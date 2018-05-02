@@ -31,8 +31,8 @@ export default class CalculationArea extends Component {
     super(props);
     this.state = {
       unit: 'm',
-      lengthValue: '10',
-      widthValue: '10',
+      lengthValue: '66.00',
+      widthValue: '0.19',
       areaValueInM: '10',
       areaValueInY: '10',
       areaValueInF: '10',
@@ -75,6 +75,24 @@ export default class CalculationArea extends Component {
 
   getNewChar(str){
     return str[str.length - 1];
+  }
+
+  validateDecimal2 = (value) => {
+      var RE = /^\d*\.?\d{0,2}$/
+      if(RE.test(value)){
+         return true;
+      }else{
+         return false;
+      }
+  }
+
+  validateDecimal3 = (value) => {
+      var RE = /^\d*\.?\d{0,3}$/
+      if(RE.test(value)){
+         return true;
+      }else{
+         return false;
+      }
   }
 
   updateAllValues = () => {
@@ -159,6 +177,14 @@ export default class CalculationArea extends Component {
       .catch(err => console.log(err))
   }
 
+  numberOfDotsCount(string,char) {
+    // var re = new RegExp(char,"gi");
+      // var re = new RegExp(.,"gi");
+      // /./gi
+    // return string.match(re).length;
+    return string.split('.').length;
+  }
+
   render() {
     const { params } = this.props.navigation.state;
     const space = Platform.select({ ios: 5, android: 2 });
@@ -184,6 +210,20 @@ export default class CalculationArea extends Component {
                 title={i18n.t('calculation_area.length').toUpperCase()}
                 value={this.state.lengthValue}
                 onChangeText={(number) => {
+                  if(number && number>0)
+                  // alert(this.numberOfDotsCount(number,'.'));
+                    // if(this.numberOfDotsCount(number)>1){
+                    //   alert(i18n.t('converter_area.outOfRangeAlert'));
+                    //   return;
+                    // }
+
+                  if(number>10000000){
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
+                  }
+                  if(number===''){
+                    alert(i18n.t('converter_area.noValueAlert'));
+                  }
                   if(this.getNewChar(number.toString())==='.'){
                     var exceptLast = number.toString();
                     exceptLast = exceptLast.slice(0, -1);
@@ -192,6 +232,21 @@ export default class CalculationArea extends Component {
                       number=exceptLast
                     }
                   }
+
+                  if(number>0){
+                    if(!this.validateDecimal2(number)) {
+                      alert(i18n.t('converter_area.outOfRangeAlert'));
+                      return;
+                    }
+                 }
+
+                 if(number.toString().includes('-')) {
+                    var exceptLast = number.toString();
+                    exceptLast = exceptLast.replace('-', '');
+                    number=exceptLast
+                    alert(i18n.t('converter_area.negativeAlert'));
+                  }
+
                   this.setState({ lengthValue: number },function(){this.updateAllValues()});
                   }
                 }
@@ -203,6 +258,13 @@ export default class CalculationArea extends Component {
                 title={i18n.t('calculation_area.width').toUpperCase()}
                 value={this.state.widthValue}
                 onChangeText={(number) => {
+                  if(number>10000){
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
+                  }
+                  if(number===''){
+                    alert(i18n.t('converter_area.noValueAlert'));
+                  }
                   if(this.getNewChar(number.toString())==='.'){
                     var exceptLast = number.toString();
                     exceptLast = exceptLast.slice(0, -1);
@@ -211,6 +273,20 @@ export default class CalculationArea extends Component {
                       number=exceptLast
                     }
                   }
+                  if(number>0){
+                    if(!this.validateDecimal3(number)) {
+                      alert(i18n.t('converter_area.outOfRangeAlert'));
+                      return;
+                    }
+                 }
+
+                 if(number.toString().includes('-')) {
+                    var exceptLast = number.toString();
+                    exceptLast = exceptLast.replace('-', '');
+                    number=exceptLast
+                    alert(i18n.t('converter_area.negativeAlert'));
+                  }
+
                   this.setState({ widthValue: number },function(){this.updateAllValues()});
                   }
                 }

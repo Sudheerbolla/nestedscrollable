@@ -30,8 +30,8 @@ class Details extends Component {
     super(props);
     this.state = {
       unit: 'm',
-      areaValue: '240',
-      widthValue: '10',
+      areaValue: '4.80',
+      widthValue: '0.19',
       lengthValueInM:'0',
       lengthValueInY:'0',
       lengthValueInI:'0',
@@ -158,6 +158,15 @@ class Details extends Component {
       .catch(err => console.log(err))
   }
 
+  validateDecimal = (value) => {
+      var RE = /^\d*\.?\d{0,2}$/
+      if(RE.test(value)){
+         return true;
+      }else{
+         return false;
+      }
+  }
+
   render() {
     const { params } = this.props.navigation.state;
     return (
@@ -182,14 +191,37 @@ class Details extends Component {
                 title={i18n.t('calculation_length.area').toUpperCase()}
                 value={this.state.areaValue}
                 onChangeText={(number) => {
+                  if(number>10000000){
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
+                  }
+                  if(number===''){
+                    alert(i18n.t('converter_area.noValueAlert'));
+                  }
                   if(this.getNewChar(number.toString())==='.'){
                     var exceptLast = number.toString();
                     exceptLast = exceptLast.slice(0, -1);
                     if (exceptLast.toString().includes('.')) {
-                      alert('A Number cannot have two decimals points');
+                      alert(i18n.t('converter_area.outOfRangeAlert'));
                       number=exceptLast
                     }
                   }
+
+                  if(number>0){
+                    if(!this.validateDecimal(number)) {
+                      alert(i18n.t('converter_area.outOfRangeAlert'));
+                      return;
+                    }
+                 }
+
+                 if(number.toString().includes('-')) {
+                    var exceptLast = number.toString();
+                    exceptLast = exceptLast.replace('-', '');
+                    number=exceptLast
+                    alert(i18n.t('converter_area.negativeAlert'));
+                  }
+
+
                   this.setState({ areaValue: number },function(){this.updateAllValues()});
                   }
                 }
@@ -201,14 +233,36 @@ class Details extends Component {
                 title={i18n.t('calculation_length.width').toUpperCase()}
                 value={this.state.widthValue}
                 onChangeText={(number) => {
+                  if(number>10000){
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
+                  }
+                  if(number===''){
+                    alert(i18n.t('converter_area.noValueAlert'));
+                  }
                   if(this.getNewChar(number.toString())==='.'){
                     var exceptLast = number.toString();
                     exceptLast = exceptLast.slice(0, -1);
                     if (exceptLast.toString().includes('.')) {
-                      alert('A Number cannot have two decimals points');
+                      alert(i18n.t('converter_area.outOfRangeAlert'));
                       number=exceptLast
                     }
                   }
+
+                  if(number>0){
+                    if(!this.validateDecimal(number)) {
+                      alert(i18n.t('converter_area.outOfRangeAlert'));
+                      return;
+                    }
+                 }
+
+                 if(number.toString().includes('-')) {
+                    var exceptLast = number.toString();
+                    exceptLast = exceptLast.replace('-', '');
+                    number=exceptLast
+                    alert(i18n.t('converter_area.negativeAlert'));
+                  }
+
                   this.setState({ widthValue: number },function(){this.updateAllValues()});
                   }
                 }

@@ -116,115 +116,6 @@ export default class CalculationDiameter extends Component {
 
 }
 
-const styles = StyleSheet.create({
-  resultUnitContainer: {
-    flex: 1,
-  },
-  unitItem: {
-    height: 35,
-    paddingTop: 3,
-  },
-  resultContainer: {
-    flexDirection: 'row',
-    flex: 1,
-  },
-  resultNumber: {
-    flex: 1,
-    top: 3,
-    alignItems: 'flex-end',
-    paddingRight: 18,
-  },
-  number: {
-    fontSize: 20,
-    height: 35,
-    color: COLORS.DARK_GREY,
-    marginLeft:10
-  },
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  leftContainer: {
-    flex: 1,
-  },
-  rightContainer: {
-    flex: 0.45,
-    position: 'relative',
-  },
-  picker: {
-    height: 85,
-    top: -70,
-    ...Platform.select({
-      android: {
-        top: 0,
-      },
-    }),
-  },
-  unitContainer: {
-    width: 100,
-    ...Platform.select({
-      android: {
-        // paddingTop: 70,
-      },
-    }),
-  }, unitContainerLarge: {
-      width: 150,
-  },
-  unitWidth: {
-    height: 42,
-    top: -25,
-    justifyContent: 'center',
-    alignItems: 'center',
-    ...Platform.select({
-      android: {
-        paddingTop: -145,
-      },
-    }),
-  },
-  unitWidthLabel: {
-    fontSize: 15,
-    color: COLORS.DARK_GREY,
-  },
-  pickerTopBorder: {
-    position: 'absolute',
-    borderWidth: 1,
-    borderColor: COLORS.DARK_GREY,
-    width: 70,
-    top: 20,
-    left: 15,
-    ...Platform.select({
-      android: {
-        top: 30,
-      },
-    }),
-  },
-  pickerBottomBorder: {
-    position: 'absolute',
-    borderWidth: 1,
-    borderColor: COLORS.DARK_GREY,
-    width: 70,
-    bottom: 30,
-    left: 15,
-    ...Platform.select({
-      android: {
-        bottom: -10,
-      },
-    }),
-  },
-  coreDiameterText: {
-    height: 85,
-    justifyContent: 'center',
-  },
-  input: {
-    height: 42,
-    backgroundColor: COLORS.BLUE_3,
-    color: COLORS.BLUE,
-    fontSize: 20,
-    marginTop: 10,
-    textAlign: 'center',
-  },
-});
-
 class TellerrollenScreen extends React.Component {
 
   constructor(props) {
@@ -267,6 +158,15 @@ class TellerrollenScreen extends React.Component {
     var diameter=2*(Math.sqrt(underRootValue))
     return diameter;
   }
+
+    validateDecimal = (value) => {
+        var RE = /^\d*\.?\d{0,2}$/
+        if(RE.test(value)){
+           return true;
+        }else{
+           return false;
+        }
+    }
 
   updateAllValues = () => {
     this.setState({
@@ -323,14 +223,36 @@ class TellerrollenScreen extends React.Component {
             title={i18n.t('calculation_diameter.length').toUpperCase()}
             value={this.state.lengthValue}
             onChangeText={(number) => {
+              if(number>500000){
+                alert(i18n.t('converter_area.outOfRangeAlert'));
+                return;
+              }
+              if(number===''){
+                alert(i18n.t('converter_area.noValueAlert'));
+              }
               if(this.getNewChar(number.toString())==='.'){
                 var exceptLast = number.toString();
                 exceptLast = exceptLast.slice(0, -1);
                 if (exceptLast.toString().includes('.')) {
-                  alert('A Number cannot have two decimals points');
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
                   number=exceptLast
                 }
               }
+
+              if(number>0){
+                if(!this.validateDecimal(number)) {
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  return;
+                }
+             }
+
+             if(number.toString().includes('-')) {
+                var exceptLast = number.toString();
+                exceptLast = exceptLast.replace('-', '');
+                number=exceptLast
+                alert(i18n.t('converter_area.negativeAlert'));
+              }
+
               this.setState({ lengthValue: number },function(){this.updateAllValues()});
               }
             }
@@ -342,14 +264,36 @@ class TellerrollenScreen extends React.Component {
             title={i18n.t('calculation_diameter.thickness').toUpperCase()}
             value={this.state.thickNessValue}
             onChangeText={(number) => {
+              if(number>25000){
+                alert(i18n.t('converter_area.outOfRangeAlert'));
+                return;
+              }
+              if(number===''){
+                alert(i18n.t('converter_area.noValueAlert'));
+              }
               if(this.getNewChar(number.toString())==='.'){
                 var exceptLast = number.toString();
                 exceptLast = exceptLast.slice(0, -1);
                 if (exceptLast.toString().includes('.')) {
-                  alert('A Number cannot have two decimals points');
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
                   number=exceptLast
                 }
               }
+
+              if(number>0){
+                if(!this.validateDecimal(number)) {
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  return;
+                }
+             }
+
+             if(number.toString().includes('-')) {
+                var exceptLast = number.toString();
+                exceptLast = exceptLast.replace('-', '');
+                number=exceptLast
+                alert(i18n.t('converter_area.negativeAlert'));
+              }
+
               this.setState({ thickNessValue: number },function(){this.updateAllValues()});
               }
             }
@@ -705,3 +649,112 @@ class SAFRollenScreen extends React.Component {
     }
 
 }
+
+const styles = StyleSheet.create({
+  resultUnitContainer: {
+    flex: 1,
+  },
+  unitItem: {
+    height: 35,
+    paddingTop: 3,
+  },
+  resultContainer: {
+    flexDirection: 'row',
+    flex: 1,
+  },
+  resultNumber: {
+    flex: 1,
+    top: 3,
+    alignItems: 'flex-end',
+    paddingRight: 18,
+  },
+  number: {
+    fontSize: 20,
+    height: 35,
+    color: COLORS.DARK_GREY,
+    marginLeft:10
+  },
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  leftContainer: {
+    flex: 1,
+  },
+  rightContainer: {
+    flex: 0.45,
+    position: 'relative',
+  },
+  picker: {
+    height: 85,
+    top: -70,
+    ...Platform.select({
+      android: {
+        top: 0,
+      },
+    }),
+  },
+  unitContainer: {
+    width: 100,
+    ...Platform.select({
+      android: {
+        // paddingTop: 70,
+      },
+    }),
+  }, unitContainerLarge: {
+      width: 150,
+  },
+  unitWidth: {
+    height: 42,
+    top: -25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    ...Platform.select({
+      android: {
+        paddingTop: -145,
+      },
+    }),
+  },
+  unitWidthLabel: {
+    fontSize: 15,
+    color: COLORS.DARK_GREY,
+  },
+  pickerTopBorder: {
+    position: 'absolute',
+    borderWidth: 1,
+    borderColor: COLORS.DARK_GREY,
+    width: 70,
+    top: 20,
+    left: 15,
+    ...Platform.select({
+      android: {
+        top: 30,
+      },
+    }),
+  },
+  pickerBottomBorder: {
+    position: 'absolute',
+    borderWidth: 1,
+    borderColor: COLORS.DARK_GREY,
+    width: 70,
+    bottom: 30,
+    left: 15,
+    ...Platform.select({
+      android: {
+        bottom: -10,
+      },
+    }),
+  },
+  coreDiameterText: {
+    height: 85,
+    justifyContent: 'center',
+  },
+  input: {
+    height: 42,
+    backgroundColor: COLORS.BLUE_3,
+    color: COLORS.BLUE,
+    fontSize: 20,
+    marginTop: 10,
+    textAlign: 'center',
+  },
+});
