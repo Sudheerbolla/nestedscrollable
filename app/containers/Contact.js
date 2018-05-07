@@ -108,7 +108,10 @@ class Calculation extends Component {
           title={params.title}
         />
         <View style={{ flex: 1 }}>
-          <ScrollView scrollEnabled={Platform.select({ ios: false, android: true })}>
+{/* scrollEnabled={Platform.select({ ios: false, android: true })} */}
+          <ScrollView keyboardDismissMode='on-drag'
+                keyboardShouldPersistTaps={true}
+                >
             <View style={styles.form}>
 
               <View style={styles.field}>

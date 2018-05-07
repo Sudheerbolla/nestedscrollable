@@ -47,6 +47,17 @@ export default class Calculation extends Component {
     });
   }
 
+  round(number, precision) {
+    var shift = function (number, precision, reverseShift) {
+      if (reverseShift) {
+        precision = -precision;
+      }
+      var numArray = ("" + number).split("e");
+      return +(numArray[0] + "e" + (numArray[1] ? (+numArray[1] + precision) : precision));
+    };
+    return shift(Math.round(shift(number, precision, false)), precision, true);
+  }
+
   render() {
     const {params} = this.props.navigation.state;
     return (<Grid>
@@ -60,6 +71,7 @@ export default class Calculation extends Component {
             backgroundColor: '#B0E0E6',
             padding: 3
           }}>
+          {/* <Text style={styles.textInputResult}>{this.round(this.state.text, 4).toString()}</Text> */}
           <Text style={styles.textInputResult}>{this.state.text}</Text>
           <Text style={styles.textInput}>{this.state.prev}</Text>
         </View>

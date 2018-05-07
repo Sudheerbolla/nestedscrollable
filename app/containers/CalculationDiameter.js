@@ -159,14 +159,14 @@ class TellerrollenScreen extends React.Component {
     return diameter;
   }
 
-    validateDecimal = (value) => {
-        var RE = /^\d*\.?\d{0,2}$/
-        if(RE.test(value)){
-           return true;
-        }else{
-           return false;
-        }
-    }
+  validateDecimal = (value) => {
+      var RE = /^\d*\.?\d{0,2}$/
+      if(RE.test(value)){
+         return true;
+      }else{
+         return false;
+      }
+  }
 
   updateAllValues = () => {
     this.setState({
@@ -223,13 +223,20 @@ class TellerrollenScreen extends React.Component {
             title={i18n.t('calculation_diameter.length').toUpperCase()}
             value={this.state.lengthValue}
             onChangeText={(number) => {
+              if(number){
+                if((number.split('\.').length-1)>1){
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
+                }
+              }
+
               if(number>500000){
                 alert(i18n.t('converter_area.outOfRangeAlert'));
                 return;
               }
-              if(number===''){
-                alert(i18n.t('converter_area.noValueAlert'));
-              }
+              // if(number===''){
+              //   alert(i18n.t('converter_area.noValueAlert'));
+              // }
               if(this.getNewChar(number.toString())==='.'){
                 var exceptLast = number.toString();
                 exceptLast = exceptLast.slice(0, -1);
@@ -264,13 +271,20 @@ class TellerrollenScreen extends React.Component {
             title={i18n.t('calculation_diameter.thickness').toUpperCase()}
             value={this.state.thickNessValue}
             onChangeText={(number) => {
+              if(number){
+                if((number.split('\.').length-1)>1){
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
+                }
+              }
+
               if(number>25000){
                 alert(i18n.t('converter_area.outOfRangeAlert'));
                 return;
               }
-              if(number===''){
-                alert(i18n.t('converter_area.noValueAlert'));
-              }
+              // if(number===''){
+              //   alert(i18n.t('converter_area.noValueAlert'));
+              // }
               if(this.getNewChar(number.toString())==='.'){
                 var exceptLast = number.toString();
                 exceptLast = exceptLast.slice(0, -1);

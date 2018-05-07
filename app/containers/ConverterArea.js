@@ -77,14 +77,21 @@ export default class Details extends Component {
   }
 
   updateAllValues = (number) => {
+    if(number){
+      if((number.split('\.').length-1)>1){
+        alert(i18n.t('converter_area.outOfRangeAlert'));
+          return;
+      }
+    }
+
     if(number>100000000){
       alert(i18n.t('converter_area.outOfRangeAlert'));
       return;
     }
 
-    if(number===''){
-      alert(i18n.t('converter_area.noValueAlert'));
-    }
+    // if(number===''){
+    //   alert(i18n.t('converter_area.noValueAlert'));
+    // }
 
     var lastChar = this.getNewChar(number.toString());
 
@@ -316,7 +323,7 @@ export default class Details extends Component {
                     itemStyle={{ fontSize: 15, color: COLORS.DARK_GREY }}
                     onValueChange={(itemValue, itemIndex) => {
                       this.setState({ unit: itemValue, hideView:value});
-                      this.updateAllValues(number);
+                      this.updateAllValues(this.state.lengthValue);
                     }}>
                     <Picker.Item label="m2" value="m2" />
                     <Picker.Item label="cm2" value="cm2" />
