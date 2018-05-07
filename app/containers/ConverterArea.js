@@ -77,14 +77,21 @@ export default class Details extends Component {
   }
 
   updateAllValues = (number) => {
+    if(number){
+      if((number.split('\.').length-1)>1){
+        alert(i18n.t('converter_area.outOfRangeAlert'));
+          return;
+      }
+    }
+
     if(number>100000000){
       alert(i18n.t('converter_area.outOfRangeAlert'));
       return;
     }
 
-    if(number===''){
-      alert(i18n.t('converter_area.noValueAlert'));
-    }
+    // if(number===''){
+    //   alert(i18n.t('converter_area.noValueAlert'));
+    // }
 
     var lastChar = this.getNewChar(number.toString());
 

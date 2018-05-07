@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { CustomPicker } from 'react-native-custom-picker';
+
 import {
   StyleSheet,
   View,
@@ -15,6 +16,7 @@ import {
   TouchableOpacity,
   Share
 } from 'react-native';
+
 import { Grid, DetailTextInput } from '../components';
 import { COLORS, ICONS, FONTS } from '../constants';
 import NavBarDetail from '../modules/NavBarDetail';
@@ -177,12 +179,8 @@ export default class CalculationArea extends Component {
       .catch(err => console.log(err))
   }
 
-  numberOfDotsCount(string,char) {
-    // var re = new RegExp(char,"gi");
-      // var re = new RegExp(.,"gi");
-      // /./gi
-    // return string.match(re).length;
-    return string.split('.').length;
+  numberOfDotsCount(string) {
+    return string.split('\.').length-1;
   }
 
   render() {
@@ -210,20 +208,20 @@ export default class CalculationArea extends Component {
                 title={i18n.t('calculation_area.length').toUpperCase()}
                 value={this.state.lengthValue}
                 onChangeText={(number) => {
-                  if(number && number>0)
-                  // alert(this.numberOfDotsCount(number,'.'));
-                    // if(this.numberOfDotsCount(number)>1){
-                    //   alert(i18n.t('converter_area.outOfRangeAlert'));
-                    //   return;
-                    // }
+                  if(number){
+                    if((number.split('\.').length-1)>1){
+                      alert(i18n.t('converter_area.outOfRangeAlert'));
+                        return;
+                    }
+                  }
 
                   if(number>10000000){
                     alert(i18n.t('converter_area.outOfRangeAlert'));
                     return;
                   }
-                  if(number===''){
-                    alert(i18n.t('converter_area.noValueAlert'));
-                  }
+                  // if(number===''){
+                  //   alert(i18n.t('converter_area.noValueAlert'));
+                  // }
                   if(this.getNewChar(number.toString())==='.'){
                     var exceptLast = number.toString();
                     exceptLast = exceptLast.slice(0, -1);
@@ -258,13 +256,19 @@ export default class CalculationArea extends Component {
                 title={i18n.t('calculation_area.width').toUpperCase()}
                 value={this.state.widthValue}
                 onChangeText={(number) => {
+                  if(number){
+                    if((number.split('\.').length-1)>1){
+                      alert(i18n.t('converter_area.outOfRangeAlert'));
+                        return;
+                    }
+                  }
                   if(number>10000){
                     alert(i18n.t('converter_area.outOfRangeAlert'));
                     return;
                   }
-                  if(number===''){
-                    alert(i18n.t('converter_area.noValueAlert'));
-                  }
+                  // if(number===''){
+                  //   alert(i18n.t('converter_area.noValueAlert'));
+                  // }
                   if(this.getNewChar(number.toString())==='.'){
                     var exceptLast = number.toString();
                     exceptLast = exceptLast.slice(0, -1);

@@ -31,7 +31,7 @@ android {
         applicationId "com.tesa"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 1
+        versionCode 4
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -46,10 +46,10 @@ android {
 //                keyAlias MYAPP_RELEASE_KEY_ALIAS
 //                keyPassword MYAPP_RELEASE_KEY_PASSWORD
 //            }
-                storeFile file("my-release-key.keystore")
-                storePassword "Tesa@123"
-                keyAlias "my-key-alias"
-                keyPassword "Tesa@123"
+                storeFile file("tesakey.keystore")
+                storePassword "123456789"
+                keyAlias "tesa-alias"
+                keyPassword "123456789"
         }
     }
 

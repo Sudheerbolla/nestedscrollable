@@ -191,13 +191,20 @@ class Details extends Component {
                 title={i18n.t('calculation_length.area').toUpperCase()}
                 value={this.state.areaValue}
                 onChangeText={(number) => {
+                  if(number){
+                    if((number.split('\.').length-1)>1){
+                      alert(i18n.t('converter_area.outOfRangeAlert'));
+                        return;
+                    }
+                  }
+
                   if(number>10000000){
                     alert(i18n.t('converter_area.outOfRangeAlert'));
                     return;
                   }
-                  if(number===''){
-                    alert(i18n.t('converter_area.noValueAlert'));
-                  }
+                  // if(number===''){
+                  //   alert(i18n.t('converter_area.noValueAlert'));
+                  // }
                   if(this.getNewChar(number.toString())==='.'){
                     var exceptLast = number.toString();
                     exceptLast = exceptLast.slice(0, -1);
@@ -233,13 +240,20 @@ class Details extends Component {
                 title={i18n.t('calculation_length.width').toUpperCase()}
                 value={this.state.widthValue}
                 onChangeText={(number) => {
+                  if(number){
+                    if((number.split('\.').length-1)>1){
+                      alert(i18n.t('converter_area.outOfRangeAlert'));
+                        return;
+                    }
+                  }
+
                   if(number>10000){
                     alert(i18n.t('converter_area.outOfRangeAlert'));
                     return;
                   }
-                  if(number===''){
-                    alert(i18n.t('converter_area.noValueAlert'));
-                  }
+                  // if(number===''){
+                  //   alert(i18n.t('converter_area.noValueAlert'));
+                  // }
                   if(this.getNewChar(number.toString())==='.'){
                     var exceptLast = number.toString();
                     exceptLast = exceptLast.slice(0, -1);
