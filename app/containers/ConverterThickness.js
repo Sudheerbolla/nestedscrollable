@@ -92,6 +92,11 @@ class Details extends Component {
     // if(number===''){
     //   alert(i18n.t('converter_area.noValueAlert'));
     // }
+    if(number.includes(',')){
+       var exceptLast = number.toString();
+       exceptLast = exceptLast.replace(',', '');
+       number=exceptLast
+    }
 
     if (this.getNewChar(number.toString()) === '.') {
       var exceptLast = number.toString();
@@ -126,17 +131,21 @@ class Details extends Component {
   }
 
   shareTextWithTitle() {
-    let textToShare='Input is '+this.state.lengthValue+' in '+this.state.unit+ ', And it is converted into following values : '
-    +'\n Thickness in MilliMeter '+this.state.lengthValueInMM
-    +'\n Thickness in Mils '+this.state.lengthValueInMILS
-    +'\n Thickness in MicroMeter '+this.state.lengthValueInμM +'.';
+    let emailsubject='Tesa Tape Calculator - Thickness';
+
+    let textToShare='Input: '+this.state.lengthValue+' '+this.state.unit
+    +'\n'+'\n'
+    +'Result: \n'
+    + this.state.lengthValueInMM +' MM'
+    +'\n'+this.state.lengthValueInMILS+' Mils'
+    +'\n'+this.state.lengthValueInμM+' μM';
       Share.share({
         message: textToShare,
-        title: 'Please Share using',
+        title: emailsubject,
         url: textToShare,
-        subject: textToShare
+        subject: emailsubject
       }, {
-        dialogTitle: 'Please Share using',
+        dialogTitle: emailsubject,
         excludedActivityTypes: [
           'com.apple.UIKit.activity.PostToTwitter',
         ],

@@ -93,6 +93,11 @@ class Details extends Component {
     // if(number===''){
     //   alert(i18n.t('converter_area.noValueAlert'));
     // }
+    if(number.includes(',')){
+       var exceptLast = number.toString();
+       exceptLast = exceptLast.replace(',', '');
+       number=exceptLast
+    }
 
     if (this.getNewChar(number.toString()) === '.') {
       var exceptLast = number.toString();
@@ -174,18 +179,22 @@ class Details extends Component {
   }
 
   shareTextWithTitle() {
-    let textToShare='Input is '+this.state.lengthValue+' in '+this.state.unit+ ', And it is converted into following values : '
-    +'\n Mass in KG '+this.state.lengthValueInKG
-    +'\n Mass in Pound '+this.state.lengthValueInPound
-    +'\n Mass in Ounce '+this.state.lengthValueInOunce
-    +'\n Mass in Newton '+this.state.lengthValueInNewton+'.';
+    let emailsubject='Tesa Tape Calculator - Mass';
+
+    let textToShare='Input: '+this.state.lengthValue+' '+this.state.unit
+    +'\n'+'\n'
+    +'Result: \n'
+    + this.state.lengthValueInKG +' KG'
+    +'\n'+this.state.lengthValueInPound+' Pound'
+    +'\n'+this.state.lengthValueInOunce+' Ounce'
+    +'\n'+this.state.lengthValueInNewton+' Newton';
       Share.share({
         message: textToShare,
-        title: 'Please Share using',
+        title: emailsubject,
         url: textToShare,
-        subject: textToShare
+        subject: emailsubject
       }, {
-        dialogTitle: 'Please Share using',
+        dialogTitle: emailsubject,
         excludedActivityTypes: [
           'com.apple.UIKit.activity.PostToTwitter',
         ],

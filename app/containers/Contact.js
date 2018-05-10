@@ -108,10 +108,9 @@ class Calculation extends Component {
           title={params.title}
         />
         <View style={{ flex: 1 }}>
-{/* scrollEnabled={Platform.select({ ios: false, android: true })} */}
+
           <ScrollView keyboardDismissMode='on-drag'
-                keyboardShouldPersistTaps={true}
-                >
+                keyboardShouldPersistTaps={true}>
             <View style={styles.form}>
 
               <View style={styles.field}>
@@ -173,7 +172,7 @@ class Calculation extends Component {
                 }
               }}>
                 <View style={styles.rowItem}>
-                  <ImageBackground source={ICONS.C_ICON_8} style={styles.image}>
+                  <ImageBackground source={require('../images/180310_PHONE.png')} style={styles.image}>
                     <Text style={[styles.rowLabel, { paddingTop: 70 }]}>{applyLetterSpacing(i18n.t('contact.call').toUpperCase(), 1)}</Text>
                     <Text style={styles.rowLabel}>{applyLetterSpacing(this.state.displayPhone, 1)}</Text>
                   </ImageBackground>
@@ -181,7 +180,7 @@ class Calculation extends Component {
               </TouchableOpacity>
               <TouchableOpacity onPress={this.checkForValidations}>
                 <View style={[styles.rowItem, styles.mailButton]}>
-                  <ImageBackground source={ICONS.C_ICON_7} style={styles.image}>
+                  <ImageBackground source={require('../images/180310_MAIL.png')} style={styles.image}>
                     <Text style={[styles.rowLabel, { paddingTop: 70 }]}>{applyLetterSpacing(i18n.t('contact.send'), 1)}</Text>
                     <Text style={styles.rowLabel}>{applyLetterSpacing(' ', 1)}</Text>
                   </ImageBackground>

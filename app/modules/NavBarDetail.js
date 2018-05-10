@@ -57,10 +57,12 @@ const styles = StyleSheet.create({
     width: 50,
     justifyContent: 'center',
     alignItems: 'flex-start',
+    padding:5,
   },
   icon: {
     resizeMode: 'contain',
     width: 20,
+    padding:10,
     height: 25,
   },
   titleContainer: {

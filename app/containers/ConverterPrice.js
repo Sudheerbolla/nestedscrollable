@@ -77,6 +77,7 @@ class Details extends Component {
   getNewChar(str) {
     return str[str.length - 1];
   }
+
   validateDecimal = (value) => {
       var RE = /^\d*\.?\d{0,2}$/
       if(RE.test(value)){
@@ -102,6 +103,11 @@ class Details extends Component {
     // if(number===''){
     //   alert(i18n.t('converter_area.noValueAlert'));
     // }
+    if(number.includes(',')){
+       var exceptLast = number.toString();
+       exceptLast = exceptLast.replace(',', '');
+       number=exceptLast
+    }
 
     if (this.getNewChar(number.toString()) === '.') {
       var exceptLast = number.toString();
@@ -183,18 +189,22 @@ class Details extends Component {
   }
 
   shareTextWithTitle() {
-    let textToShare='Price input is '+this.state.lengthValue+' in '+this.state.unit+ ', And it is converted into following values : '
-    +'\n Price in Square Meter '+this.state.lengthValueInPM
-    +'\n Price in Square Yard '+this.state.lengthValueInPY
-    +'\n Price in Square Foot '+this.state.lengthValueInPF
-    +'\n Price in MSI '+this.state.lengthValueInPMSI+'.';
+    let emailsubject='Tesa Tape Calculator - Price';
+
+    let textToShare='Input: '+this.state.lengthValue+' '+this.state.unit
+    +'\n'+'\n'
+    +'Result: \n'
+    + this.state.lengthValueInPM +' m2'
+    +'\n'+this.state.lengthValueInPY+' yard2'
+    +'\n'+this.state.lengthValueInPF+' feet2'
+    +'\n'+this.state.lengthValueInPMSI+' MSI';
       Share.share({
         message: textToShare,
-        title: 'Please Share using',
+        title: emailsubject,
         url: textToShare,
-        subject: textToShare
+        subject: emailsubject
       }, {
-        dialogTitle: 'Please Share using',
+        dialogTitle: emailsubject,
         excludedActivityTypes: [
           'com.apple.UIKit.activity.PostToTwitter',
         ],

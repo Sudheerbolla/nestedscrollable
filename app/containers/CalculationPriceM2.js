@@ -14,15 +14,76 @@ import MarqueeText from 'react-native-marquee';
 const { width, height } = Dimensions.get('window');
 
 class Details extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
-      unit: '5',
-      priceValue:'5',
-      lengthValue: '66',
+      unit: 'Roll',
+      priceValue:'0',
+      lengthValue: '66.00',
       widthValue: '19',
       pricePerRoll:'100'
     };
+  }
+
+  round(number, precision) {
+    var shift = function (number, precision, reverseShift) {
+      if (reverseShift) {
+        precision = -precision;
+      }
+      var numArray = ("" + number).split("e");
+      return +(numArray[0] + "e" + (numArray[1] ? (+numArray[1] + precision) : precision));
+    };
+    return shift(Math.round(shift(number, precision, false)), precision, true);
+  }
+
+  getNewChar(str){
+    return str[str.length - 1];
+  }
+
+  updateAllValues = () => {
+    this.setState({
+      pricePerRoll:this.getCalculatedValue(),
+    });
+  }
+
+  getCalculatedValue = () => {
+    var pricePerRoll=this.state.priceValue*this.state.widthValue*this.state.lengthValue;
+    pricePerRoll=this.round(pricePerRoll, 3);
+    return pricePerRoll.toString();
+  }
+
+  shareTextWithTitle() {
+    let emailsubject='Tesa Tape Calculator - Price/M2';
+
+    let textToShare='Input: \n'+ 'Price: '+this.state.priceValue+', Width: '+this.state.widthValue+', Length: '+this.state.lengthValue+' '+this.state.unit+
+    +'\n'+'\n'
+    +'Result: \n'
+    + this.state.pricePerRoll +' Price/M2';
+
+      Share.share({
+        message: textToShare,
+        title: emailsubject,
+        url: textToShare,
+        subject: emailsubject
+      }, {
+        dialogTitle: emailsubject,
+        excludedActivityTypes: [
+          'com.apple.UIKit.activity.PostToTwitter',
+        ],
+        tintColor: 'green'
+      })
+      .then(this._showResult)
+      .catch(err => console.log(err))
+  }
+
+  validateDecimal = (value) => {
+      var RE = /^\d*\.?\d{0,2}$/
+      if(RE.test(value)){
+         return true;
+      }else{
+         return false;
+      }
   }
 
   render() {
@@ -38,7 +99,7 @@ class Details extends Component {
           supText={true}
           rightButton={true}
           onRight={() => {
-            alert('on Shared');
+            this.shareTextWithTitle();
           }}
         />
         <ScrollView>
@@ -48,8 +109,53 @@ class Details extends Component {
 
             <DetailTextInput
               title={i18n.t('calculation_price_m2.price').toUpperCase()}
-              value={this.state.unit}
-              onChangeText={(number) => this.setState({ unit: number })}
+              value={this.state.priceValue}
+              onChangeText={(number) => {
+                if(number){
+                  if((number.split('\.').length-1)>1){
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                      return;
+                  }
+                }
+
+                if(number>1000000){
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  return;
+                }
+
+                if(number.includes(',')){
+                   var exceptLast = number.toString();
+                   exceptLast = exceptLast.replace(',', '');
+                   number=exceptLast
+                }
+
+                if(this.getNewChar(number.toString())==='.'){
+                  var exceptLast = number.toString();
+                  exceptLast = exceptLast.slice(0, -1);
+                  if (exceptLast.toString().includes('.')) {
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    number=exceptLast
+                  }
+                }
+
+                if(number>0){
+                  if(!this.validateDecimal(number)) {
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
+                  }
+               }
+
+               if(number.toString().includes('-')) {
+                  var exceptLast = number.toString();
+                  exceptLast = exceptLast.replace('-', '');
+                  number=exceptLast
+                  alert(i18n.t('converter_area.negativeAlert'));
+                }
+
+
+                this.setState({ priceValue: number },function(){this.updateAllValues()});
+                }
+              }
             />
 
             <View style={{ height: 33 }} />
@@ -57,7 +163,51 @@ class Details extends Component {
             <DetailTextInput
               title={i18n.t('calculation_price_m2.length').toUpperCase()}
               value={this.state.lengthValue}
-              onChangeText={(number) => this.setState({ lengthValue: number })}
+              onChangeText={(number) => {
+                if(number){
+                  if((number.split('\.').length-1)>1){
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                      return;
+                  }
+                }
+
+                if(number>1000000){
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  return;
+                }
+
+                if(number.includes(',')){
+                   var exceptLast = number.toString();
+                   exceptLast = exceptLast.replace(',', '');
+                   number=exceptLast
+                }
+
+                if(this.getNewChar(number.toString())==='.'){
+                  var exceptLast = number.toString();
+                  exceptLast = exceptLast.slice(0, -1);
+                  if (exceptLast.toString().includes('.')) {
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    number=exceptLast
+                  }
+                }
+
+                if(number>0){
+                  if(!this.validateDecimal(number)) {
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
+                  }
+               }
+
+               if(number.toString().includes('-')) {
+                  var exceptLast = number.toString();
+                  exceptLast = exceptLast.replace('-', '');
+                  number=exceptLast
+                  alert(i18n.t('converter_area.negativeAlert'));
+                }
+
+                this.setState({ lengthValue: number },function(){this.updateAllValues()});
+                }
+              }
             />
 
             <View style={{ height: 26 }} />
@@ -65,7 +215,52 @@ class Details extends Component {
             <DetailTextInput
               title={i18n.t('calculation_price_m2.width').toUpperCase()}
               value={this.state.widthValue}
-              onChangeText={(number) => this.setState({ widthValue: number })}
+              onChangeText={(number) => {
+                if(number){
+                  if((number.split('\.').length-1)>1){
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                      return;
+                  }
+                }
+
+                if(number>1000000){
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  return;
+                }
+
+                if(number.includes(',')){
+                   var exceptLast = number.toString();
+                   exceptLast = exceptLast.replace(',', '');
+                   number=exceptLast
+                }
+
+                if(this.getNewChar(number.toString())==='.'){
+                  var exceptLast = number.toString();
+                  exceptLast = exceptLast.slice(0, -1);
+                  if (exceptLast.toString().includes('.')) {
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    number=exceptLast
+                  }
+                }
+
+                if(number>0){
+                  if(!this.validateDecimal(number)) {
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
+                  }
+               }
+
+               if(number.toString().includes('-')) {
+                  var exceptLast = number.toString();
+                  exceptLast = exceptLast.replace('-', '');
+                  number=exceptLast
+                  alert(i18n.t('converter_area.negativeAlert'));
+                }
+
+
+                this.setState({ widthValue: number },function(){this.updateAllValues()});
+                }
+              }
             />
 
             <View style={{ height: 40 }} />
@@ -75,7 +270,9 @@ class Details extends Component {
                 {applyLetterSpacing(i18n.t('calculation_price_m2.result').toUpperCase(), 5)}
               </Text>
               <View style={styles.resultNumber}>
-                <Text style={styles.number}>{applyLetterSpacing('280', 1)}</Text>
+                  <MarqueeText style={styles.number} duration={3000} marqueeOnStart loop marqueeDelay={1000} marqueeResetDelay={1000}>
+                           {applyLetterSpacing(this.state.pricePerRoll, 1)}
+                  </MarqueeText>
               </View>
             </View>
           </View>

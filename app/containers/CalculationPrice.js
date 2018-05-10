@@ -18,9 +18,9 @@ class Details extends Component {
     super(props);
     this.state = {
       unit: 'pro m',
-      priceValue: '5',
-      lengthValue: '66',
-      widthValue: '19',
+      priceValue: '0',
+      lengthValue: '66.00',
+      widthValue: '205',
       pricePerRoll:'280'
     };
   }
@@ -47,6 +47,73 @@ class Details extends Component {
     );
   }
 
+  round(number, precision) {
+    var shift = function (number, precision, reverseShift) {
+      if (reverseShift) {
+        precision = -precision;
+      }
+      var numArray = ("" + number).split("e");
+      return +(numArray[0] + "e" + (numArray[1] ? (+numArray[1] + precision) : precision));
+    };
+    return shift(Math.round(shift(number, precision, false)), precision, true);
+  }
+
+  getNewChar(str){
+    return str[str.length - 1];
+  }
+
+  updateAllValues = () => {
+    this.setState({
+      pricePerRoll:this.getCalculatedValue(),
+    });
+  }
+
+  getCalculatedValue = () => {
+    var pricePerRoll='';
+    if (this.state.unit == 'pro 100 m') {
+      pricePerRoll=this.state.priceValue*this.state.widthValue*this.state.lengthValue;
+    } else if (this.state.unit == 'pro m') {
+      pricePerRoll=this.state.priceValue*this.state.widthValue*this.state.lengthValue;
+    } else if (this.state.unit == 'pro m2') {
+      pricePerRoll=this.state.priceValue*this.state.widthValue*this.state.lengthValue;
+    }
+    pricePerRoll=this.round(pricePerRoll, 3);
+    return pricePerRoll.toString();
+  }
+
+  shareTextWithTitle() {
+    let emailsubject='Tesa Tape Calculator - Price';
+
+    let textToShare='Input: \n'+ 'Price: '+this.state.priceValue+', Width: '+this.state.widthValue+', Length: '+this.state.lengthValue+' '+this.state.unit+
+    +'\n'+'\n'
+    +'Result: \n'
+    + this.state.pricePerRoll +' Price/roll';
+
+      Share.share({
+        message: textToShare,
+        title: emailsubject,
+        url: textToShare,
+        subject: emailsubject
+      }, {
+        dialogTitle: emailsubject,
+        excludedActivityTypes: [
+          'com.apple.UIKit.activity.PostToTwitter',
+        ],
+        tintColor: 'green'
+      })
+      .then(this._showResult)
+      .catch(err => console.log(err))
+  }
+
+  validateDecimal = (value) => {
+      var RE = /^\d*\.?\d{0,2}$/
+      if(RE.test(value)){
+         return true;
+      }else{
+         return false;
+      }
+  }
+
   render() {
     const { params } = this.props.navigation.state;
     return (
@@ -59,7 +126,7 @@ class Details extends Component {
           title={params.title}
           rightButton={true}
           onRight={() => {
-            alert('on Shared');
+            this.shareTextWithTitle();
           }}
         />
         <ScrollView>
@@ -69,8 +136,53 @@ class Details extends Component {
 
             <DetailTextInput
               title={i18n.t('calculation_price.price').toUpperCase()}
-              value={this.state.unit}
-              onChangeText={(number) => this.setState({ unit: number })}
+              value={this.state.priceValue}
+              onChangeText={(number) => {
+                if(number){
+                  if((number.split('\.').length-1)>1){
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                      return;
+                  }
+                }
+
+                if(number>1000000){
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  return;
+                }
+
+                if(number.includes(',')){
+                   var exceptLast = number.toString();
+                   exceptLast = exceptLast.replace(',', '');
+                   number=exceptLast
+                }
+
+                if(this.getNewChar(number.toString())==='.'){
+                  var exceptLast = number.toString();
+                  exceptLast = exceptLast.slice(0, -1);
+                  if (exceptLast.toString().includes('.')) {
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    number=exceptLast
+                  }
+                }
+
+                if(number>0){
+                  if(!this.validateDecimal(number)) {
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
+                  }
+               }
+
+               if(number.toString().includes('-')) {
+                  var exceptLast = number.toString();
+                  exceptLast = exceptLast.replace('-', '');
+                  number=exceptLast
+                  alert(i18n.t('converter_area.negativeAlert'));
+                }
+
+
+                this.setState({ priceValue: number },function(){this.updateAllValues()});
+                }
+              }
             />
 
             <View style={{ height: 33 }} />
@@ -78,7 +190,52 @@ class Details extends Component {
             <DetailTextInput
               title={i18n.t('calculation_price.length').toUpperCase()}
               value={this.state.lengthValue}
-              onChangeText={(number) => this.setState({ lengthValue: number })}
+              onChangeText={(number) => {
+                if(number){
+                  if((number.split('\.').length-1)>1){
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                      return;
+                  }
+                }
+
+                if(number>100000){
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  return;
+                }
+
+                if(number.includes(',')){
+                   var exceptLast = number.toString();
+                   exceptLast = exceptLast.replace(',', '');
+                   number=exceptLast
+                }
+
+                if(this.getNewChar(number.toString())==='.'){
+                  var exceptLast = number.toString();
+                  exceptLast = exceptLast.slice(0, -1);
+                  if (exceptLast.toString().includes('.')) {
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    number=exceptLast
+                  }
+                }
+
+                if(number>0){
+                  if(!this.validateDecimal(number)) {
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
+                  }
+               }
+
+               if(number.toString().includes('-')) {
+                  var exceptLast = number.toString();
+                  exceptLast = exceptLast.replace('-', '');
+                  number=exceptLast
+                  alert(i18n.t('converter_area.negativeAlert'));
+                }
+
+
+                this.setState({ lengthValue: number },function(){this.updateAllValues()});
+                }
+              }
             />
 
             <View style={{ height: 26 }} />
@@ -86,7 +243,52 @@ class Details extends Component {
             <DetailTextInput
               title={i18n.t('calculation_price.width').toUpperCase()}
               value={this.state.widthValue}
-              onChangeText={(number) => this.setState({ widthValue: number })}
+              onChangeText={(number) => {
+                if(number){
+                  if((number.split('\.').length-1)>1){
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                      return;
+                  }
+                }
+
+                if(number>1000000){
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  return;
+                }
+
+                if(number.includes(',')){
+                   var exceptLast = number.toString();
+                   exceptLast = exceptLast.replace(',', '');
+                   number=exceptLast
+                }
+
+                if(this.getNewChar(number.toString())==='.'){
+                  var exceptLast = number.toString();
+                  exceptLast = exceptLast.slice(0, -1);
+                  if (exceptLast.toString().includes('.')) {
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    number=exceptLast
+                  }
+                }
+
+                if(number>0){
+                  if(!this.validateDecimal(number)) {
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
+                  }
+               }
+
+               if(number.toString().includes('-')) {
+                  var exceptLast = number.toString();
+                  exceptLast = exceptLast.replace('-', '');
+                  number=exceptLast
+                  alert(i18n.t('converter_area.negativeAlert'));
+                }
+
+
+                this.setState({ widthValue: number },function(){this.updateAllValues()});
+                }
+              }
             />
 
             <View style={{ height: 60 }} />
@@ -96,7 +298,10 @@ class Details extends Component {
                 {applyLetterSpacing(i18n.t('calculation_price.result').toUpperCase(), 5)}
               </Text>
               <View style={styles.resultNumber}>
-                <Text style={styles.number}>{applyLetterSpacing('280', 1)}</Text>
+                <MarqueeText style={styles.number} duration={3000} marqueeOnStart loop marqueeDelay={1000} marqueeResetDelay={1000}>
+                         {applyLetterSpacing(this.state.pricePerRoll, 1)}
+                </MarqueeText>
+
               </View>
             </View>
           </View>
@@ -115,7 +320,7 @@ class Details extends Component {
                     style={{ paddingLeft: 30, marginTop: 15, height: 20 }}
                     value={this.state.unit}
                     onValueChange={(value) => {
-                      this.setState({ unit: value });
+                      this.setState({ unit: value },function(){this.updateAllValues()});
                     }}
                   />
                 ),
@@ -123,7 +328,9 @@ class Details extends Component {
                   <Picker
                     selectedValue={this.state.unit}
                     itemStyle={{ fontSize: 15, color: COLORS.DARK_GREY }}
-                    onValueChange={(itemValue, itemIndex) => this.setState({ unit: itemValue })}>
+                    onValueChange={(itemValue, itemIndex) => {
+                      this.setState({ unit: itemValue },function(){this.updateAllValues()});
+                    }}>
                     <Picker.Item label="pro	100	m" value="pro	100	m" />
                     <Picker.Item label="pro	m" value="pro m" />
                     <Picker.Item label="pro	m2" value="pro m2" />
@@ -138,7 +345,7 @@ class Details extends Component {
               <Text style={styles.unitWidthLabel}>m</Text>
             </View>
 
-            <View style={{ height: Platform.select({ ios: 54, android: 90 }) }} />
+            <View style={{ height: Platform.select({ ios: 54, android: 65 }) }} />
 
             <View style={styles.unitWidth}>
               <Text style={styles.unitWidthLabel}>mm</Text>

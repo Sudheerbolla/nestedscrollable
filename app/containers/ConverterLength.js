@@ -96,6 +96,11 @@ class Details extends Component {
     // if(number===''){
     //   alert(i18n.t('converter_area.noValueAlert'));
     // }
+    if(number.includes(',')){
+       var exceptLast = number.toString();
+       exceptLast = exceptLast.replace(',', '');
+       number=exceptLast
+    }
 
     if (this.getNewChar(number.toString()) === '.') {
       var exceptLast = number.toString();
@@ -236,21 +241,25 @@ class Details extends Component {
   }
 
   shareTextWithTitle() {
-    let textToShare='Input is '+this.state.lengthValue+' in '+this.state.unit+ ', And it is converted into following values : '
-    +'\n Length in Meters '+this.state.lengthValueInM
-    +'\n Length in CentiMeters '+this.state.lengthValueInCM
-    +'\n Length in MilliMeters '+this.state.lengthValueInMM
-    +'\n Length in Yards '+this.state.lengthValueInY
-    +'\n Length in Foot '+this.state.lengthValueInF
-    +'\n Length in Inches '+this.state.lengthValueInI
-    +'\n Length in MSI '+this.state.lengthValueInMSI +'.';
+    let emailsubject='Tesa Tape Calculator - Length';
+
+    let textToShare='Input: '+this.state.lengthValue+' '+this.state.unit
+    +'\n'+'\n'
+    +'Result: \n'
+    + this.state.lengthValueInM +' M'
+    +'\n'+this.state.lengthValueInCM+' CM'
+    +'\n'+this.state.lengthValueInMM+' MM'
+    +'\n'+this.state.lengthValueInY+' Yards'
+    +'\n'+this.state.lengthValueInF+' Feet'
+    +'\n'+this.state.lengthValueInI+' Inches'
+    +'\n'+this.state.lengthValueInMSI +' MSI';
       Share.share({
         message: textToShare,
-        title: 'Please Share using',
+        title: emailsubject,
         url: textToShare,
-        subject: textToShare
+        subject: emailsubject
       }, {
-        dialogTitle: 'Please Share using',
+        dialogTitle: emailsubject,
         excludedActivityTypes: [
           'com.apple.UIKit.activity.PostToTwitter',
         ],
@@ -259,6 +268,7 @@ class Details extends Component {
       .then(this._showResult)
       .catch(err => console.log(err))
   }
+
 
   render() {
     const { params } = this.props.navigation.state;

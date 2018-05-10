@@ -92,6 +92,11 @@ export default class Details extends Component {
     // if(number===''){
     //   alert(i18n.t('converter_area.noValueAlert'));
     // }
+    if(number.includes(',')){
+       var exceptLast = number.toString();
+       exceptLast = exceptLast.replace(',', '');
+       number=exceptLast
+    }
 
     var lastChar = this.getNewChar(number.toString());
 
@@ -208,20 +213,24 @@ export default class Details extends Component {
   }
 
   shareTextWithTitle() {
-    let textToShare='Input is '+this.state.lengthValue+' in '+this.state.unit+ ', And it is converted into following values : '
-    +'\n Area in Square Meters '+this.state.lengthValueInM
-    +'\n Area in Square CentiMeters '+this.state.lengthValueInCM
-    +'\n Area in Square Yards '+this.state.lengthValueInY
-    +'\n Area in Square Foot '+this.state.lengthValueInF
-    +'\n Area in Square Inches '+this.state.lengthValueInI
-    +'\n Area in MSI '+this.state.lengthValueInMSI +'.';
+    let emailsubject='Tesa Tape Calculator - Area';
+
+    let textToShare='Input: '+this.state.lengthValue+' '+this.state.unit
+    +'\n'+'\n'
+    +'Result: \n'
+    + this.state.lengthValueInM +' m2'
+    +'\n'+this.state.lengthValueInCM+' cm2'
+    +'\n'+this.state.lengthValueInY+' yard2'
+    +'\n'+this.state.lengthValueInF+' feet2'
+    +'\n'+this.state.lengthValueInI+' inches2'
+    +'\n'+this.state.lengthValueInMSI +' MSI';
       Share.share({
         message: textToShare,
-        title: 'Please Share using',
+        title: emailsubject,
         url: textToShare,
-        subject: textToShare
+        subject: emailsubject
       }, {
-        dialogTitle: 'Please Share using',
+        dialogTitle: emailsubject,
         excludedActivityTypes: [
           'com.apple.UIKit.activity.PostToTwitter',
         ],
