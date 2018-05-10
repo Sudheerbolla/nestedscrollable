@@ -60,7 +60,7 @@ export default class CalculationDiameter extends Component {
           title={i18n.t('calculation_diameter.diameter').toUpperCase()}
           rightButton={true}
           onRight={() => {
-            alert('on Shared');
+
           }}
         />
 
@@ -147,15 +147,17 @@ class TellerrollenScreen extends React.Component {
   }
 
   calculateOuterDiameter = () => {
-    var innerDiameter=1;
+    var coreDiameter=1;
     if(this.state.unit=='3-Zoll-Kern'){
-      innerDiameter=82;
+      coreDiameter=82;
     }else if (this.state.unit=='6-Zoll-Kern') {
-      innerDiameter=160;
+      coreDiameter=160;
     }
-    var underRootValue=((this.state.thickNessValue*this.state.lengthValue)/3.141)+((innerDiameter/2)*(innerDiameter/2));
 
-    var diameter=2*(Math.sqrt(underRootValue))
+    var underRootValue=(((coreDiameter/1000)*(coreDiameter/1000))+(4/3.141592)*this.state.lengthValue*(this.state.thickNessValue/1000000))
+    // var underRootValue=((this.state.thickNessValue*this.state.lengthValue)/3.141)+((coreDiameter/2)*(coreDiameter/2));
+
+    var diameter=1000*(Math.sqrt(underRootValue))
     return diameter;
   }
 
@@ -189,24 +191,29 @@ class TellerrollenScreen extends React.Component {
   }
 
   shareTextWithTitle() {
-      let textToShare='Length is '+this.state.lengthValue+' ThickNesss is '+this.state.thickNessValue+' in '+this.state.unit+ ', and Diameter is calculated into following values : '
-      +'\n Diameter in MM '+this.state.diameterInMM
-      +'\n Diameter in Inches '+this.state.diameterInInches +'.';
-        Share.share({
-          message: textToShare,
-          title: 'Please Share using',
-          url: textToShare,
-          subject: textToShare
-        }, {
-          dialogTitle: 'Please Share using',
-          excludedActivityTypes: [
-            'com.apple.UIKit.activity.PostToTwitter',
-          ],
-          tintColor: 'green'
-        })
-        .then(this._showResult)
-        .catch(err => console.log(err))
-    }
+    let emailsubject='Tesa Tape Calculator - Diameter';
+
+    let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+', ThickNesss: '+this.state.thickNessValue+' '+this.state.unit+
+    +'\n'+'\n'
+    +'Result: \n'
+    + this.state.diameterInMM +' MM'
+    +'\n'+this.state.diameterInInches+' Inches';
+
+      Share.share({
+        message: textToShare,
+        title: emailsubject,
+        url: textToShare,
+        subject: emailsubject
+      }, {
+        dialogTitle: emailsubject,
+        excludedActivityTypes: [
+          'com.apple.UIKit.activity.PostToTwitter',
+        ],
+        tintColor: 'green'
+      })
+      .then(this._showResult)
+      .catch(err => console.log(err))
+  }
 
   render() {
     return (
@@ -237,6 +244,12 @@ class TellerrollenScreen extends React.Component {
               // if(number===''){
               //   alert(i18n.t('converter_area.noValueAlert'));
               // }
+              if(number.includes(',')){
+                 var exceptLast = number.toString();
+                 exceptLast = exceptLast.replace(',', '');
+                 number=exceptLast
+              }
+
               if(this.getNewChar(number.toString())==='.'){
                 var exceptLast = number.toString();
                 exceptLast = exceptLast.slice(0, -1);
@@ -285,6 +298,12 @@ class TellerrollenScreen extends React.Component {
               // if(number===''){
               //   alert(i18n.t('converter_area.noValueAlert'));
               // }
+              if(number.includes(',')){
+                 var exceptLast = number.toString();
+                 exceptLast = exceptLast.replace(',', '');
+                 number=exceptLast
+              }
+
               if(this.getNewChar(number.toString())==='.'){
                 var exceptLast = number.toString();
                 exceptLast = exceptLast.slice(0, -1);
@@ -406,6 +425,8 @@ class SAFRollenScreen extends React.Component {
       this.state = {
         unit: '3-Zoll-Kern',
         lengthValue: '66',
+        widthValue: '19',
+        coreWidthValue: '600',
         thickNessValue: '205',
         '3KernZollDiameter':82,//mm
         '6KernZollDiameter':160,//mm
@@ -430,15 +451,16 @@ class SAFRollenScreen extends React.Component {
     }
 
     calculateOuterDiameter = () => {
-      var innerDiameter=1;
+      var coreDiameter=1;
       if(this.state.unit=='3-Zoll-Kern'){
-        innerDiameter=82;
-      }else if (this.state.unit=='6-Zoll-Kern') {
-        innerDiameter=160;
+        coreDiameter=82;
+      } else if (this.state.unit=='6-Zoll-Kern') {
+        coreDiameter=160;
       }
-      var underRootValue=((this.state.thickNessValue*this.state.lengthValue)/3.141)+((innerDiameter/2)*(innerDiameter/2));
 
-      var diameter=2*(Math.sqrt(underRootValue))
+      var underRootValue=(((coreDiameter/1000)*(coreDiameter/1000))+(4/this.state.coreWidthValue)*1000*(this.state.lengthValue/3.141592)*(this.state.thickNessValue/1000000))*(this.state.widthValue/1000)
+
+      var diameter=1000*(Math.sqrt(underRootValue))*1.1
       return diameter;
     }
 
@@ -463,24 +485,29 @@ class SAFRollenScreen extends React.Component {
     }
 
     shareTextWithTitle() {
-        let textToShare='Length is '+this.state.lengthValue+' ThickNesss is '+this.state.thickNessValue+' in '+this.state.unit+ ', and Diameter is calculated into following values : '
-        +'\n Diameter in MM '+this.state.diameterInMM
-        +'\n Diameter in Inches '+this.state.diameterInInches +'.';
-          Share.share({
-            message: textToShare,
-            title: 'Please Share using',
-            url: textToShare,
-            subject: textToShare
-          }, {
-            dialogTitle: 'Please Share using',
-            excludedActivityTypes: [
-              'com.apple.UIKit.activity.PostToTwitter',
-            ],
-            tintColor: 'green'
-          })
-          .then(this._showResult)
-          .catch(err => console.log(err))
-      }
+      let emailsubject='Tesa Tape Calculator - Diameter';
+
+      let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+', ThickNesss: '+this.state.thickNessValue+' '+this.state.unit+
+      +'\n'+'\n'
+      +'Result: \n'
+      + this.state.diameterInMM +' MM'
+      +'\n'+this.state.diameterInInches+' Inches';
+
+        Share.share({
+          message: textToShare,
+          title: emailsubject,
+          url: textToShare,
+          subject: emailsubject
+        }, {
+          dialogTitle: emailsubject,
+          excludedActivityTypes: [
+            'com.apple.UIKit.activity.PostToTwitter',
+          ],
+          tintColor: 'green'
+        })
+        .then(this._showResult)
+        .catch(err => console.log(err))
+    }
 
     render() {
       return (
@@ -493,55 +520,104 @@ class SAFRollenScreen extends React.Component {
               </Text>
             </View>
 
-            <DetailTextInput
-              title={'width(Core)'.toUpperCase()}
-              value={this.state.thickNessValue}
-              onChangeText={(number) => {
-                if(this.getNewChar(number.toString())==='.'){
-                  var exceptLast = number.toString();
-                  exceptLast = exceptLast.slice(0, -1);
-                  if (exceptLast.toString().includes('.')) {
-                    alert('A Number cannot have two decimals points');
-                    number=exceptLast
-                  }
-                }
-                this.setState({ thickNessValue: number },function(){this.updateAllValues()});
-                }
-              }
-            />
-
-            <View style={{ height: 30 }} />
-
-            <DetailTextInput
-              title={i18n.t('calculation_diameter.thickness').toUpperCase()}
-              value={this.state.thickNessValue}
-              onChangeText={(number) => {
-                if(this.getNewChar(number.toString())==='.'){
-                  var exceptLast = number.toString();
-                  exceptLast = exceptLast.slice(0, -1);
-                  if (exceptLast.toString().includes('.')) {
-                    alert('A Number cannot have two decimals points');
-                    number=exceptLast
-                  }
-                }
-                this.setState({ thickNessValue: number },function(){this.updateAllValues()});
-                }
-              }
-            />
-
-          <View style={{ height: 30 }} />
           <DetailTextInput
-            title={i18n.t('calculation_diameter.length').toUpperCase()}
-            value={this.state.thickNessValue}
+            title={'width(Core)'.toUpperCase()}
+            value={this.state.coreWidthValue}
             onChangeText={(number) => {
+              if(number){
+                if((number.split('\.').length-1)>1){
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
+                }
+              }
+
+              if(number>10000){
+                alert(i18n.t('converter_area.outOfRangeAlert'));
+                return;
+              }
+
+              if(number.includes(',')){
+                 var exceptLast = number.toString();
+                 exceptLast = exceptLast.replace(',', '');
+                 number=exceptLast
+              }
+
               if(this.getNewChar(number.toString())==='.'){
                 var exceptLast = number.toString();
                 exceptLast = exceptLast.slice(0, -1);
                 if (exceptLast.toString().includes('.')) {
-                  alert('A Number cannot have two decimals points');
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
                   number=exceptLast
                 }
               }
+
+              if(number>0){
+                if(!this.validateDecimal(number)) {
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  return;
+                }
+             }
+
+             if(number.toString().includes('-')) {
+                var exceptLast = number.toString();
+                exceptLast = exceptLast.replace('-', '');
+                number=exceptLast
+                alert(i18n.t('converter_area.negativeAlert'));
+              }
+              this.setState({ coreWidthValue: number },function(){this.updateAllValues()});
+              }
+            }
+          />
+
+          <View style={{ height: 30 }} />
+
+          <DetailTextInput
+            title={i18n.t('calculation_diameter.thickness').toUpperCase()}
+            value={this.state.thickNessValue}
+            onChangeText={(number) => {
+              if(number){
+                if((number.split('\.').length-1)>1){
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
+                }
+              }
+
+              if(number>25000){
+                alert(i18n.t('converter_area.outOfRangeAlert'));
+                return;
+              }
+              // if(number===''){
+              //   alert(i18n.t('converter_area.noValueAlert'));
+              // }
+              if(number.includes(',')){
+                 var exceptLast = number.toString();
+                 exceptLast = exceptLast.replace(',', '');
+                 number=exceptLast
+              }
+
+              if(this.getNewChar(number.toString())==='.'){
+                var exceptLast = number.toString();
+                exceptLast = exceptLast.slice(0, -1);
+                if (exceptLast.toString().includes('.')) {
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  number=exceptLast
+                }
+              }
+
+              if(number>0){
+                if(!this.validateDecimal(number)) {
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  return;
+                }
+             }
+
+             if(number.toString().includes('-')) {
+                var exceptLast = number.toString();
+                exceptLast = exceptLast.replace('-', '');
+                number=exceptLast
+                alert(i18n.t('converter_area.negativeAlert'));
+              }
+
               this.setState({ thickNessValue: number },function(){this.updateAllValues()});
               }
             }
@@ -550,18 +626,105 @@ class SAFRollenScreen extends React.Component {
           <View style={{ height: 30 }} />
 
           <DetailTextInput
-            title={'Width(Material)'.toUpperCase()}
-            value={this.state.thickNessValue}
+            title={i18n.t('calculation_diameter.length').toUpperCase()}
+            value={this.state.lengthValue}
             onChangeText={(number) => {
+              if(number){
+                if((number.split('\.').length-1)>1){
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
+                }
+              }
+
+              if(number>500000){
+                alert(i18n.t('converter_area.outOfRangeAlert'));
+                return;
+              }
+              // if(number===''){
+              //   alert(i18n.t('converter_area.noValueAlert'));
+              // }
+              if(number.includes(',')){
+                 var exceptLast = number.toString();
+                 exceptLast = exceptLast.replace(',', '');
+                 number=exceptLast
+              }
+
               if(this.getNewChar(number.toString())==='.'){
                 var exceptLast = number.toString();
                 exceptLast = exceptLast.slice(0, -1);
                 if (exceptLast.toString().includes('.')) {
-                  alert('A Number cannot have two decimals points');
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
                   number=exceptLast
                 }
               }
-              this.setState({ thickNessValue: number },function(){this.updateAllValues()});
+
+              if(number>0){
+                if(!this.validateDecimal(number)) {
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  return;
+                }
+              }
+
+             if(number.toString().includes('-')) {
+                var exceptLast = number.toString();
+                exceptLast = exceptLast.replace('-', '');
+                number=exceptLast
+                alert(i18n.t('converter_area.negativeAlert'));
+              }
+              this.setState({ lengthValue: number },function(){this.updateAllValues()});
+              }
+            }
+          />
+
+          <View style={{ height: 30 }} />
+
+          <DetailTextInput
+            title={'Width(Material)'.toUpperCase()}
+            value={this.state.widthValue}
+            onChangeText={(number) => {
+              if(number){
+                if((number.split('\.').length-1)>1){
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
+                }
+              }
+
+              if(number>25000){
+                alert(i18n.t('converter_area.outOfRangeAlert'));
+                return;
+              }
+              // if(number===''){
+              //   alert(i18n.t('converter_area.noValueAlert'));
+              // }
+              if(number.includes(',')){
+                 var exceptLast = number.toString();
+                 exceptLast = exceptLast.replace(',', '');
+                 number=exceptLast
+              }
+
+              if(this.getNewChar(number.toString())==='.'){
+                var exceptLast = number.toString();
+                exceptLast = exceptLast.slice(0, -1);
+                if (exceptLast.toString().includes('.')) {
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  number=exceptLast
+                }
+              }
+
+              if(number>0){
+                if(!this.validateDecimal(number)) {
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  return;
+                }
+             }
+
+             if(number.toString().includes('-')) {
+                var exceptLast = number.toString();
+                exceptLast = exceptLast.replace('-', '');
+                number=exceptLast
+                alert(i18n.t('converter_area.negativeAlert'));
+              }
+              this.setState({ widthValue: number },function(){this.updateAllValues()});
               }
             }
           />

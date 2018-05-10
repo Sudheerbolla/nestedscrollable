@@ -137,18 +137,23 @@ class Details extends Component {
   }
 
   shareTextWithTitle() {
-    let textToShare='Area is '+this.state.areaValue+' Width is '+this.state.widthValue+' in '+this.state.unit+ ', and Length is calculated into following values : '
-    +'\n Length in Meters '+this.state.lengthValueInM
-    +'\n Length in Yards '+this.state.lengthValueInY
-    +'\n Length in Feet '+this.state.lengthValueInF
-    +'\n Length in Inches '+this.state.lengthValueInI +'.';
+    let emailsubject='Tesa Tape Calculator - Length';
+
+    let textToShare='Input: \n'+ 'Area: '+this.state.areaValue+', Width: '+this.state.widthValue+' '+this.state.unit+
+    +'\n'+'\n'
+    +'Result: \n'
+    + this.state.lengthValueInM +' m'
+    +'\n'+this.state.lengthValueInY+' yards'
+    +'\n'+this.state.lengthValueInF+' Feet'
+    +'\n'+this.state.lengthValueInI+' Inches';
+
       Share.share({
         message: textToShare,
-        title: 'Please Share using',
+        title: emailsubject,
         url: textToShare,
-        subject: textToShare
+        subject: emailsubject
       }, {
-        dialogTitle: 'Please Share using',
+        dialogTitle: emailsubject,
         excludedActivityTypes: [
           'com.apple.UIKit.activity.PostToTwitter',
         ],
@@ -157,7 +162,6 @@ class Details extends Component {
       .then(this._showResult)
       .catch(err => console.log(err))
   }
-
   validateDecimal = (value) => {
       var RE = /^\d*\.?\d{0,2}$/
       if(RE.test(value)){
@@ -182,7 +186,7 @@ class Details extends Component {
             this.shareTextWithTitle();
           }}
         />
-        <ScrollView scrollEnabled={Platform.select({ ios: false, android: true })}>
+        <ScrollView>
           <View style={styles.container}>
             <View style={styles.leftContainer}>
               <View style={styles.clearSpace} />
@@ -205,6 +209,12 @@ class Details extends Component {
                   // if(number===''){
                   //   alert(i18n.t('converter_area.noValueAlert'));
                   // }
+                  if(number.includes(',')){
+                     var exceptLast = number.toString();
+                     exceptLast = exceptLast.replace(',', '');
+                     number=exceptLast
+                  }
+
                   if(this.getNewChar(number.toString())==='.'){
                     var exceptLast = number.toString();
                     exceptLast = exceptLast.slice(0, -1);
@@ -254,6 +264,11 @@ class Details extends Component {
                   // if(number===''){
                   //   alert(i18n.t('converter_area.noValueAlert'));
                   // }
+                  if(number.includes(',')){
+                     var exceptLast = number.toString();
+                     exceptLast = exceptLast.replace(',', '');
+                     number=exceptLast
+                  }
                   if(this.getNewChar(number.toString())==='.'){
                     var exceptLast = number.toString();
                     exceptLast = exceptLast.slice(0, -1);

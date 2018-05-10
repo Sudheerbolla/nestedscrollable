@@ -34,7 +34,7 @@ export default class CalculationArea extends Component {
     this.state = {
       unit: 'm',
       lengthValue: '66.00',
-      widthValue: '0.19',
+      widthValue: '0.652',
       areaValueInM: '10',
       areaValueInY: '10',
       areaValueInF: '10',
@@ -158,18 +158,23 @@ export default class CalculationArea extends Component {
   }
 
   shareTextWithTitle() {
-    let textToShare='Length is '+this.state.lengthValue+' Width is '+this.state.widthValue+' in '+this.state.unit+ ', and Area is calculated into following values : '
-    +'\n Area in Square Meters '+this.state.areaValueInM
-    +'\n Area in Square Yards '+this.state.areaValueInY
-    +'\n Area in Square Foot '+this.state.areaValueInF
-    +'\n Area in Square Inches '+this.state.areaValueInI +'.';
+    let emailsubject='Tesa Tape Calculator - Area';
+
+    let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+', Width: '+this.state.widthValue+' '+this.state.unit+
+    +'\n'+'\n'
+    +'Result: \n'
+    + this.state.areaValueInM +' m2'
+    +'\n'+this.state.areaValueInY+' yard2'
+    +'\n'+this.state.areaValueInF+' feet2'
+    +'\n'+this.state.areaValueInI+' inches2';
+
       Share.share({
         message: textToShare,
-        title: 'Please Share using',
+        title: emailsubject,
         url: textToShare,
-        subject: textToShare
+        subject: emailsubject
       }, {
-        dialogTitle: 'Please Share using',
+        dialogTitle: emailsubject,
         excludedActivityTypes: [
           'com.apple.UIKit.activity.PostToTwitter',
         ],
@@ -199,7 +204,7 @@ export default class CalculationArea extends Component {
             this.shareTextWithTitle();
           }}
         />
-        <ScrollView scrollEnabled={Platform.select({ ios: false, android: true })}>
+        <ScrollView>
           <View style={styles.container}>
             <View style={styles.leftContainer}>
               <View style={styles.clearSpace} />
@@ -222,6 +227,13 @@ export default class CalculationArea extends Component {
                   // if(number===''){
                   //   alert(i18n.t('converter_area.noValueAlert'));
                   // }
+
+                  if(number.includes(',')){
+                     var exceptLast = number.toString();
+                     exceptLast = exceptLast.replace(',', '');
+                     number=exceptLast
+                  }
+
                   if(this.getNewChar(number.toString())==='.'){
                     var exceptLast = number.toString();
                     exceptLast = exceptLast.slice(0, -1);
@@ -269,6 +281,11 @@ export default class CalculationArea extends Component {
                   // if(number===''){
                   //   alert(i18n.t('converter_area.noValueAlert'));
                   // }
+                  if(number.includes(',')){
+                     var exceptLast = number.toString();
+                     exceptLast = exceptLast.replace(',', '');
+                     number=exceptLast
+                  }
                   if(this.getNewChar(number.toString())==='.'){
                     var exceptLast = number.toString();
                     exceptLast = exceptLast.slice(0, -1);

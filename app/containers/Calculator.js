@@ -66,7 +66,7 @@ export default class Calculation extends Component {
         }} titleStyle={{
           fontSize: 25
         }} title={params.title}/>
-      <ScrollView scrollEnabled={Platform.select({ios: false, android: true})}>
+      <ScrollView>
         <View style={{
             backgroundColor: '#B0E0E6',
             padding: 3

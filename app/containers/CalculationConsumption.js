@@ -18,7 +18,7 @@ export default class CalculationConsumptation extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lengthValue: '66',
+      lengthValue: '66.00',
       widthValue: '205',
       consumptationValueInM2: '13530',
     };
@@ -47,21 +47,27 @@ export default class CalculationConsumptation extends Component {
 
   getCalculatedValue = () => {
     // var outPut = this.state.lengthValue?this.state.lengthValue:'66' * (this.state.widthValue?this.state.widthValue:'205') * 1000;
-    var outPut = this.state.lengthValue * (this.state.widthValue * 0.001) * 1000;
+    // var outPut = this.state.lengthValue * (this.state.widthValue * 0.001) * 1000;
+    var outPut = this.state.lengthValue * this.state.widthValue * 1000;
     outPut=this.round(outPut, 3);
     return outPut.toString();
   }
 
   shareTextWithTitle() {
-    let textToShare='Length is '+this.state.lengthValue+'mm, Width is '+this.state.widthValue+ 'μm, and Consumptation is calculated into following values : '
-    +'\nConsumptation in Square Meters '+this.state.consumptationValueInM2 +'.';
+    let emailsubject='Tesa Tape Calculator - Consumptation';
+
+    let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+'mm, Width: '+this.state.widthValue+'μm '+
+    +'\n'+'\n'
+    +'Result: \n'
+    + this.state.consumptationValueInM2 +' m2';
+
       Share.share({
         message: textToShare,
-        title: 'Please Share using',
+        title: emailsubject,
         url: textToShare,
-        subject: textToShare
+        subject: emailsubject
       }, {
-        dialogTitle: 'Please Share using',
+        dialogTitle: emailsubject,
         excludedActivityTypes: [
           'com.apple.UIKit.activity.PostToTwitter',
         ],
@@ -95,7 +101,7 @@ export default class CalculationConsumptation extends Component {
             this.shareTextWithTitle();
           }}
         />
-        <ScrollView scrollEnabled={Platform.select({ ios: false, android: true })}>
+        <ScrollView>
         <View style={styles.coreDiameterText}>
           <Text style={{ color: COLORS.DARK_GREY, fontFamily: FONTS.FONT_LIGHT, fontSize: 15 }}>
             {applyLetterSpacing(i18n.t('calculation_consumptation.punch_line'), 1)}
@@ -121,6 +127,12 @@ export default class CalculationConsumptation extends Component {
                 // if(number===''){
                 //   alert(i18n.t('converter_area.noValueAlert'));
                 // }
+                if(number.includes(',')){
+                   var exceptLast = number.toString();
+                   exceptLast = exceptLast.replace(',', '');
+                   number=exceptLast
+                }
+
                 if(this.getNewChar(number.toString())==='.'){
                   var exceptLast = number.toString();
                   exceptLast = exceptLast.slice(0, -1);
@@ -169,6 +181,12 @@ export default class CalculationConsumptation extends Component {
                 // if(number===''){
                 //   alert(i18n.t('converter_area.noValueAlert'));
                 // }
+                if(number.includes(',')){
+                   var exceptLast = number.toString();
+                   exceptLast = exceptLast.replace(',', '');
+                   number=exceptLast
+                }
+
                 if(this.getNewChar(number.toString())==='.'){
                   var exceptLast = number.toString();
                   exceptLast = exceptLast.slice(0, -1);
