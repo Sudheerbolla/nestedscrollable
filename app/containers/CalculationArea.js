@@ -246,6 +246,8 @@ export default class CalculationArea extends Component {
                       alert(i18n.t('converter_area.negativeAlert'));
                     }
                       this.setState({ lengthValue: number },function(){this.updateAllValues()});
+                  } else {
+                    this.setState({ lengthValue: number },function(){this.updateAllValues()});
                   }
                   }
                 }
