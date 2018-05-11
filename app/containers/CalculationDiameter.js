@@ -509,6 +509,15 @@ class SAFRollenScreen extends React.Component {
         .catch(err => console.log(err))
     }
 
+    validateDecimal = (value) => {
+        var RE = /^\d*\.?\d{0,2}$/
+        if(RE.test(value)){
+           return true;
+        }else{
+           return false;
+        }
+    }
+
     render() {
       return (
         <ScrollView>

@@ -34,6 +34,7 @@ class Calculation extends Component {
     let mailTo = '';
     let displayPhone = '';
     let callTo = 1234567890;
+    // alert(deviceCountry);
     switch (deviceCountry) {
       case 'DE':
         mailTo = 'tesa.industrieinternetanfragen@tesa.com';
@@ -110,7 +111,7 @@ class Calculation extends Component {
         <View style={{ flex: 1 }}>
 
           <ScrollView keyboardDismissMode='on-drag'
-                keyboardShouldPersistTaps={true}>
+                keyboardShouldPersistTaps="always">
             <View style={styles.form}>
 
               <View style={styles.field}>
