@@ -34,7 +34,6 @@ class Calculation extends Component {
     let mailTo = '';
     let displayPhone = '';
     let callTo = 1234567890;
-    alert(deviceCountry);
     switch (deviceCountry) {
       case 'DE':
         mailTo = 'malte.spaniol@itpe-germany.de';
@@ -76,7 +75,6 @@ class Calculation extends Component {
       displayPhone:displayPhone,
       callTo:callTo
     });
-    alert(mailTo);
   }
 
   checkForValidations = () => {

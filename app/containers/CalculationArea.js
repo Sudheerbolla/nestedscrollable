@@ -13,7 +13,8 @@ import {
   Platform,
   ImageBackground,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  Share
 } from 'react-native';
 
 import { Grid, DetailTextInput } from '../components';
@@ -34,7 +35,7 @@ export default class CalculationArea extends Component {
     this.state = {
       unit: 'm',
       lengthValue: '66.00',
-      widthValue: '0.652',
+      widthValue: '0.019',
       areaValueInM: '10',
       areaValueInY: '10',
       areaValueInF: '10',
@@ -168,24 +169,22 @@ export default class CalculationArea extends Component {
     +'\n'+this.state.areaValueInF+' feet2'
     +'\n'+this.state.areaValueInI+' inches2';
 
-      // Share.share({
-      //   message: textToShare,
-      //   title: emailsubject,
-      //   url: textToShare,
-      //   subject: emailsubject
-      // }, {
-      //   dialogTitle: emailsubject,
-      //   excludedActivityTypes: [
-      //     'com.apple.UIKit.activity.PostToTwitter',
-      //   ],
-      //   tintColor: 'green'
-      // })
-      // .then(this._showResult)
-      // .catch(err => console.log(err))
+       Share.share({
+         message: textToShare,
+         title: emailsubject,
+         url: textToShare,
+         subject: emailsubject
+       }, {
+         dialogTitle: emailsubject,
+         excludedActivityTypes: [
+           'com.apple.UIKit.activity.PostToTwitter',
+         ],
+        tintColor: 'green'
+       })
+       .then(this._showResult)
+       .catch(err => console.log(err))
 
-
-      Communications.email('kmrinal@gmail.com', null, null, emailsubject, textToShare);
-  }
+     }
 
   render() {
     const { params } = this.props.navigation.state;

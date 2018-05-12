@@ -31,7 +31,7 @@ class Details extends Component {
     this.state = {
       unit: 'm',
       areaValue: '4.80',
-      widthValue: '0.19',
+      widthValue: '0.019',
       lengthValueInM:'0',
       lengthValueInY:'0',
       lengthValueInI:'0',
