@@ -207,27 +207,27 @@ export default class CalculationArea extends Component {
 
               <DetailTextInput
                 title={i18n.t('calculation_area.length').toUpperCase()}
-                value={this.state.lengthValue}
+                value={this.state.lengthValue.toString()}
+                setNativeProps={this.state.lengthValue}
                 onChangeText={(number) => {
-                  let lastValue=this.state.lengthValue;
                   if(number){
                     if((number.split('\.').length-1)>1){
                       alert(i18n.t('converter_area.outOfRangeAlert'));
-                      number=lastValue;
+                      return;
                     }
                     if(number>10000000){
                       alert(i18n.t('converter_area.outOfRangeAlert'));
-                      number=lastValue;
+                      return;
                     }
                     if(number.includes(',')){
                        var exceptLast = number.toString();
                        exceptLast = exceptLast.replace(',', '');
-                       number=exceptLast
+                       number =exceptLast
                     }
                     if(number>0){
                       if(!this.validateDecimal2(number)) {
                         alert(i18n.t('converter_area.outOfRangeAlert'));
-                        number=lastValue;
+                        return;
                       }
                     }
                     if(this.getNewChar(number.toString())==='.'){
@@ -235,20 +235,19 @@ export default class CalculationArea extends Component {
                       exceptLast = exceptLast.slice(0, -1);
                       if (exceptLast.toString().includes('.')) {
                         alert('A Number cannot have two decimals points');
-                        number=exceptLast
+                        number =exceptLast
                       }
                     }
 
                    if(number.toString().includes('-')) {
                       var exceptLast = number.toString();
                       exceptLast = exceptLast.replace('-', '');
-                      number=exceptLast
+                      number =exceptLast
                       alert(i18n.t('converter_area.negativeAlert'));
                     }
-                      this.setState({ lengthValue: number },function(){this.updateAllValues()});
-                  } else {
-                    this.setState({ lengthValue: number },function(){this.updateAllValues()});
+
                   }
+                  this.setState({ lengthValue: number },function(){this.updateAllValues()});
                   }
                 }
               />

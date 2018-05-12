@@ -331,7 +331,7 @@ export default class Details extends Component {
                     selectedValue={this.state.unit}
                     itemStyle={{ fontSize: 15, color: COLORS.DARK_GREY }}
                     onValueChange={(itemValue, itemIndex) => {
-                      this.setState({ unit: itemValue, hideView:value});
+                      this.setState({ unit: itemValue, hideView:itemValue});
                       this.updateAllValues(this.state.lengthValue);
                     }}>
                     <Picker.Item label="m2" value="m2" />

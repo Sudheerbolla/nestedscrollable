@@ -34,12 +34,15 @@ class Calculation extends Component {
     let mailTo = '';
     let displayPhone = '';
     let callTo = 1234567890;
-    // alert(deviceCountry);
+    alert(deviceCountry);
     switch (deviceCountry) {
       case 'DE':
-        mailTo = 'tesa.industrieinternetanfragen@tesa.com';
-        displayPhone = '+49 40 888 99 0';
-        callTo = 4940888990;
+        mailTo = 'malte.spaniol@itpe-germany.de';
+        // mailTo = 'tesa.industrieinternetanfragen@tesa.com';
+        // displayPhone = '+49 40 888 99 0';
+        displayPhone = '+49 40 53257770';
+        callTo = '494053257770';
+        // callTo = 4940888990;
         break;
       case 'FR':
         mailTo = 'contact.france@tesa.com';
@@ -62,9 +65,9 @@ class Calculation extends Component {
         callTo = 35822103400;
         break;
       default:
-        mailTo = 'tesa@tesa.com';
-        displayPhone = '+123 456 7890';
-        callTo = 1234567890;
+        mailTo = 'kmrinal@gmail.com';
+        displayPhone = '+91-9916164906';
+        callTo = '9916164906';
       break
     }
 
@@ -73,6 +76,7 @@ class Calculation extends Component {
       displayPhone:displayPhone,
       callTo:callTo
     });
+    alert(mailTo);
   }
 
   checkForValidations = () => {
@@ -83,7 +87,7 @@ class Calculation extends Component {
     } else if (!this.state.message) {
       alert('please enter Message')
     } else {
-      Communications.email(this.state.mailTo, null, null, 'App Contact Request', this.state.message);
+      Communications.email(this.state.mailTo, null, null, 'Tape Calculator - Contact', this.state.message);
     }
   }
 
@@ -179,6 +183,7 @@ class Calculation extends Component {
                   </ImageBackground>
                 </View>
               </TouchableOpacity>
+
               <TouchableOpacity onPress={this.checkForValidations}>
                 <View style={[styles.rowItem, styles.mailButton]}>
                   <ImageBackground source={require('../images/180310_MAIL.png')} style={styles.image}>
