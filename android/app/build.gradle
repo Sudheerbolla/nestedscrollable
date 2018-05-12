@@ -84,6 +84,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-send-intent')
     compile project(':react-native-i18n')
     compile project(':react-native-device-info')
     compile fileTree(dir: "libs", include: ["*.jar"])

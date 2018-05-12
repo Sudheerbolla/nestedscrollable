@@ -85,7 +85,12 @@ class Calculation extends Component {
     } else if (!this.state.message) {
       alert('please enter Message')
     } else {
-      Communications.email(this.state.mailTo.toString(), null, null, 'Tape Calculator - Contact', this.state.message);
+      if(Platform.OS === 'ios') {
+        Communications.email(this.state.mailTo.toString(), null, null, 'Tape Calculator - Contact', this.state.message);
+      } else {
+        var SendIntentAndroid = require('react-native-send-intent');
+        SendIntentAndroid.sendMail(this.state.mailTo, 'Tape Calculator - Contact', this.state.message);
+      }
     }
   }
 

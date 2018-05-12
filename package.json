@@ -24,6 +24,7 @@
     "react-native-material-textfield": "^0.12.0",
     "react-native-phone-call": "^1.0.4",
     "react-native-scalable-image": "^0.4.0",
+    "react-native-send-intent": "^1.0.25",
     "react-navigation": "^1.5.1",
     "react-navigation-redux-helpers": "^1.0.3",
     "react-redux": "^5.0.7",
