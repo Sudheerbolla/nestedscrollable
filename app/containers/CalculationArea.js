@@ -83,7 +83,7 @@ export default class CalculationArea extends Component {
       var RE = /^\d*\.?\d{0,2}$/
       if(RE.test(value)){
          return true;
-      }else{
+      } else{
          return false;
       }
   }
@@ -92,7 +92,7 @@ export default class CalculationArea extends Component {
       var RE = /^\d*\.?\d{0,3}$/
       if(RE.test(value)){
          return true;
-      }else{
+      } else{
          return false;
       }
   }
