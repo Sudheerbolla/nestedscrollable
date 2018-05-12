@@ -11,6 +11,8 @@ import SupText from '../utils/SupText';
 import applyLetterSpacing from '../utils/applyLetterSpacing';
 import MarqueeText from 'react-native-marquee';
 
+import Communications from 'react-native-communications';
+
 const { width, height } = Dimensions.get('window');
 
 export default class CalculationDiameter extends Component {
@@ -21,7 +23,8 @@ export default class CalculationDiameter extends Component {
       TellerrollenBg:'rgba(0, 0, 0, 1)',
       SAFRollenBg:'rgba(0, 0, 0, 0.4)',
       tv:true,
-      sv:false
+      sv:false,
+      textToShare:''
     };
   }
 
@@ -47,6 +50,15 @@ export default class CalculationDiameter extends Component {
     );
   }
 
+  shareTextWithTitle() {
+    let emailsubject='Tesa Tape Calculator - Diameter';
+    Communications.email('kmrinal@gmail.com', null, null, emailsubject, this.state.textToShare);
+  }
+
+  updateShareText(result){
+    this.setState({textToShare : result});
+  }
+
   render() {
     const { params } = this.props.navigation.state;
     return (
@@ -60,7 +72,7 @@ export default class CalculationDiameter extends Component {
           title={i18n.t('calculation_diameter.diameter').toUpperCase()}
           rightButton={true}
           onRight={() => {
-
+            this.shareTextWithTitle()
           }}
         />
 
@@ -103,10 +115,10 @@ export default class CalculationDiameter extends Component {
         </View>
 
         { this.state.tv &&
-          <TellerrollenScreen/>
+          <TellerrollenScreen callback={this.updateShareText.bind(this)}/>
         }
         { this.state.sv &&
-          <SAFRollenScreen/>
+          <SAFRollenScreen callback={this.updateShareText.bind(this)}/>
         }
 
         <View style={{ height: 35 }} />
@@ -126,9 +138,10 @@ class TellerrollenScreen extends React.Component {
       thickNessValue: '205',
       '3KernZollDiameter':82,//mm
       '6KernZollDiameter':160,//mm
-      diameterInMM:'100',
-      diameterInInches:'100',
+      diameterInMM:'154.761',
+      diameterInInches:'6.093',
     };
+      this.shareTextWithTitle();
   }
 
   round(number, precision) {
@@ -175,6 +188,7 @@ class TellerrollenScreen extends React.Component {
       diameterInMM:this.getCalculatedValue('mm'),
       diameterInInches:this.getCalculatedValue('inches')
     });
+    this.shareTextWithTitle();
   }
 
   getCalculatedValue = (conv) => {
@@ -191,28 +205,13 @@ class TellerrollenScreen extends React.Component {
   }
 
   shareTextWithTitle() {
-    let emailsubject='Tesa Tape Calculator - Diameter';
-
-    let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+', ThickNesss: '+this.state.thickNessValue+' '+this.state.unit+
+    let textToShare = 'Input: \n'+ 'Length: '+this.state.lengthValue+', ThickNesss: '+this.state.thickNessValue+' '+this.state.unit+
     +'\n'+'\n'
     +'Result: \n'
     + this.state.diameterInMM +' MM'
     +'\n'+this.state.diameterInInches+' Inches';
 
-      Share.share({
-        message: textToShare,
-        title: emailsubject,
-        url: textToShare,
-        subject: emailsubject
-      }, {
-        dialogTitle: emailsubject,
-        excludedActivityTypes: [
-          'com.apple.UIKit.activity.PostToTwitter',
-        ],
-        tintColor: 'green'
-      })
-      .then(this._showResult)
-      .catch(err => console.log(err))
+    this.props.callback(textToShare);
   }
 
   render() {
@@ -430,9 +429,10 @@ class SAFRollenScreen extends React.Component {
         thickNessValue: '205',
         '3KernZollDiameter':82,//mm
         '6KernZollDiameter':160,//mm
-        diameterInMM:'100',
-        diameterInInches:'100',
+        diameterInMM:'28.542',
+        diameterInInches:'1.124',
       };
+      this.shareTextWithTitle();
     }
 
     round(number, precision) {
@@ -469,6 +469,7 @@ class SAFRollenScreen extends React.Component {
         diameterInMM:this.getCalculatedValue('mm'),
         diameterInInches:this.getCalculatedValue('inches')
       });
+      this.shareTextWithTitle();
     }
 
     getCalculatedValue = (conv) => {
@@ -487,26 +488,13 @@ class SAFRollenScreen extends React.Component {
     shareTextWithTitle() {
       let emailsubject='Tesa Tape Calculator - Diameter';
 
-      let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+', ThickNesss: '+this.state.thickNessValue+' '+this.state.unit+
+      let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+', ThickNesss: '+this.state.thickNessValue+' '+ 'Width(Core): '+this.state.coreWidthValue+', Width(Material): '+this.state.widthValue+this.state.unit+
       +'\n'+'\n'
       +'Result: \n'
       + this.state.diameterInMM +' MM'
       +'\n'+this.state.diameterInInches+' Inches';
 
-        Share.share({
-          message: textToShare,
-          title: emailsubject,
-          url: textToShare,
-          subject: emailsubject
-        }, {
-          dialogTitle: emailsubject,
-          excludedActivityTypes: [
-            'com.apple.UIKit.activity.PostToTwitter',
-          ],
-          tintColor: 'green'
-        })
-        .then(this._showResult)
-        .catch(err => console.log(err))
+      this.props.callback(textToShare);
     }
 
     validateDecimal = (value) => {

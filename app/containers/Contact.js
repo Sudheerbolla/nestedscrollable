@@ -80,14 +80,14 @@ class Calculation extends Component {
   }
 
   checkForValidations = () => {
-    if(!this.state.name){
+    if(!this.state.name) {
       alert('please enter Name')
     } else if (!this.state.email && !this.validateEmail(this.state.email)) {
       alert(i18n.t('contact.emailvalidation'))
     } else if (!this.state.message) {
       alert('please enter Message')
     } else {
-      Communications.email(this.state.mailTo, null, null, 'Tape Calculator - Contact', this.state.message);
+      Communications.email(this.state.mailTo.toString(), null, null, 'Tape Calculator - Contact', this.state.message);
     }
   }
 

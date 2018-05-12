@@ -13,8 +13,7 @@ import {
   Platform,
   ImageBackground,
   ScrollView,
-  TouchableOpacity,
-  Share
+  TouchableOpacity
 } from 'react-native';
 
 import { Grid, DetailTextInput } from '../components';
@@ -24,6 +23,7 @@ import i18n from '../utils/i18n';
 import SupText from '../utils/SupText';
 import applyLetterSpacing from '../utils/applyLetterSpacing';
 import MarqueeText from 'react-native-marquee';
+import Communications from 'react-native-communications';
 
 const { width, height } = Dimensions.get('window');
 
@@ -168,20 +168,23 @@ export default class CalculationArea extends Component {
     +'\n'+this.state.areaValueInF+' feet2'
     +'\n'+this.state.areaValueInI+' inches2';
 
-      Share.share({
-        message: textToShare,
-        title: emailsubject,
-        url: textToShare,
-        subject: emailsubject
-      }, {
-        dialogTitle: emailsubject,
-        excludedActivityTypes: [
-          'com.apple.UIKit.activity.PostToTwitter',
-        ],
-        tintColor: 'green'
-      })
-      .then(this._showResult)
-      .catch(err => console.log(err))
+      // Share.share({
+      //   message: textToShare,
+      //   title: emailsubject,
+      //   url: textToShare,
+      //   subject: emailsubject
+      // }, {
+      //   dialogTitle: emailsubject,
+      //   excludedActivityTypes: [
+      //     'com.apple.UIKit.activity.PostToTwitter',
+      //   ],
+      //   tintColor: 'green'
+      // })
+      // .then(this._showResult)
+      // .catch(err => console.log(err))
+
+
+      Communications.email('kmrinal@gmail.com', null, null, emailsubject, textToShare);
   }
 
   render() {
