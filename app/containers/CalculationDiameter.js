@@ -51,25 +51,21 @@ export default class CalculationDiameter extends Component {
   }
 
   shareTextWithTitle() {
-    let emailsubject='Tesa Tape Calculator - Diameter';  
-
-Share.share({
-         message: this.state.textToShare,
-         title: emailsubject,
-         url: textToShare,
-         subject: emailsubject
-       }, {
-         dialogTitle: emailsubject,
-         excludedActivityTypes: [
-           'com.apple.UIKit.activity.PostToTwitter',
-         ],
-        tintColor: 'green'
-       })
-       .then(this._showResult)
-       .catch(err => console.log(err))
-
-
-}
+   Share.share({
+     message: this.state.textToShare,
+     title: 'Tesa Tape Calculator - Diameter',
+     url: this.state.textToShare,
+     subject: 'Tesa Tape Calculator - Diameter'
+   }, {
+     dialogTitle: 'Tesa Tape Calculator - Diameter',
+     excludedActivityTypes: [
+       'com.apple.UIKit.activity.PostToTwitter',
+     ],
+    tintColor: 'green'
+   })
+   .then(this._showResult)
+   .catch(err => console.log(err))
+  }
 
   updateShareText(result){
     this.setState({textToShare : result});

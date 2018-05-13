@@ -31,8 +31,8 @@ android {
         applicationId "com.tesa"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 4
-        versionName "1.0"
+        versionCode 5
+        versionName "1.5"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -84,6 +84,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-send-intent')
     compile project(':react-native-i18n')
     compile project(':react-native-device-info')
     compile fileTree(dir: "libs", include: ["*.jar"])

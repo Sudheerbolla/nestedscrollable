@@ -14,6 +14,7 @@ import {
   ImageBackground,
   ScrollView,
   TouchableOpacity,
+  NativeModules,
   Share
 } from 'react-native';
 
@@ -184,7 +185,8 @@ export default class CalculationArea extends Component {
        .then(this._showResult)
        .catch(err => console.log(err))
 
-     }
+
+  }
 
   render() {
     const { params } = this.props.navigation.state;
