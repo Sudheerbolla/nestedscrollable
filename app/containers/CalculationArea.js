@@ -44,9 +44,9 @@ export default class CalculationArea extends Component {
     };
   }
 
-  // componentDidMount(){
-  //   this.updateAllValues();
-  // }
+  componentDidMount(){
+    this.updateAllValues();
+  }
 
   renderField(settings) {
     const { selectedItem, defaultText, getLabel, clear } = settings;
@@ -166,7 +166,7 @@ export default class CalculationArea extends Component {
   shareTextWithTitle() {
     let emailsubject='Tesa Tape Calculator - Area';
 
-    let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+', Width: '+this.state.widthValue+' '+this.state.unit+
+    let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+', Width: '+this.state.widthValue+' '
     +'\n'+'\n'
     +'Result: \n'
     + this.state.areaValueInM +' m2'
@@ -519,3 +519,33 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+// {Platform.select({
+//   android: (
+//     <CustomPicker
+//       options={['yards', 'm', 'feet', 'inches']}
+//       fieldTemplate={this.renderField}
+//       style={{ paddingLeft: 30, marginTop: 10, height: 20 }}
+//       value={this.state.unit}
+//       onValueChange={(value) => {
+//         this.setState({ unit: value },function(){this.updateAllValues()});
+//       }}
+//     />
+//   ),
+//   ios: (
+//     <Picker
+//       selectedValue={this.state.unit}
+//       itemStyle={{ fontSize: 15, color: COLORS.DARK_GREY }}
+//       style={{
+//         paddingLeft: Platform.select({ ios: 10 }),
+//         marginLeft: Platform.select({ android: 20 }),
+//       }}
+//       onValueChange={(itemValue, itemIndex) => {
+//         this.setState({ unit: itemValue },function(){this.updateAllValues()});
+//       }}>
+//       <Picker.Item label="yards" value="yards" />
+//       <Picker.Item label="m" value="m" />
+//       <Picker.Item label="feet" value="feet" />
+//       <Picker.Item label="inches" value="inches" />
+//     </Picker>
+//   ),
+// })}

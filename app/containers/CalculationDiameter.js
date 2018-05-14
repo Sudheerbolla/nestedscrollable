@@ -156,6 +156,10 @@ class TellerrollenScreen extends React.Component {
       this.shareTextWithTitle();
   }
 
+  componentDidMount(){
+    this.updateAllValues();
+  }
+
   round(number, precision) {
     var shift = function (number, precision, reverseShift) {
       if (reverseShift) {
@@ -217,7 +221,7 @@ class TellerrollenScreen extends React.Component {
   }
 
   shareTextWithTitle() {
-    let textToShare = 'Input: \n'+ 'Length: '+this.state.lengthValue+', ThickNesss: '+this.state.thickNessValue+' '+this.state.unit+
+    let textToShare = 'Input: \n'+ 'Length: '+this.state.lengthValue+', ThickNesss: '+this.state.thickNessValue+' '
     +'\n'+'\n'
     +'Result: \n'
     + this.state.diameterInMM +' MM'
@@ -446,6 +450,9 @@ class SAFRollenScreen extends React.Component {
       };
       this.shareTextWithTitle();
     }
+    componentDidMount(){
+      this.updateAllValues();
+    }
 
     round(number, precision) {
       var shift = function (number, precision, reverseShift) {
@@ -500,7 +507,7 @@ class SAFRollenScreen extends React.Component {
     shareTextWithTitle() {
       let emailsubject='Tesa Tape Calculator - Diameter';
 
-      let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+', ThickNesss: '+this.state.thickNessValue+' '+ 'Width(Core): '+this.state.coreWidthValue+', Width(Material): '+this.state.widthValue+this.state.unit+
+      let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+', ThickNesss: '+this.state.thickNessValue+' '+ 'Width(Core): '+this.state.coreWidthValue+', Width(Material): '+this.state.widthValue
       +'\n'+'\n'
       +'Result: \n'
       + this.state.diameterInMM +' MM'

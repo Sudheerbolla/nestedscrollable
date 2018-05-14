@@ -24,6 +24,10 @@ export default class CalculationConsumptation extends Component {
     };
   }
 
+  componentDidMount(){
+    this.updateAllValues();
+  }
+
   round(number, precision) {
     var shift = function (number, precision, reverseShift) {
       if (reverseShift) {

@@ -285,8 +285,7 @@ class Details extends Component {
                     style={{ paddingLeft: 30, marginTop: 13, height: 20 }}
                     value={this.state.unit}
                     onValueChange={(value) => {
-                        this.setState({ unit: value,hideView:value });
-                        this.updateAllValues(this.state.lengthValue)
+                        this.setState({ unit: value,hideView:value },function(){this.updateAllValues(this.state.lengthValue)});
                     }}
                   />
                 ),
@@ -295,8 +294,7 @@ class Details extends Component {
                     selectedValue={this.state.unit}
                     itemStyle={{ fontSize: 15, color: COLORS.DARK_GREY }}
                     onValueChange={(itemValue, itemIndex) =>{
-                      this.setState({ unit: itemValue,hideView:itemValue });
-                      this.updateAllValues(this.state.lengthValue)
+                      this.setState({ unit: itemValue,hideView:itemValue },function(){this.updateAllValues(this.state.lengthValue)});
                     }}>
                     <Picker.Item label="Preis / m2" value="Preis / m2" />
                     <Picker.Item label="Preis / yd2" value="Preis / yd2" />

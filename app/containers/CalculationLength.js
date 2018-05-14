@@ -39,6 +39,10 @@ class Details extends Component {
     };
   }
 
+  componentDidMount(){
+    this.updateAllValues();
+  }
+
   round(number, precision) {
     var shift = function (number, precision, reverseShift) {
       if (reverseShift) {
@@ -139,7 +143,7 @@ class Details extends Component {
   shareTextWithTitle() {
     let emailsubject='Tesa Tape Calculator - Length';
 
-    let textToShare='Input: \n'+ 'Area: '+this.state.areaValue+', Width: '+this.state.widthValue+' '+this.state.unit+
+    let textToShare='Input: \n'+ 'Area: '+this.state.areaValue+', Width: '+this.state.widthValue+' '
     +'\n'+'\n'
     +'Result: \n'
     + this.state.lengthValueInM +' m'

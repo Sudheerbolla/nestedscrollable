@@ -321,8 +321,7 @@ export default class Details extends Component {
                     style={{ paddingLeft: 30, marginTop: 13, height: 20 }}
                     value={this.state.unit}
                     onValueChange={(value) => {
-                      this.setState({ unit: value,hideView:value });
-                      this.updateAllValues(this.state.lengthValue);
+                      this.setState({ unit: value,hideView:value },function(){this.updateAllValues(this.state.lengthValue)});
                     }}
                   />
                 ),
@@ -331,8 +330,7 @@ export default class Details extends Component {
                     selectedValue={this.state.unit}
                     itemStyle={{ fontSize: 15, color: COLORS.DARK_GREY }}
                     onValueChange={(itemValue, itemIndex) => {
-                      this.setState({ unit: itemValue, hideView:itemValue});
-                      this.updateAllValues(this.state.lengthValue);
+                      this.setState({ unit: itemValue, hideView:itemValue},function(){this.updateAllValues(this.state.lengthValue)});
                     }}>
                     <Picker.Item label="m2" value="m2" />
                     <Picker.Item label="cm2" value="cm2" />

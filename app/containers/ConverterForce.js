@@ -105,7 +105,7 @@ class Details extends Component {
       lengthValue: number,
       lengthValueInNM: this.getCalculatedValue(number, 'N/m'),
       lengthValueInNCM: this.getCalculatedValue(number, 'N/cm'),
-      lengthValueInN25MM: this.getCalculatedValue(number, 'N/25 mm'),
+      lengthValueInN25MM: this.getCalculatedValue(number, 'N/25mm'),
       lengthValueInKGMILS: this.getCalculatedValue(number, 'Kg/mils'),
       lengthValueInPIN: this.getCalculatedValue(number, 'Pounds/In'),
       lengthValueInOIN: this.getCalculatedValue(number, 'Ounces/In')
@@ -119,7 +119,7 @@ class Details extends Component {
         outPut = number
       } else if (conv == 'N/cm') {
         outPut = 0.01 * number
-      } else if (conv == 'N/25 mm') {
+      } else if (conv == 'N/25mm') {
         outPut = 0.00004 * number
       } else if (conv == 'Kg/mils') {
         outPut = 2.590079180963938164e-6 * number
@@ -133,7 +133,7 @@ class Details extends Component {
         outPut = 100 * number
       else if (conv == 'N/cm') {
         outPut = number
-      } else if (conv == 'N/25 mm') {
+      } else if (conv == 'N/25mm') {
         outPut = 0.004 * number
       } else if (conv == 'Kg/mils') {
         outPut = 0.00025900791809639378592 * number
@@ -142,12 +142,12 @@ class Details extends Component {
       } else if (conv == 'Ounces/In') {
         outPut = 1.4161193227806 * number
       }
-    } else if (this.state.unit == 'N/25 mm') {
+    } else if (this.state.unit == 'N/25mm') {
       if (conv === 'N/m')
         outPut = 40 * number
       else if (conv == 'N/cm') {
         outPut = 0.4 * number
-      } else if (conv == 'N/25 mm') {
+      } else if (conv == 'N/25mm') {
         outPut = number
       } else if (conv == 'Kg/mils') {
         outPut = 0.00010360316723855751979 * number
@@ -161,7 +161,7 @@ class Details extends Component {
         outPut = 0.00024908891 * number
       else if (conv == 'N/cm') {
         outPut = 0.024908891 * number
-      } else if (conv == 'N/25 mm') {
+      } else if (conv == 'N/25mm') {
         outPut = 0.00980665 * number
       } else if (conv == 'Kg/mils') {
         outPut = number
@@ -175,7 +175,7 @@ class Details extends Component {
         outPut = 175.127 * number
       else if (conv == 'N/cm') {
         outPut = 1.75127 * number
-      } else if (conv == 'N/25 mm') {
+      } else if (conv == 'N/25mm') {
         outPut = 0.00700508 * number
       } else if (conv == 'Kg/mils') {
         outPut = 0.000453592 * number
@@ -189,7 +189,7 @@ class Details extends Component {
         outPut = 0.0070615518333333 * number
       else if (conv == 'N/cm') {
         outPut = 1.4161193227806 * number
-      } else if (conv == 'N/25 mm') {
+      } else if (conv == 'N/25mm') {
         outPut = 0.00566447729 * number
       } else if (conv == 'Kg/mils') {
         outPut = 2.83495e-5 * number
@@ -206,7 +206,7 @@ class Details extends Component {
   shareTextWithTitle() {
     let emailsubject='Tesa Tape Calculator - Force';
 
-    let textToShare='Input: '+this.state.lengthValue+' '+this.state.unit
+    let textToShare='Input: '+this.state.lengthValue+' '
     +'\n'+'\n'
     +'Result: \n'
     + this.state.lengthValueInNM +' N/M'
@@ -330,28 +330,26 @@ class Details extends Component {
               {Platform.select({
                 android: (
                   <CustomPicker
-                    options={['N/m', 'N/cm', 'N/25 mm', 'Kg/mils', 'Pounds/In', 'Ounces/In']}
+                    options={['N/m', 'N/cm', 'N/25mm', 'Kg/mils', 'Pounds/In', 'Ounces/In']}
                     fieldTemplate={this.renderField}
                     style={{ paddingLeft: 30, marginTop: 13, height: 20 }}
                     value={this.state.unit}
                     onValueChange={(value) => {
-                        this.setState({ unit: value,hideView:value });
-                        this.updateAllValues(this.state.lengthValue)
+                        this.setState({ unit: value,hideView:value },function(){this.updateAllValues(this.state.lengthValue)});
                     }}
                   />
                 ),
                 ios: (
                   <Picker
                     selectedValue={this.state.unit}
-                    style={{ width: 260 }}
+                    style={{ width: 125 }}
                     itemStyle={{ fontSize: 15, color: COLORS.DARK_GREY }}
                     onValueChange={(itemValue, itemIndex) =>{
-                      this.setState({ unit: itemValue,hideView:itemValue });
-                      this.updateAllValues(this.state.lengthValue)
+                      this.setState({ unit: itemValue,hideView:itemValue },function(){this.updateAllValues(this.state.lengthValue)});
                     }}>
                     <Picker.Item label="N/m" value="N/m" />
                     <Picker.Item label="N/cm" value="N/cm" />
-                    <Picker.Item label="N/25	mm" value="N/25	mm" />
+                    <Picker.Item label="N/25mm" value="N/25mm" />
                     <Picker.Item label="Kg/mils" value="Kg/mils" />
                     <Picker.Item label="Pounds/In" value="Pounds/In" />
                     <Picker.Item label="Ounces/In" value="Ounces/In" />
@@ -381,7 +379,7 @@ class Details extends Component {
                 text={'N/cm'}
               />
             }
-            { this.state.hideView!='N/25 mm' &&
+            { this.state.hideView!='N/25mm' &&
               <SupText
                 textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 18 }}
                 supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11 }}
