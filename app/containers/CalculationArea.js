@@ -44,9 +44,9 @@ export default class CalculationArea extends Component {
     };
   }
 
-  // componentDidMount(){
-  //   this.updateAllValues();
-  // }
+  componentDidMount(){
+    this.updateAllValues();
+  }
 
   renderField(settings) {
     const { selectedItem, defaultText, getLabel, clear } = settings;
@@ -166,7 +166,7 @@ export default class CalculationArea extends Component {
   shareTextWithTitle() {
     let emailsubject='Tesa Tape Calculator - Area';
 
-    let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+', Width: '+this.state.widthValue+' '+this.state.unit+
+    let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+', Width: '+this.state.widthValue+' '
     +'\n'+'\n'
     +'Result: \n'
     + this.state.areaValueInM +' m2'

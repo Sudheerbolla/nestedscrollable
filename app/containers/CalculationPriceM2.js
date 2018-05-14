@@ -26,6 +26,10 @@ class Details extends Component {
     };
   }
 
+  componentDidMount(){
+    this.updateAllValues();
+  }
+
   round(number, precision) {
     var shift = function (number, precision, reverseShift) {
       if (reverseShift) {
@@ -56,7 +60,7 @@ class Details extends Component {
   shareTextWithTitle() {
     let emailsubject='Tesa Tape Calculator - Price/M2';
 
-    let textToShare='Input: \n'+ 'Price: '+this.state.priceValue+', Width: '+this.state.widthValue+', Length: '+this.state.lengthValue+' '+this.state.unit+
+    let textToShare='Input: \n'+ 'Price: '+this.state.priceValue+', Width: '+this.state.widthValue+', Length: '+this.state.lengthValue+' '
     +'\n'+'\n'
     +'Result: \n'
     + this.state.pricePerRoll +' Price/M2';

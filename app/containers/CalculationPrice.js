@@ -25,6 +25,10 @@ class Details extends Component {
     };
   }
 
+  componentDidMount(){
+    this.updateAllValues();
+  }
+
   renderField(settings) {
     const { selectedItem, defaultText, getLabel, clear } = settings;
     return (
@@ -84,7 +88,7 @@ class Details extends Component {
   shareTextWithTitle() {
     let emailsubject='Tesa Tape Calculator - Price';
 
-    let textToShare='Input: \n'+ 'Price: '+this.state.priceValue+', Width: '+this.state.widthValue+', Length: '+this.state.lengthValue+' '+this.state.unit+
+    let textToShare='Input: \n'+ 'Price: '+this.state.priceValue+', Width: '+this.state.widthValue+', Length: '+this.state.lengthValue+' '
     +'\n'+'\n'
     +'Result: \n'
     + this.state.pricePerRoll +' Price/roll';
