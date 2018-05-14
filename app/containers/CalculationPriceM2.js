@@ -22,7 +22,7 @@ class Details extends Component {
       priceValue:'0',
       lengthValue: '66.00',
       widthValue: '19',
-      pricePerRoll:'100'
+      pricePerRoll:'0'
     };
   }
 
@@ -303,7 +303,8 @@ class Details extends Component {
                 textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 18 }}
                 supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11 }}
                 style={styles.unitItem}
-                text={applyLetterSpacing(i18n.t('calculation_price.price_roll'), 1)}
+                sup={'2'}
+                text={applyLetterSpacing(i18n.t('calculation_price_m2.price_m2'), 1)}
               />
             </View>
           </View>

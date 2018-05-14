@@ -381,7 +381,7 @@ class Details extends Component {
                 text={'N/cm'}
               />
             }
-              { this.state.hideView!='N/25 mm' &&
+            { this.state.hideView!='N/25 mm' &&
               <SupText
                 textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 18 }}
                 supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11 }}

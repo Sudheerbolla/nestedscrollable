@@ -20,7 +20,7 @@ export default class CalculationConsumptation extends Component {
     this.state = {
       lengthValue: '66.00',
       widthValue: '205',
-      consumptationValueInM2: '13530',
+      consumptationValueInM2: '13530000',
     };
   }
 

@@ -44,6 +44,10 @@ export default class CalculationArea extends Component {
     };
   }
 
+  // componentDidMount(){
+  //   this.updateAllValues();
+  // }
+
   renderField(settings) {
     const { selectedItem, defaultText, getLabel, clear } = settings;
     return (
@@ -315,16 +319,16 @@ export default class CalculationArea extends Component {
                 </Text>
                 <View style={styles.resultNumber}>
                   <MarqueeText style={styles.number} duration={3000} marqueeOnStart loop marqueeDelay={1000} marqueeResetDelay={1000}>
-                           {applyLetterSpacing(this.state.areaValueInM, 1)}
+                           {applyLetterSpacing(this.state.areaValueInM==="NaN"?0:this.state.areaValueInM, 1)}
                   </MarqueeText>
                   <MarqueeText style={styles.number} duration={3000} marqueeOnStart loop marqueeDelay={1000} marqueeResetDelay={1000}>
-                           {applyLetterSpacing(this.state.areaValueInY, 1)}
+                           {applyLetterSpacing(this.state.areaValueInY==="NaN"?0:this.state.areaValueInY, 1)}
                   </MarqueeText>
                   <MarqueeText style={styles.number} duration={3000} marqueeOnStart loop marqueeDelay={1000} marqueeResetDelay={1000}>
-                           {applyLetterSpacing(this.state.areaValueInF, 1)}
+                           {applyLetterSpacing(this.state.areaValueInF==="NaN"?0:this.state.areaValueInF, 1)}
                   </MarqueeText>
                   <MarqueeText style={styles.number} duration={3000} marqueeOnStart loop marqueeDelay={1000} marqueeResetDelay={1000}>
-                           {applyLetterSpacing(this.state.areaValueInI, 1)}
+                           {applyLetterSpacing(this.state.areaValueInI==="NaN"?0:this.state.areaValueInI, 1)}
                   </MarqueeText>
                 </View>
               </View>
