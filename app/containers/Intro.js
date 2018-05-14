@@ -31,8 +31,8 @@ class Intro extends Component {
             <View style={styles.container}>
               <View style={styles.row}>
                 <View style={styles.column}>
-                  <ImageButton onPress={() => this.props.navigation.navigate('Calculation', {title: i18n.t('general.calculation').toUpperCase()})
-} image={ICONS.START_ICON_1} title={i18n.t('general.calculation').toUpperCase()}/>
+                  <ImageButton onPress={() => this.props.navigation.navigate('Calculation', {title: i18n.t('general.calculation').toUpperCase()})}
+                     image={ICONS.START_ICON_1} title={i18n.t('general.calculation').toUpperCase()}/>
                 </View>
                 <View style={{
                     width: 1,
@@ -40,8 +40,8 @@ class Intro extends Component {
                     backgroundColor: '#000000'
                   }}/>
                 <View style={styles.column}>
-                  <ImageButton onPress={() => this.props.navigation.navigate('Converter', {title: i18n.t('general.converter').toUpperCase()})
-} image={ICONS.START_ICON_2} title={i18n.t('general.converter').toUpperCase()}/>
+                  <ImageButton onPress={() => this.props.navigation.navigate('Converter', {title: i18n.t('general.converter').toUpperCase()})}
+                     image={ICONS.START_ICON_2} title={i18n.t('general.converter').toUpperCase()}/>
                 </View>
               </View>
               <View style={{
@@ -52,16 +52,16 @@ class Intro extends Component {
                 }}/>
               <View style={styles.row}>
                 <View style={styles.column}>
-                  <ImageButton onPress={() => this.props.navigation.navigate('Calculator', {title: i18n.t('general.calculator').toUpperCase()})
-} image={ICONS.START_ICON_3} title={i18n.t('general.calculator').toUpperCase()}/>
+                  <ImageButton onPress={() => this.props.navigation.navigate('Calculator', {title: i18n.t('general.calculator').toUpperCase()})}
+                     image={ICONS.START_ICON_3} title={i18n.t('general.calculator').toUpperCase()}/>
                 </View>
                 <View style={{
                     width: 1,
                     backgroundColor: '#000000'
                   }}/>
                 <View style={styles.column}>
-                  <ImageButton onPress={() => this.props.navigation.navigate('Contact', {title: i18n.t('general.contact').toUpperCase()})
-} image={ICONS.START_ICON_4} title={i18n.t('general.contact').toUpperCase()}/>
+                  <ImageButton onPress={() => this.props.navigation.navigate('Contact', {title: i18n.t('general.contact').toUpperCase()})}
+                     image={ICONS.START_ICON_4} title={i18n.t('general.contact').toUpperCase()}/>
                 </View>
               </View>
 
