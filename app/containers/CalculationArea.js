@@ -519,3 +519,33 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+// {Platform.select({
+//   android: (
+//     <CustomPicker
+//       options={['yards', 'm', 'feet', 'inches']}
+//       fieldTemplate={this.renderField}
+//       style={{ paddingLeft: 30, marginTop: 10, height: 20 }}
+//       value={this.state.unit}
+//       onValueChange={(value) => {
+//         this.setState({ unit: value },function(){this.updateAllValues()});
+//       }}
+//     />
+//   ),
+//   ios: (
+//     <Picker
+//       selectedValue={this.state.unit}
+//       itemStyle={{ fontSize: 15, color: COLORS.DARK_GREY }}
+//       style={{
+//         paddingLeft: Platform.select({ ios: 10 }),
+//         marginLeft: Platform.select({ android: 20 }),
+//       }}
+//       onValueChange={(itemValue, itemIndex) => {
+//         this.setState({ unit: itemValue },function(){this.updateAllValues()});
+//       }}>
+//       <Picker.Item label="yards" value="yards" />
+//       <Picker.Item label="m" value="m" />
+//       <Picker.Item label="feet" value="feet" />
+//       <Picker.Item label="inches" value="inches" />
+//     </Picker>
+//   ),
+// })}
