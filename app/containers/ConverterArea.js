@@ -131,7 +131,7 @@ export default class Details extends Component {
       lengthValueInY:this.getCalculatedValue(number,'yard2'),
       lengthValueInF:this.getCalculatedValue(number,'feet2'),
       lengthValueInI:this.getCalculatedValue(number,'inches2'),
-      lengthValueInMSI: (this.getCalculatedValue(number,'inches2') * 1000).toString(),
+      lengthValueInMSI: (this.getCalculatedValue(number,'inches2') / 1000).toString(),
     });
   }
 
@@ -148,8 +148,6 @@ export default class Details extends Component {
         outPut = 10.7639100001464 * number
       } else if (conv == 'inches2') {
         outPut = 1550.0030400210816879 * number
-      } else if (conv == 'MSI') {
-        outPut = 1.5425 * number
       }
     } else if (this.state.unit == 'cm2') {
       if (conv === 'm2')
@@ -162,8 +160,6 @@ export default class Details extends Component {
         outPut = 0.00107639100000000011 * number
       } else if (conv == 'inches2') {
         outPut = 0.15500030400000003317 * number
-      } else if (conv == 'MSI') {
-        outPut = 1.5425 * 10000 * number
       }
     } else if (this.state.unit == 'yard2') {
       if (conv === 'm2')
@@ -176,9 +172,8 @@ export default class Details extends Component {
         outPut = 8.999996124959999122 * number
       } else if (conv == 'inches2') {
         outPut = 1295.9994419942399873 * number
-      } else if (conv == 'MSI') {
-        outPut = 1.5425 * number
       }
+      // alert(this.state.unit+'\n'+conv+' '+outPut+' \n'+this.state.hideView)
     } else if (this.state.unit == 'feet2') {
       if (conv === 'm2')
         outPut = 0.092902999999667099096 * number
@@ -190,8 +185,6 @@ export default class Details extends Component {
         outPut = number
       } else if (conv == 'inches2') {
         outPut = 143.99993799936001437 * number
-      } else if (conv == 'MSI') {
-        outPut = 1.5425 * number
       }
     } else if (this.state.unit == 'inches2') {
       if (conv === 'm2')
@@ -204,8 +197,19 @@ export default class Details extends Component {
         outPut = 0.0069444414544444438633 * number
       } else if (conv == 'inches2') {
         outPut = number
-      } else if (conv == 'MSI') {
-        outPut = 1.5425 * number
+      }
+    }else if (this.state.unit == 'MSI') {
+      var outPutInInches = 1000*number
+      if (conv === 'm2')
+        outPut = 0.0006451597222199103622*outPutInInches
+      else if (conv == 'cm2') {
+        outPut = 6.4515972221991031432 * outPutInInches
+      } else if (conv == 'yard2') {
+        outPut = 0.00077160460604938272376 * outPutInInches
+      } else if (conv == 'feet2') {
+        outPut = 0.0069444414544444438633 * outPutInInches
+      } else if (conv == 'inches2') {
+        outPut = outPutInInches
       }
     }
     outPut=this.round(outPut, 3);
@@ -342,22 +346,6 @@ export default class Details extends Component {
                 ),
               })}
 
-                  {/* <Picker
-                    selectedValue={this.state.unit}
-                    style={{height:38,justifyContent:'center'}}
-                    itemStyle={{ fontSize: 15, color: COLORS.DARK_GREY }}
-                    onValueChange={(itemValue, itemIndex) => {
-                      this.setState({ unit: itemValue, hideView:itemValue});
-                      this.updateAllValues(number);
-                    }}>
-                    <Picker.Item label="m2" value="m2" />
-                    <Picker.Item label="cm2" value="cm" />
-                    <Picker.Item label="yard2" value="yard" />
-                    <Picker.Item label="feet2" value="feet" />
-                    <Picker.Item label="inches2" value="inches" />
-                    <Picker.Item label="MSI" value="MSI" />
-                  </Picker> */}
-
               <View style={styles.pickerBottomBorder} />
 
             </View>
@@ -374,7 +362,7 @@ export default class Details extends Component {
                 sup={'2'}
               />
               }
-                { this.state.hideView!='cm2' &&
+              { this.state.hideView!='cm2' &&
               <SupText
                 textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 18 }}
                 supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11 }}
@@ -382,7 +370,7 @@ export default class Details extends Component {
                 text={'cm'}
                 sup={'2'}
               />}
-                  { this.state.hideView!='yards2' &&
+              { this.state.hideView!='yard2' &&
               <SupText
                 textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 18 }}
                 supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11 }}

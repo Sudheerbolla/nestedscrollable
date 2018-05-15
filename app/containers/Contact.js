@@ -12,10 +12,18 @@ import NavBar from '../modules/NavBar';
 import { COLORS, ICONS, FONTS } from '../constants';
 import i18n from '../utils/i18n';
 import applyLetterSpacing from '../utils/applyLetterSpacing';
+// import nodemailer from 'nodemailer'
+
+// const nodemailer=require('nodemailer')
+
+// node_modules\react-native-android-library-sudheer
+// import ToastModule from '../../android/app/src/main/java/com/tesa/ToastModule';
 
 const deviceCountry = DeviceInfo.getDeviceCountry();
+import Boilerplate from 'react-native-android-library-sudheer'
 
-class Calculation extends Component {
+export default class Calculation extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -91,8 +99,80 @@ class Calculation extends Component {
         var SendIntentAndroid = require('react-native-send-intent');
         SendIntentAndroid.sendMail(this.state.mailTo, 'Tape Calculator - Contact', this.state.message);
       }
+
+      Boilerplate.show('Boilerplate runs fine', Boilerplate.LONG)
+
+      // ToastModule.show('Awesome', ToastExample.SHORT);
+      // this.sendEmailInBackGround();
+      // app.post('/send-email', function (req, res) {
+      //   let transporter = nodeMailer.createTransport({
+      //       host: 'smtp.1und1.de',
+      //       port: 587,
+      //       secure: false,
+      //       auth: {
+      //           user: 'info@itpe-germany.de',
+      //           pass: 'Itpe!9877'
+      //       }
+      //   });
+      //   let mailOptions = {
+      //       from: '"Tesa" <nagasudheerbolla@gmail.com>', // sender address
+      //       to: "nagasudheerbolla@gmail.com", // list of receivers
+      //       subject: "Subject", // Subject line
+      //       text: "Body message", // plain text body
+      //   };
+      //
+      //   transporter.sendMail(mailOptions, (error, info) => {
+      //       if (error) {
+      //         alert(error);
+      //           return console.log(error);
+      //       }
+      //       console.log('Message %s sent: %s', info.messageId, info.response);
+      //         alert('Message %s sent: %s', info.messageId, info.response);
+      //       });
+      //   });
+      //
+      //   app.listen(port, function(){
+      //     console.log('Server is running at port: ',port);
+      //   });
+
     }
   }
+
+  // sendEmailInBackGround=()=>{
+  //   nodemailer.createTestAccount((err, account) => {
+  //       // create reusable transporter object using the default SMTP transport
+  //       let transporter = nodemailer.createTransport({
+  //           host: 'smtp.1und1.de',
+  //           port: 587,
+  //           secure: false, // true for 465, false for other ports
+  //           auth: {
+  //               user: 'info@itpe-germany.de', // generated ethereal user
+  //               pass: 'Itpe!9877' // generated ethereal password
+  //           }
+  //       });
+  //
+  //       // setup email data with unicode symbols
+  //       let mailOptions = {
+  //           from: '"Tesa" <nagasudheerbolla@gmail.com>', // sender address
+  //           to: 'nagasudheerbolla@gmail.com', // list of receivers
+  //           subject: 'Hello ✔', // Subject line
+  //           text: 'Hello world?', // plain text
+  //       };
+  //
+  //       // send mail with defined transport object
+  //       transporter.sendMail(mailOptions, (error, info) => {
+  //           if (error) {
+  //               return console.log(error);
+  //           }
+  //           console.log('Message sent: %s', info.messageId);
+  //           // Preview only available when sending through an Ethereal account
+  //           console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+  //
+  //           // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+  //           // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+  //       });
+  //   });
+  // }
 
   validateEmail = () => {
     var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -123,43 +203,57 @@ class Calculation extends Component {
 
               <View style={styles.field}>
                 <TextInput
+                  returnKeyType={ "next" }
+                  ref={(input) => { this.nameTextInput = input; }}
                   maxLength={48}
                   underlineColorAndroid="rgba(0,0,0,0)"
                   placeholderTextColor={COLORS.DARK_GREY}
                   placeholder={applyLetterSpacing(i18n.t('contact.name').toUpperCase(), 1)}
                   style={styles.input}
+                  blurOnSubmit={false}
                   value={this.state.name}
                   onChangeText={text => this.setState({ name: text })}
+                  onSubmitEditing={() => { this.firmTextInput.focus(); }}
                 />
               </View>
 
               <View style={styles.field}>
                 <TextInput
+                  ref={(input) => { this.firmTextInput = input; }}
                   maxLength={48}
+                  returnKeyType={ "next" }
+                  blurOnSubmit={false}
                   underlineColorAndroid="rgba(0,0,0,0)"
                   placeholderTextColor={COLORS.DARK_GREY}
                   placeholder={applyLetterSpacing(i18n.t('contact.firw').toUpperCase(), 1)}
                   style={styles.input}
                   value={this.state.firm}
                   onChangeText={text => this.setState({ firm: text })}
+                  onSubmitEditing={() => { this.emailTextInput.focus(); }}
                 />
               </View>
 
               <View style={styles.field}>
                 <TextInput
+                  ref={(input) => { this.emailTextInput = input; }}
                   underlineColorAndroid="rgba(0,0,0,0)"
                   placeholderTextColor={COLORS.DARK_GREY}
+                  returnKeyType={ "next" }
+                  blurOnSubmit={false}
                   placeholder={applyLetterSpacing(i18n.t('contact.email').toUpperCase(), 1)}
                   style={styles.input}
                   value={this.state.email}
                   onChangeText={text => this.setState({ email: text })}
+                  onSubmitEditing={() => { this.messageTextInput.focus(); }}
                 />
               </View>
 
               <View style={styles.fieldDescription}>
                 <TextInput
+                  ref={(input) => { this.messageTextInput = input; }}
                   maxLength={1000}
                   underlineColorAndroid="rgba(0,0,0,0)"
+                  returnKeyType={ "done" }
                   placeholderTextColor={COLORS.DARK_GREY}
                   placeholder={applyLetterSpacing(i18n.t('contact.message').toUpperCase(), 1)}
                   multiline={true}
@@ -232,9 +326,13 @@ class Calculation extends Component {
 }
 
 const { width } = Dimensions.get('window');
+
 const screenHorizontalPadding = 50;
+
 const columnWidth = (width - screenHorizontalPadding) / 2;
+
 const cubeWidth = (width - 30) / 2;
+
 const styles = StyleSheet.create({
   column: {
     width: columnWidth,
@@ -347,5 +445,3 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   }
 });
-
-export default Calculation;

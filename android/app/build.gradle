@@ -31,8 +31,8 @@ android {
         applicationId "com.tesa"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 5
-        versionName "1.5"
+        versionCode 6
+        versionName "1.6"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -81,15 +81,26 @@ android {
             }
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 dependencies {
     compile project(':react-native-send-intent')
     compile project(':react-native-i18n')
     compile project(':react-native-device-info')
+    compile project(':react-native-android-library-sudheer')
+  
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
-    compile "com.facebook.react:react-native:+"  // From node_modules
+    compile ("com.facebook.react:react-native:0.54.1") {force=true}  // From node_modules
+
+    compile files('libs/activation.jar')
+    compile files('libs/additionnal.jar')
+    compile files('libs/mail.jar')
 }
 
 // Run this once to be able to run the application with BUCK

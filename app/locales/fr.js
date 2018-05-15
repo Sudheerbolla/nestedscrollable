@@ -1,12 +1,22 @@
 const locale = {
+  launchingscreen: {
+    calculate: 'Calculer',
+    convert: 'Convertir',
+    calculator: 'Calculatrice'
+  },
   general: {
     calculation: 'CALCUL',
     converter: 'CONVERTISEUR',
-    calculator: 'CALCULATORICE DE\nPOUCHE',
-    contact: 'CONTACT',
-    calculate: 'CALCULATRI',
-    phone: '+494053257770',
-    mailto: 'malte.spaniol@itpe-germany.de',
+    calculator: 'calculatrice',
+    contact: 'contact'
+  },
+  calculation: {
+    area: 'superficie',
+    length: 'mètre linéaire',
+    diameter: 'diamètre du rouleau',
+    consumption: 'consommation / 1 000 pièces',
+    price_roll: 'prix / rouleau',
+    price_m2: 'prix / m²'
   },
   contact: {
     name: 'PRÉNOM',
@@ -24,9 +34,9 @@ const locale = {
   },
   calculation_area: {
     area: 'RÉGION',
-    length: 'LONGUEUR',
-    width: 'LARGEUR',
-    result: 'RÉSULTAT',
+    length: 'longueur',
+    width: 'largeur',
+    result: 'résultat',
   },
   calculation_length: {
     length: 'LONGUEUR',
@@ -35,8 +45,8 @@ const locale = {
     result: 'RÉSULTAT',
   },
   calculation_diameter: {
-    diameter: 'DIAMÈTRE',
-    core: 'DIAMÈTRE DE CORE',
+    diameter: 'diamètre',
+    core: 'mandrin',
     length: 'LONGUEUR',
     thickness: 'ÉPAISSEUR',
     result: 'RÉSULTAT',
@@ -44,9 +54,9 @@ const locale = {
   calculation_consumptation: {
     consumptation: 'CONSOMMATION',
     punch_line: 'Consomma tion / 1000 ligne de poinçon',
-    length_x: 'LONGUEUR (X)',
-    width_y: 'LARGEUR (Y)',
-    without_waste: "S'il vous plaît noter que la consomma tion est la consomma tion de matériaux purs, sans gaspillage",
+    length_x: 'longueur',
+    width_y: 'largeur',
+    without_waste: "S'il vous plaît noter que la consommation est la consommation de matériaux purs, sans gaspillage.",
     result: 'RÉSULTAT',
   },
   calculation_price: {
@@ -80,11 +90,11 @@ const locale = {
     result: 'RÉSULTAT',
   },
   converter_mass: {
-    mass: 'MASSE',
+    mass: 'poids',
     result: 'RÉSULTAT',
   },
   converter_force: {
-    force: 'FORCE DE LA COLLE',
+    force: 'adhésion par pelage',
     result: 'RÉSULTAT',
   },
   converter_price: {

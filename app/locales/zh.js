@@ -1,12 +1,22 @@
 const locale = {
+  launchingscreen: {
+    calculate: '计算',
+    convert: '转换',
+    calculator: '计算器'
+  },
   general: {
     calculation: '計算',
     converter: '變流器',
     calculator: '袖珍計算器',
-    contact: '聯繫',
-    calculate: '計算器',
-    phone: '+494053257770',
-    mailto: 'malte.spaniol@itpe-germany.de',
+    contact: '聯繫'
+  },
+  calculation: {
+    area: '粘接面积',
+    length: '長さ',
+    diameter: '直径',
+    consumption: '消耗量/1000 模切件',
+    price_roll: '价格/卷',
+    price_m2: '价格/平方米'
   },
   contact: {
     name: '名稱',
@@ -46,7 +56,7 @@ const locale = {
     punch_line: '消費 / 1000 衝線',
     length_x: '長度(X)',
     width_y: '寬度 (Y)',
-    without_waste: '請注意，消耗是純物質消耗，沒有浪費。',
+    without_waste: '请注意，请注意，这里的物料消耗量指未考虑浪费情况下的纯物料消耗这里的物料消耗量指未考虑浪费情况下的纯物料消耗',
     result: '結果',
   },
   calculation_price: {

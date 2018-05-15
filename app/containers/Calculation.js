@@ -27,11 +27,11 @@ export default class Calculation extends Component {
               <ImageButton
                 onPress={() =>
                   this.props.navigation.navigate('CalculationArea', {
-                    title: i18n.t('calculation_area.area').toUpperCase(),
+                    title: i18n.t('calculation.area').toUpperCase(),
                   })
                 }
                 image={ICONS.A_ICON_1}
-                title={i18n.t('calculation_area.area').toUpperCase()}
+                title={i18n.t('calculation.area').toUpperCase()}
               />
             </View>
             <View style={{
@@ -43,11 +43,11 @@ export default class Calculation extends Component {
               <ImageButton
                 onPress={() =>
                   this.props.navigation.navigate('CalculationLength', {
-                    title: i18n.t('calculation_length.length').toUpperCase(),
+                    title: i18n.t('calculation.length').toUpperCase(),
                   })
                 }
                 image={ICONS.A_ICON_2}
-                title={i18n.t('calculation_length.length').toUpperCase()}
+                title={i18n.t('calculation.length').toUpperCase()}
               />
             </View>
           </View>
@@ -62,7 +62,7 @@ export default class Calculation extends Component {
               <ImageButton
                 onPress={() => this.props.navigation.navigate('CalculationDiameter')}
                 image={ICONS.A_ICON_3}
-                title={i18n.t('calculation_diameter.diameter').toUpperCase()}
+                title={i18n.t('calculation.diameter').toUpperCase()}
                 titleStyle={{ fontSize: 14 }}
               />
             </View>
@@ -74,11 +74,11 @@ export default class Calculation extends Component {
               <ImageButton
                 onPress={() =>
                   this.props.navigation.navigate('CalculationConsumption', {
-                    title: i18n.t('calculation_consumptation.consumptation').toUpperCase(),
+                    title: i18n.t('calculation.consumption').toUpperCase(),
                   })
                 }
                 image={ICONS.A_ICON_4}
-                title={i18n.t('calculation_consumptation.consumptation').toUpperCase()}
+                title={i18n.t('calculation.consumption').toUpperCase()}
               />
             </View>
           </View>
@@ -93,11 +93,11 @@ export default class Calculation extends Component {
               <ImageButton
                 onPress={() =>
                   this.props.navigation.navigate('CalculationPrice', {
-                    title: i18n.t('calculation_price.price_roll').toUpperCase(),
+                    title: i18n.t('calculation.price_roll').toUpperCase(),
                   })
                 }
                 image={ICONS.A_ICON_5}
-                title={i18n.t('calculation_price.price_roll').toUpperCase()}
+                title={i18n.t('calculation.price_roll').toUpperCase()}
               />
             </View>
             <View style={{
@@ -108,12 +108,12 @@ export default class Calculation extends Component {
               <ImageButton
                 onPress={() =>
                   this.props.navigation.navigate('CalculationPriceM2', {
-                    title: i18n.t('calculation_price_m2.price_m2').toUpperCase(),
+                    title: i18n.t('calculation.price_m2').toUpperCase(),
                   })
                 }
                 supText={true}
                 image={ICONS.A_ICON_6}
-                title={i18n.t('calculation_price_m2.price_m2').toUpperCase()}
+                title={i18n.t('calculation.price_m2').toUpperCase()}
               />
             </View>
           </View>
