@@ -1,4 +1,4 @@
-export default const locale = {
+const locale = {
   launchingscreen: {
     calculate: 'Calculer',
     convert: 'Convertir',
@@ -111,3 +111,5 @@ export default const locale = {
 
 // converter: 'CONVERTIS',
 // converter: 'CONVERTISEUR',
+
+export default locale;

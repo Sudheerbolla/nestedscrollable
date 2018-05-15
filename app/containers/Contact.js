@@ -166,6 +166,7 @@ class Calculation extends Component {
 
               <View style={styles.field}>
                 <TextInput
+                  returnKeyType={ "next" }
                   ref={(input) => { this.nameTextInput = input; }}
                   maxLength={48}
                   underlineColorAndroid="rgba(0,0,0,0)"
@@ -183,6 +184,7 @@ class Calculation extends Component {
                 <TextInput
                   ref={(input) => { this.firmTextInput = input; }}
                   maxLength={48}
+                  returnKeyType={ "next" }
                   blurOnSubmit={false}
                   underlineColorAndroid="rgba(0,0,0,0)"
                   placeholderTextColor={COLORS.DARK_GREY}
@@ -199,6 +201,7 @@ class Calculation extends Component {
                   ref={(input) => { this.emailTextInput = input; }}
                   underlineColorAndroid="rgba(0,0,0,0)"
                   placeholderTextColor={COLORS.DARK_GREY}
+                  returnKeyType={ "next" }
                   blurOnSubmit={false}
                   placeholder={applyLetterSpacing(i18n.t('contact.email').toUpperCase(), 1)}
                   style={styles.input}
@@ -213,6 +216,7 @@ class Calculation extends Component {
                   ref={(input) => { this.messageTextInput = input; }}
                   maxLength={1000}
                   underlineColorAndroid="rgba(0,0,0,0)"
+                  returnKeyType={ "done" }
                   placeholderTextColor={COLORS.DARK_GREY}
                   placeholder={applyLetterSpacing(i18n.t('contact.message').toUpperCase(), 1)}
                   multiline={true}

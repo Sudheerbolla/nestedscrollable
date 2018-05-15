@@ -1,4 +1,4 @@
-export default const locale = {
+const locale = {
   launchingscreen: {
     calculate: 'calculate',
     convert: 'convert',
@@ -29,27 +29,27 @@ export default const locale = {
     imprint: 'imprint',
     privacy: 'privacy policy',
     condition: 'condition of use',
-    characters:'characters',
-    emailvalidation:'Please enter a valid email address'
+    characters: 'characters',
+    emailvalidation: 'Please enter a valid email address'
   },
   calculation_area: {
     area: 'AREA',
     length: 'length (linear)',
     width: 'width',
-    result: 'result',
+    result: 'result'
   },
   calculation_length: {
     length: 'LENGTH',
     area: 'AREA',
     width: 'WIDTH',
-    result: 'RESULT',
+    result: 'RESULT'
   },
   calculation_diameter: {
     diameter: 'outer roll diameter',
     core: 'core',
     length: 'LENGTH',
     thickness: 'THICKNESS',
-    result: 'RESULT',
+    result: 'RESULT'
   },
   calculation_consumptation: {
     consumptation: 'CONSUMPTION',
@@ -57,14 +57,14 @@ export default const locale = {
     length_x: 'LENGTH(X)',
     width_y: 'WIDTH(Y)',
     without_waste: 'Please note that the Consumption is pure material Consumption, without waste.',
-    result: 'RESULT',
+    result: 'RESULT'
   },
   calculation_price: {
     price_roll: 'Price / Roll',
     price: 'Price',
     length: 'Length',
     width: 'Width',
-    result: 'Result',
+    result: 'Result'
   },
   calculation_price_m2: {
     price_m2: 'Price / M',
@@ -72,33 +72,35 @@ export default const locale = {
     roll: 'Roll',
     length: 'Length',
     width: 'Width',
-    result: 'Result',
+    result: 'Result'
   },
   converter_area: {
     area: 'AREA',
     result: 'RESULT',
-    negativeAlert:'Negative values are not allowed',
-    outOfRangeAlert:'This value is outside of the range',
-    noValueAlert:'Please fill in all fields',
+    negativeAlert: 'Negative values are not allowed',
+    outOfRangeAlert: 'This value is outside of the range',
+    noValueAlert: 'Please fill in all fields'
   },
   converter_length: {
     length: 'LENGTH',
-    result: 'RESULT',
+    result: 'RESULT'
   },
   converter_thickness: {
     thickness: 'THICKNESS',
-    result: 'RESULT',
+    result: 'RESULT'
   },
   converter_mass: {
     mass: 'weight',
-    result: 'RESULT',
+    result: 'RESULT'
   },
   converter_force: {
     force: 'peel adhesion',
-    result: 'RESULT',
+    result: 'RESULT'
   },
   converter_price: {
     price: 'PRICE',
-    result: 'RESULT',
-  },
+    result: 'RESULT'
+  }
 };
+
+export default locale;

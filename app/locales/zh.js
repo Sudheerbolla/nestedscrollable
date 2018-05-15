@@ -1,4 +1,4 @@
-export default const locale = {
+const locale = {
   launchingscreen: {
     calculate: '计算',
     convert: '转换',
@@ -102,3 +102,5 @@ export default const locale = {
     result: '結果',
   },
 };
+
+export default locale;
