@@ -8,7 +8,9 @@ import applyLetterSpacing from '../utils/applyLetterSpacing';
 import SupText from '../utils/SupText';
 
 const ImageButton = ({ onPress, image, title, titleStyle, supText }) => {
+
   const space = Platform.select({ ios: 5, android: 2 });
+
   return (
     <TouchableOpacity onPress={onPress}>
       <ImageBackground source={image} style={styles.image}>
@@ -24,6 +26,7 @@ const ImageButton = ({ onPress, image, title, titleStyle, supText }) => {
       </ImageBackground>
     </TouchableOpacity>
   );
+
 };
 
 ImageButton.propTypes = {
@@ -52,7 +55,7 @@ const styles = StyleSheet.create({
   label: {
     // width: 118,
     fontFamily: FONTS.FONT_BOLD,
-    fontSize: 15,
+    fontSize: 13.5,
     textAlign: 'center',
     color: COLORS.DARK_GREY,
   },

@@ -1,12 +1,22 @@
-const locale = {
+export default const locale = {
+  launchingscreen: {
+    calculate: 'calcular',
+    convert: 'convertir',
+    calculator: 'calculadora'
+  },
   general: {
-    calculation: 'CALCULO',
-    converter: 'CONVERTIDOR',
-    calculator: 'CALCULADO DE BOLSILLO',
-    contact: 'CONTACTO',
-    calculate: 'CALCULADO',
-    phone: '+494050691464',
-    mailto: 'malte.spaniol@itpe-germany.de',
+    calculation: 'cálculo',
+    converter: 'convertidor',
+    calculator: 'calculadora',
+    contact: 'contacto',
+  },
+  calculation: {
+    area: 'area',
+    length: 'metro',
+    diameter: 'diámetro del rollo',
+    consumption: 'consumo / 1,000 die cuts',
+    price_roll: 'precio / rollo',
+    price_m2: 'precio / area'
   },
   contact: {
     name: 'NOMBRE',
@@ -24,9 +34,9 @@ const locale = {
   },
   calculation_area: {
     area: 'ZONA',
-    length: 'LONGITUD',
-    width: 'ANCHURA',
-    result: 'RESULTADO',
+    length: 'longitud',
+    width: 'ancho',
+    result: 'resultado',
   },
   calculation_length: {
     length: 'LONGITUD',
@@ -35,8 +45,8 @@ const locale = {
     result: 'RESULTADO',
   },
   calculation_diameter: {
-    diameter: 'DIÁMETRO',
-    core: 'DIÁMETRO CENTRAL',
+    diameter: 'diámetro externo del rollo',
+    core: 'mandril',
     length: 'LONGITUD',
     thickness: 'ESPESOR',
     result: 'RESULTADO',
@@ -44,9 +54,9 @@ const locale = {
   calculation_consumptation: {
     consumptation: 'CONSUMPTION',
     punch_line: 'Consumo / 1000 línea de golpe',
-    length_x: 'LONGITUD (X)',
-    width_y: 'ANCHURA (Y)',
-    without_waste: 'Tenga en cuenta que el consumo es puro consumo de material, sin desperdicio',
+    length_x: 'longitud (x)',
+    width_y: 'ancho (y)',
+    without_waste: 'Tenga en cuenta que el consumo es consumo de material, sin contar el desperdicio.',
     result: 'RESULTADO',
   },
   calculation_price: {
@@ -80,11 +90,11 @@ const locale = {
     result: 'RESULTADO',
   },
   converter_mass: {
-    mass: 'MASA',
+    mass: 'peso',
     result: 'RESULTADO',
   },
   converter_force: {
-    force: 'FUERZA DE PEGAMENTO',
+    force: 'fuerza adhesión',
     result: 'RESULTADO',
   },
   converter_price: {
@@ -92,5 +102,3 @@ const locale = {
     result: 'RESULTADO',
   },
 };
-
-export default locale;

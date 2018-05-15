@@ -1,12 +1,22 @@
-const locale = {
+export default const locale = {
+  launchingscreen: {
+    calculate: 'calculate',
+    convert: 'convert',
+    calculator: 'calculator'
+  },
   general: {
     calculation: 'calculation',
     converter: 'converter',
     calculator: 'calculator',
-    contact: 'contact',
-    calculate: 'calculate',
-    phone: '+494050691464',
-    mailto: 'malte.spaniol@itpe-germany.de',
+    contact: 'contact'
+  },
+  calculation: {
+    area: 'area',
+    length: 'length',
+    diameter: 'roll diameter',
+    consumption: 'consumption / 1,000 die cuts',
+    price_roll: 'price / roll',
+    price_m2: 'price / area'
   },
   contact: {
     name: 'Name',
@@ -24,9 +34,9 @@ const locale = {
   },
   calculation_area: {
     area: 'AREA',
-    length: 'LENGTH',
-    width: 'WIDTH',
-    result: 'Result',
+    length: 'length (linear)',
+    width: 'width',
+    result: 'result',
   },
   calculation_length: {
     length: 'LENGTH',
@@ -35,18 +45,18 @@ const locale = {
     result: 'RESULT',
   },
   calculation_diameter: {
-    diameter: 'DIAMETER',
-    core: 'CORE DIAMETER',
+    diameter: 'outer roll diameter',
+    core: 'core',
     length: 'LENGTH',
     thickness: 'THICKNESS',
     result: 'RESULT',
   },
   calculation_consumptation: {
-    consumptation: 'CONSUMPTATION',
+    consumptation: 'CONSUMPTION',
     punch_line: 'Consumptation / 1000 punch line',
     length_x: 'LENGTH(X)',
     width_y: 'WIDTH(Y)',
-    without_waste: 'Please note that the Consumptation is pure material Consumptation, without waste.',
+    without_waste: 'Please note that the Consumption is pure material Consumption, without waste.',
     result: 'RESULT',
   },
   calculation_price: {
@@ -80,11 +90,11 @@ const locale = {
     result: 'RESULT',
   },
   converter_mass: {
-    mass: 'MASS',
+    mass: 'weight',
     result: 'RESULT',
   },
   converter_force: {
-    force: 'FORCE OF GLUE',
+    force: 'peel adhesion',
     result: 'RESULT',
   },
   converter_price: {
@@ -92,5 +102,3 @@ const locale = {
     result: 'RESULT',
   },
 };
-
-export default locale;

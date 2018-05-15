@@ -1,12 +1,22 @@
-const locale = {
+export default const locale = {
+  launchingscreen: {
+    calculate: '計算する',
+    convert: '変換する',
+    calculator: '電卓'
+  },
   general: {
     calculation: '計算',
-    converter: 'メッセージ',
-    calculator: 'ポケット電卓',
-    contact: '接触',
-    calculate: '電卓',
-    phone: '+494053257770',
-    mailto: 'malte.spaniol@itpe-germany.de',
+    converter: '単位変換',
+    calculator: '電卓',
+    contact: 'コンタクト'
+  },
+  calculation: {
+    area: '面積',
+    length: '長さ',
+    diameter: '直径',
+    consumption: '使用量',
+    price_roll: '単価／巻',
+    price_m2: '単価／平米'
   },
   contact: {
     name: '名',
@@ -19,14 +29,14 @@ const locale = {
     imprint: '印象',
     privacy: '個人情報保護方針',
     condition: '利用条件',
-    characters:'文字',
+    characters:'符号',
     emailvalidation:'有効なメールアドレスを入力してください'
   },
   calculation_area: {
     area: 'エリア',
-    length: '⻑さ',
+    length: '長さ',
     width: '幅',
-    result: '結果',
+    result: '計算結果',
   },
   calculation_length: {
     length: '⻑さ',
@@ -35,8 +45,8 @@ const locale = {
     result: '結果',
   },
   calculation_diameter: {
-    diameter: '直径',
-    core: 'コアダイ アモンド',
+    diameter: '外径',
+    core: 'コアサイズ゙',
     length: '⻑さ',
     thickness: '厚さ',
     result: '結果',
@@ -44,8 +54,8 @@ const locale = {
   calculation_consumptation: {
     consumptation: '消費',
     punch_line: '消費/ 1000 パンチラ イン',
-    length_x: '⻑さ(X)',
-    width_y: '幅(Y)',
+    length_x: '長さ(x)',
+    width_y: '幅(y)',
     without_waste: '消費は無駄なく純粋な材料消費であることに注意してください。',
     result: '結果',
   },
@@ -80,11 +90,11 @@ const locale = {
     result: '結果',
   },
   converter_mass: {
-    mass: '質量',
+    mass: '重量',
     result: '結果',
   },
   converter_force: {
-    force: 'グルーの',
+    force: '接着を剥がす',
     result: '結果',
   },
   converter_price: {
@@ -92,5 +102,3 @@ const locale = {
     result: '結果',
   },
 };
-
-export default locale;

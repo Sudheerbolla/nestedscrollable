@@ -9,7 +9,7 @@ import applyLetterSpacing from '../utils/applyLetterSpacing';
 
 const { width, height } = Dimensions.get('window');
 
-class LaunchScreen extends Component {
+export default class LaunchScreen extends Component {
   render() {
     return (
       <View style={styles.conatiner}>
@@ -25,9 +25,9 @@ class LaunchScreen extends Component {
 
           <View style={styles.arrowContainer}>
             <View style={styles.labelContainer}>
-              <Text style={styles.label}>{applyLetterSpacing(i18n.t('general.calculate').toUpperCase(), 1)}</Text>
-              <Text style={styles.label}>{applyLetterSpacing(i18n.t('general.converter').toUpperCase(), 1)}</Text>
-              <Text style={styles.label}>{applyLetterSpacing(i18n.t('general.calculator').toUpperCase(), 1)}</Text>
+              <Text style={styles.label}>{applyLetterSpacing(i18n.t('launchingscreen.calculate').toUpperCase(), 1)}</Text>
+              <Text style={styles.label}>{applyLetterSpacing(i18n.t('launchingscreen.convert').toUpperCase(), 1)}</Text>
+              <Text style={styles.label}>{applyLetterSpacing(i18n.t('launchingscreen.calculator').toUpperCase(), 1)}</Text>
             </View>
             <View style={styles.iconContainer}>
               <Image source={ICONS.ARROW_BENEFIT} style={styles.arrowIcon} />
@@ -87,5 +87,3 @@ const styles = StyleSheet.create({
     height: 70,
   },
 });
-
-export default LaunchScreen;

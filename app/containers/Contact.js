@@ -166,41 +166,51 @@ class Calculation extends Component {
 
               <View style={styles.field}>
                 <TextInput
+                  ref={(input) => { this.nameTextInput = input; }}
                   maxLength={48}
                   underlineColorAndroid="rgba(0,0,0,0)"
                   placeholderTextColor={COLORS.DARK_GREY}
                   placeholder={applyLetterSpacing(i18n.t('contact.name').toUpperCase(), 1)}
                   style={styles.input}
+                  blurOnSubmit={false}
                   value={this.state.name}
                   onChangeText={text => this.setState({ name: text })}
+                  onSubmitEditing={() => { this.firmTextInput.focus(); }}
                 />
               </View>
 
               <View style={styles.field}>
                 <TextInput
+                  ref={(input) => { this.firmTextInput = input; }}
                   maxLength={48}
+                  blurOnSubmit={false}
                   underlineColorAndroid="rgba(0,0,0,0)"
                   placeholderTextColor={COLORS.DARK_GREY}
                   placeholder={applyLetterSpacing(i18n.t('contact.firw').toUpperCase(), 1)}
                   style={styles.input}
                   value={this.state.firm}
                   onChangeText={text => this.setState({ firm: text })}
+                  onSubmitEditing={() => { this.emailTextInput.focus(); }}
                 />
               </View>
 
               <View style={styles.field}>
                 <TextInput
+                  ref={(input) => { this.emailTextInput = input; }}
                   underlineColorAndroid="rgba(0,0,0,0)"
                   placeholderTextColor={COLORS.DARK_GREY}
+                  blurOnSubmit={false}
                   placeholder={applyLetterSpacing(i18n.t('contact.email').toUpperCase(), 1)}
                   style={styles.input}
                   value={this.state.email}
                   onChangeText={text => this.setState({ email: text })}
+                  onSubmitEditing={() => { this.messageTextInput.focus(); }}
                 />
               </View>
 
               <View style={styles.fieldDescription}>
                 <TextInput
+                  ref={(input) => { this.messageTextInput = input; }}
                   maxLength={1000}
                   underlineColorAndroid="rgba(0,0,0,0)"
                   placeholderTextColor={COLORS.DARK_GREY}

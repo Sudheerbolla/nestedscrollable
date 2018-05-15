@@ -7,7 +7,8 @@ import {COLORS, ICONS, FONTS} from '../constants';
 import i18n from '../utils/i18n';
 import applyLetterSpacing from '../utils/applyLetterSpacing';
 
-class Intro extends Component {
+export default class Intro extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -91,5 +92,3 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   }
 });
-
-export default Intro;
