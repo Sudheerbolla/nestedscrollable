@@ -215,20 +215,17 @@ class Details extends Component {
     +'\n'+this.state.lengthValueInKGMILS+' KG/Mils'
     +'\n'+this.state.lengthValueInPIN+' Pounds/inch'
     +'\n'+this.state.lengthValueInOIN +' Ounce/inch';
-      Share.share({
-        message: textToShare,
-        title: emailsubject,
-        url: textToShare,
-        subject: emailsubject
-      }, {
-        dialogTitle: emailsubject,
-        excludedActivityTypes: [
-          'com.apple.UIKit.activity.PostToTwitter',
-        ],
-        tintColor: 'green'
-      })
-      .then(this._showResult)
-      .catch(err => console.log(err))
+    Share.share({
+      message: textToShare,
+      subject: emailsubject
+    }, {
+      dialogTitle: emailsubject,
+      excludedActivityTypes: [
+        'com.apple.UIKit.activity.PostToTwitter',
+      ]
+    })
+    .then(this._showResult)
+    .catch(err => console.log(err))
   }
 
   renderField(settings) {

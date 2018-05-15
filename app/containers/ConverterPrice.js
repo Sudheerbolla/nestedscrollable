@@ -198,20 +198,17 @@ class Details extends Component {
     +'\n'+this.state.lengthValueInPY+' yard2'
     +'\n'+this.state.lengthValueInPF+' feet2'
     +'\n'+this.state.lengthValueInPMSI+' MSI';
-      Share.share({
-        message: textToShare,
-        title: emailsubject,
-        url: textToShare,
-        subject: emailsubject
-      }, {
-        dialogTitle: emailsubject,
-        excludedActivityTypes: [
-          'com.apple.UIKit.activity.PostToTwitter',
-        ],
-        tintColor: 'green'
-      })
-      .then(this._showResult)
-      .catch(err => console.log(err))
+    Share.share({
+      message: textToShare,
+      subject: emailsubject
+    }, {
+      dialogTitle: emailsubject,
+      excludedActivityTypes: [
+        'com.apple.UIKit.activity.PostToTwitter',
+      ]
+    })
+    .then(this._showResult)
+    .catch(err => console.log(err))
   }
 
   render() {

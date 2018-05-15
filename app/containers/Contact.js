@@ -20,7 +20,7 @@ import applyLetterSpacing from '../utils/applyLetterSpacing';
 // import ToastModule from '../../android/app/src/main/java/com/tesa/ToastModule';
 
 const deviceCountry = DeviceInfo.getDeviceCountry();
-import Boilerplate from 'react-native-android-library-sudheer'
+// import Boilerplate from 'react-native-android-library-sudheer'
 
 export default class Calculation extends Component {
 
@@ -100,7 +100,7 @@ export default class Calculation extends Component {
         SendIntentAndroid.sendMail(this.state.mailTo, 'Tape Calculator - Contact', this.state.message);
       }
 
-      Boilerplate.show('Boilerplate runs fine', Boilerplate.LONG)
+      // Boilerplate.show('Boilerplate runs fine', Boilerplate.LONG)
 
       // ToastModule.show('Awesome', ToastExample.SHORT);
       // this.sendEmailInBackGround();

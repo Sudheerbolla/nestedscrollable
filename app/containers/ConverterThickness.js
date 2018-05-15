@@ -139,20 +139,17 @@ class Details extends Component {
     + this.state.lengthValueInMM +' MM'
     +'\n'+this.state.lengthValueInMILS+' Mils'
     +'\n'+this.state.lengthValueInμM+' μM';
-      Share.share({
-        message: textToShare,
-        title: emailsubject,
-        url: textToShare,
-        subject: emailsubject
-      }, {
-        dialogTitle: emailsubject,
-        excludedActivityTypes: [
-          'com.apple.UIKit.activity.PostToTwitter',
-        ],
-        tintColor: 'green'
-      })
-      .then(this._showResult)
-      .catch(err => console.log(err))
+    Share.share({
+      message: textToShare,
+      subject: emailsubject
+    }, {
+      dialogTitle: emailsubject,
+      excludedActivityTypes: [
+        'com.apple.UIKit.activity.PostToTwitter',
+      ]
+    })
+    .then(this._showResult)
+    .catch(err => console.log(err))
   }
 
   getCalculatedValue = (number, conv) => {

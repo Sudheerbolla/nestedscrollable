@@ -174,17 +174,17 @@ export default class CalculationArea extends Component {
     +'\n'+this.state.areaValueInF+' feet2'
     +'\n'+this.state.areaValueInI+' inches2';
 
-       Share.share({
-         message: textToShare,
-         subject: emailsubject
-       }, {
-         dialogTitle: emailsubject,
-         excludedActivityTypes: [
-           'com.apple.UIKit.activity.PostToTwitter',
-         ]
-       })
-       .then(this._showResult)
-       .catch(err => console.log(err))
+     Share.share({
+       message: textToShare,
+       subject: emailsubject
+     }, {
+       dialogTitle: emailsubject,
+       excludedActivityTypes: [
+         'com.apple.UIKit.activity.PostToTwitter',
+       ]
+     })
+     .then(this._showResult)
+     .catch(err => console.log(err))
   }
 
   render() {

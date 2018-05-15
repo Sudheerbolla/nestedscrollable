@@ -58,27 +58,23 @@ export default class CalculationConsumptation extends Component {
   }
 
   shareTextWithTitle() {
-    let emailsubject='Tesa Tape Calculator - Consumptation';
+    let emailsubject='Tesa Tape Calculator - Consumption';
 
     let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+'mm, Width: '+this.state.widthValue+'μm '+
     +'\n'+'\n'
     +'Result: \n'
     + this.state.consumptationValueInM2 +' m2';
-
-      Share.share({
-        message: textToShare,
-        title: emailsubject,
-        url: textToShare,
-        subject: emailsubject
-      }, {
-        dialogTitle: emailsubject,
-        excludedActivityTypes: [
-          'com.apple.UIKit.activity.PostToTwitter',
-        ],
-        tintColor: 'green'
-      })
-      .then(this._showResult)
-      .catch(err => console.log(err))
+    Share.share({
+      message: textToShare,
+      subject: emailsubject
+    }, {
+      dialogTitle: emailsubject,
+      excludedActivityTypes: [
+        'com.apple.UIKit.activity.PostToTwitter',
+      ]
+    })
+    .then(this._showResult)
+    .catch(err => console.log(err))
   }
 
   validateDecimal = (value) => {
