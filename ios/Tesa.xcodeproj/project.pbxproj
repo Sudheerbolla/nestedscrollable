@@ -1066,8 +1066,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ITPE Informationstechnologische Produktentwicklung UG (haftungsbeschraenkt) (264F4ZRT6K)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ITPE Informationstechnologische Produktentwicklung UG (haftungsbeschraenkt) (264F4ZRT6K)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rajani Karukola (H3WC29L536)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rajani Karukola (H3WC29L536)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
@@ -1093,8 +1093,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tesa.app;
 				PRODUCT_NAME = Tesa;
-				PROVISIONING_PROFILE = "e4da762f-db62-48db-b5f5-14b941d13b6b";
-				PROVISIONING_PROFILE_SPECIFIER = TesaStore;
+				PROVISIONING_PROFILE = "8eff97d7-5f61-4edd-b4ee-9ec7c8a53d55";
+				PROVISIONING_PROFILE_SPECIFIER = devtesa;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
