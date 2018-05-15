@@ -176,20 +176,15 @@ export default class CalculationArea extends Component {
 
        Share.share({
          message: textToShare,
-         title: emailsubject,
-         url: textToShare,
          subject: emailsubject
        }, {
          dialogTitle: emailsubject,
          excludedActivityTypes: [
            'com.apple.UIKit.activity.PostToTwitter',
-         ],
-        tintColor: 'green'
+         ]
        })
        .then(this._showResult)
        .catch(err => console.log(err))
-
-
   }
 
   render() {

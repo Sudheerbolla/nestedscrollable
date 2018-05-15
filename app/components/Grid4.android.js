@@ -12,6 +12,7 @@ export default class Grid4 extends Component {
     imgWidth: width,
     imgHeight: 150
   };
+
   componentWillMount() {
     const {width, height} = resolveAssetSource(ICONS.TAPE_CALCULATOR);
     const screenWidth = Dimensions.get('window').width;
@@ -44,7 +45,7 @@ export default class Grid4 extends Component {
       </View>
     </View>);
   }
-} 
+}
 
 const screenHorizontalPadding = 50;
 const brandBarHeight = 9;

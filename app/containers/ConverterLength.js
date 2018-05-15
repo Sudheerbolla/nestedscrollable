@@ -133,7 +133,7 @@ class Details extends Component {
       lengthValueInY: this.getCalculatedValue(number, 'yards'),
       lengthValueInF: this.getCalculatedValue(number, 'feet'),
       lengthValueInI: this.getCalculatedValue(number, 'inches'),
-      lengthValueInMSI: ((this.getCalculatedValue(number, 'inches')*this.getCalculatedValue(number, 'inches'))*1000).toString()
+      lengthValueInMSI: ((this.getCalculatedValue(number, 'inches')*this.getCalculatedValue(number, 'inches'))/1000).toString()
     });
   }
 
@@ -235,6 +235,8 @@ class Details extends Component {
       } else if (conv == 'MSI') {
         outPut = number
       }
+    }else if (this.state.unit == 'MSI') {
+        outPut = number
     }
     outPut = this.round(outPut, 3);
     return outPut.toString();
