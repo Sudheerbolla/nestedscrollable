@@ -12,10 +12,16 @@ import NavBar from '../modules/NavBar';
 import { COLORS, ICONS, FONTS } from '../constants';
 import i18n from '../utils/i18n';
 import applyLetterSpacing from '../utils/applyLetterSpacing';
+// import nodemailer from 'nodemailer'
 
-import MailCore from 'react-native-mailcore';
+// const nodemailer=require('nodemailer')
+
+// node_modules\react-native-android-library-sudheer
+// import ToastModule from '../../android/app/src/main/java/com/tesa/ToastModule';
 
 const deviceCountry = DeviceInfo.getDeviceCountry();
+// import Boilerplate from 'react-native-android-library-sudheer'
+// import ToastModule from './ToastModule';
 
 export default class Calculation extends Component {
 
@@ -88,63 +94,86 @@ export default class Calculation extends Component {
     } else if (!this.state.message) {
       alert('please enter Message')
     } else {
-      this.sendMail();
+      if(Platform.OS === 'ios') {
+        Communications.email(this.state.mailTo.toString(), null, null, 'Tape Calculator - Contact', this.state.message);
+      } else {
+        var SendIntentAndroid = require('react-native-send-intent');
+        SendIntentAndroid.sendMail(this.state.mailTo, 'Tape Calculator - Contact', this.state.message);
+      }
+
+      // Boilerplate.show('Boilerplate runs fine', Boilerplate.LONG)
+
+      // ToastModule.show('Awesome', ToastExample.SHORT);
+      // this.sendEmailInBackGround();
+      // app.post('/send-email', function (req, res) {
+      //   let transporter = nodeMailer.createTransport({
+      //       host: 'smtp.1und1.de',
+      //       port: 587,
+      //       secure: false,
+      //       auth: {
+      //           user: 'info@itpe-germany.de',
+      //           pass: 'Itpe!9877'
+      //       }
+      //   });
+      //   let mailOptions = {
+      //       from: '"Tesa" <nagasudheerbolla@gmail.com>', // sender address
+      //       to: "nagasudheerbolla@gmail.com", // list of receivers
+      //       subject: "Subject", // Subject line
+      //       text: "Body message", // plain text body
+      //   };
+      //
+      //   transporter.sendMail(mailOptions, (error, info) => {
+      //       if (error) {
+      //         alert(error);
+      //           return console.log(error);
+      //       }
+      //       console.log('Message %s sent: %s', info.messageId, info.response);
+      //         alert('Message %s sent: %s', info.messageId, info.response);
+      //       });
+      //   });
+      //
+      //   app.listen(port, function(){
+      //     console.log('Server is running at port: ',port);
+      //   });
+
     }
   }
-  sendMail = () => MailCore.sendMail({
-    hostname: 'smtp.gmail.com',
-    port: 465,
-    username: 'alphabittest@gmail.com',
-    password: 'alphabit@123',
-    from: {
-      addressWithDisplayName: 'Tesa',
-      mailbox: 'alphabittest@gmail.com'
-    },
-    to: {
-      addressWithDisplayName: 'Tesa',
-      mailbox: 'nagasudheerbolla@gmail.com'
-      // mailbox: this.state.mailTo
-    },
-    subject: 'Tape Calculator - Contact',
-    htmlBody:
-              'Name : '+this.state.name+', \n\n'+
-              'Firm : '+this.state.firm+', \n\n'+
-              'Email : '+this.state.email+', \n\n'+
-              'Message : '+this.state.message+'.'
-            
-  }).then((result) => {
-    if(result.status==='SUCCESS'){
-      this.setState({ name: '' ,firm: '' ,email: '' ,message: '' })
-      alert('Email has been sent');
-    } else {
-      alert(result.status);
-    }
-  }).catch((error) => {
-    alert(error);
-  })
 
-  // sendMail = () => MailCore.sendMail({
-  //   hostname: 'smtp.1und1.de',
-  //   port: 587,
-  //   username: 'info@itpe-germany.de',
-  //   password: 'Itpe!9877',
-  //   from: {
-  //     addressWithDisplayName: 'Tesa',
-  //     mailbox: 'info@itpe-germany.de'
-  //   },
-  //   to: {
-  //     addressWithDisplayName: 'Tesa',
-  //     mailbox: 'nagasudheerbolla@gmail.com'
-  //   },
-  //   subject: 'Testing RN MailCore' + new Date(),
-  //   htmlBody: `<h1> How is it going </h1>
-  //             <p> Test message </p>
-  //           `
-  // }).then((result) => {
-  //   alert(result.status);
-  // }).catch((error) => {
-  //   alert(error);
-  // })
+  // sendEmailInBackGround=()=>{
+  //   nodemailer.createTestAccount((err, account) => {
+  //       // create reusable transporter object using the default SMTP transport
+  //       let transporter = nodemailer.createTransport({
+  //           host: 'smtp.1und1.de',
+  //           port: 587,
+  //           secure: false, // true for 465, false for other ports
+  //           auth: {
+  //               user: 'info@itpe-germany.de', // generated ethereal user
+  //               pass: 'Itpe!9877' // generated ethereal password
+  //           }
+  //       });
+  //
+  //       // setup email data with unicode symbols
+  //       let mailOptions = {
+  //           from: '"Tesa" <nagasudheerbolla@gmail.com>', // sender address
+  //           to: 'nagasudheerbolla@gmail.com', // list of receivers
+  //           subject: 'Hello ✔', // Subject line
+  //           text: 'Hello world?', // plain text
+  //       };
+  //
+  //       // send mail with defined transport object
+  //       transporter.sendMail(mailOptions, (error, info) => {
+  //           if (error) {
+  //               return console.log(error);
+  //           }
+  //           console.log('Message sent: %s', info.messageId);
+  //           // Preview only available when sending through an Ethereal account
+  //           console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+  //
+  //           // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+  //           // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+  //       });
+  //   });
+  // }
 
   validateEmail = () => {
     var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -295,7 +324,6 @@ export default class Calculation extends Component {
       </Grid>
     );
   }
-
 }
 
 const { width } = Dimensions.get('window');

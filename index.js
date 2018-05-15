@@ -1,6 +1,6 @@
 import { AppRegistry } from 'react-native';
 import App from './App';
-// import {NativeModules} from 'react-native';
-// module.exports = NativeModules.ToastModule;
+// require('./app');
+// import './app'
 
 AppRegistry.registerComponent('Tesa', () => App);

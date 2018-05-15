@@ -228,6 +228,19 @@ export default class Details extends Component {
     +'\n'+this.state.lengthValueInF+' feet2'
     +'\n'+this.state.lengthValueInI+' inches2'
     +'\n'+this.state.lengthValueInMSI +' MSI';
+    if(Platform.OS === 'ios') {
+      Share.share({
+        message: textToShare,
+        subject: emailsubject
+      }, {
+        dialogTitle: emailsubject,
+        excludedActivityTypes: [
+          'com.apple.UIKit.activity.PostToTwitter',
+        ]
+      })
+      .then(this._showResult)
+      .catch(err => console.log(err))
+    } else{
       Share.share({
         message: textToShare,
         title: emailsubject,
@@ -242,6 +255,7 @@ export default class Details extends Component {
       })
       .then(this._showResult)
       .catch(err => console.log(err))
+    }
   }
 
   render() {

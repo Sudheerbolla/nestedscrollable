@@ -30,7 +30,7 @@ const locale = {
     diameter: 'Rollendurchmesser',
     consumption: 'Verbrauch / 1.000 Stanzteile',
     price_roll: 'Preis / Rolle',
-    price_m2: 'Preis / m²'
+    price_m2: 'Preis / m'
   },
   calculation_area: {
     area: 'FLÄCHE',

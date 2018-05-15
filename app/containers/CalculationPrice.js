@@ -17,7 +17,7 @@ class Details extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      unit: 'pro m',
+      unit: 'm',
       priceValue: '0',
       lengthValue: '66.00',
       widthValue: '205',
@@ -93,6 +93,19 @@ class Details extends Component {
     +'Result: \n'
     + this.state.pricePerRoll +' Price/roll';
 
+    if(Platform.OS === 'ios') {
+      Share.share({
+        message: textToShare,
+        subject: emailsubject
+      }, {
+        dialogTitle: emailsubject,
+        excludedActivityTypes: [
+          'com.apple.UIKit.activity.PostToTwitter',
+        ]
+      })
+      .then(this._showResult)
+      .catch(err => console.log(err))
+    } else{
       Share.share({
         message: textToShare,
         title: emailsubject,
@@ -107,6 +120,7 @@ class Details extends Component {
       })
       .then(this._showResult)
       .catch(err => console.log(err))
+    }
   }
 
   validateDecimal = (value) => {
@@ -311,39 +325,14 @@ class Details extends Component {
           </View>
 
           <View style={styles.rightContainer}>
-            <View style={{ height: 24 }} />
 
-            <View style={styles.unitContainer}>
-              <View style={styles.pickerTopBorder} />
+            <View style={{ height: 45 }} />
 
-              {Platform.select({
-                android: (
-                  <CustomPicker
-                    options={['pro 100 m', 'pro m', 'pro m2']}
-                    fieldTemplate={this.renderField}
-                    style={{ paddingLeft: 30, marginTop: 15, height: 20 }}
-                    value={this.state.unit}
-                    onValueChange={(value) => {
-                      this.setState({ unit: value },function(){this.updateAllValues()});
-                    }}
-                  />
-                ),
-                ios: (
-                  <Picker
-                    selectedValue={this.state.unit}
-                    itemStyle={{ fontSize: 15, color: COLORS.DARK_GREY }}
-                    onValueChange={(itemValue, itemIndex) => {
-                      this.setState({ unit: itemValue },function(){this.updateAllValues()});
-                    }}>
-                    <Picker.Item label="pro	100	m" value="pro	100	m" />
-                    <Picker.Item label="pro	m" value="pro m" />
-                    <Picker.Item label="pro	m2" value="pro m2" />
-                  </Picker>
-                ),
-              })}
-
-              <View style={styles.pickerBottomBorder} />
+            <View style={styles.unitWidth}>
+              <Text style={styles.unitWidthLabel}>m</Text>
             </View>
+
+            <View style={{ height: 56 }} />
 
             <View style={styles.unitWidth}>
               <Text style={styles.unitWidthLabel}>m</Text>

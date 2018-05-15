@@ -16,7 +16,7 @@ const locale = {
     diameter: 'diamètre du rouleau',
     consumption: 'consommation / 1 000 pièces',
     price_roll: 'prix / rouleau',
-    price_m2: 'prix / m²'
+    price_m2: 'prix / m'
   },
   contact: {
     name: 'PRÉNOM',

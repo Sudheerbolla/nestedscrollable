@@ -16,7 +16,7 @@ const locale = {
     diameter: 'diámetro del rollo',
     consumption: 'consumo / 1,000 die cuts',
     price_roll: 'precio / rollo',
-    price_m2: 'precio / area'
+    price_m2: 'precio / m'
   },
   contact: {
     name: 'NOMBRE',

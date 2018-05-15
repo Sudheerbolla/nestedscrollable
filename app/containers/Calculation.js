@@ -74,7 +74,7 @@ export default class Calculation extends Component {
               <ImageButton
                 onPress={() =>
                   this.props.navigation.navigate('CalculationConsumption', {
-                    title: i18n.t('calculation.consumption').toUpperCase(),
+                    title: i18n.t('calculation_consumptation.consumptation').toUpperCase(),
                   })
                 }
                 image={ICONS.A_ICON_4}

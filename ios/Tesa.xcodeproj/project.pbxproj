@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -27,6 +26,7 @@
 		A9D71D74342E4E0888F3C9CB /* Proxima Nova Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF89348B6F8F41F59FB84AFA /* Proxima Nova Light.otf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		CDAA160AB2E84DC28FD0391A /* ProximaNovaCond-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A6B0DE044D5948B6B585C4B1 /* ProximaNovaCond-Semibold.otf */; };
+		A0A7376BDC114DDAB8365CBD /* libRNMailCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 035A0AF86BE44D9DA44F881D /* libRNMailCore.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -348,6 +348,8 @@
 		CF89348B6F8F41F59FB84AFA /* Proxima Nova Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Proxima Nova Light.otf"; path = "../fonts/Proxima Nova Light.otf"; sourceTree = "<group>"; };
 		DBBA1C142EE24E95B91AA75B /* RNI18n.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNI18n.xcodeproj; path = "../node_modules/react-native-i18n/ios/RNI18n.xcodeproj"; sourceTree = "<group>"; };
 		F78D80A57D13485096EBDED4 /* libRNDeviceInfo-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNDeviceInfo-tvOS.a"; sourceTree = "<group>"; };
+		F9457D382CB543C5B424F020 /* RNMailCore.xcodeproj */ = {isa = PBXFileReference; name = "RNMailCore.xcodeproj"; path = "../node_modules/react-native-mailcore/ios/RNMailCore.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		035A0AF86BE44D9DA44F881D /* libRNMailCore.a */ = {isa = PBXFileReference; name = "libRNMailCore.a"; path = "libRNMailCore.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -370,6 +372,7 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				175390D5B5B445AEB6FFB7DD /* libRNDeviceInfo.a in Frameworks */,
 				9571E7605F9546C2A721C613 /* libRNI18n.a in Frameworks */,
+				A0A7376BDC114DDAB8365CBD /* libRNMailCore.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,6 +558,7 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				59DA2E21A3E94C99BC3B52D2 /* RNDeviceInfo.xcodeproj */,
 				DBBA1C142EE24E95B91AA75B /* RNI18n.xcodeproj */,
+				F9457D382CB543C5B424F020 /* RNMailCore.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1072,12 +1076,14 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-i18n/ios",
+					"$(SRCROOT)\..\node_modules\react-native-mailcore\ios/**",
 				);
 				INFOPLIST_FILE = Tesa/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/Tesa\"",
 					"\"$(SRCROOT)/Tesa\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1107,12 +1113,14 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-i18n/ios",
+					"$(SRCROOT)\..\node_modules\react-native-mailcore\ios/**",
 				);
 				INFOPLIST_FILE = Tesa/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/Tesa\"",
 					"\"$(SRCROOT)/Tesa\"",
 				);
 				OTHER_LDFLAGS = (

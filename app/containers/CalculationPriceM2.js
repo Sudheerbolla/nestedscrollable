@@ -65,6 +65,19 @@ class Details extends Component {
     +'Result: \n'
     + this.state.pricePerRoll +' Price/M2';
 
+    if(Platform.OS === 'ios') {
+      Share.share({
+        message: textToShare,
+        subject: emailsubject
+      }, {
+        dialogTitle: emailsubject,
+        excludedActivityTypes: [
+          'com.apple.UIKit.activity.PostToTwitter',
+        ]
+      })
+      .then(this._showResult)
+      .catch(err => console.log(err))
+    } else{
       Share.share({
         message: textToShare,
         title: emailsubject,
@@ -79,6 +92,7 @@ class Details extends Component {
       })
       .then(this._showResult)
       .catch(err => console.log(err))
+    }
   }
 
   validateDecimal = (value) => {

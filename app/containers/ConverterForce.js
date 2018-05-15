@@ -215,6 +215,19 @@ class Details extends Component {
     +'\n'+this.state.lengthValueInKGMILS+' KG/Mils'
     +'\n'+this.state.lengthValueInPIN+' Pounds/inch'
     +'\n'+this.state.lengthValueInOIN +' Ounce/inch';
+    if(Platform.OS === 'ios') {
+      Share.share({
+        message: textToShare,
+        subject: emailsubject
+      }, {
+        dialogTitle: emailsubject,
+        excludedActivityTypes: [
+          'com.apple.UIKit.activity.PostToTwitter',
+        ]
+      })
+      .then(this._showResult)
+      .catch(err => console.log(err))
+    } else{
       Share.share({
         message: textToShare,
         title: emailsubject,
@@ -229,6 +242,7 @@ class Details extends Component {
       })
       .then(this._showResult)
       .catch(err => console.log(err))
+    }
   }
 
   renderField(settings) {

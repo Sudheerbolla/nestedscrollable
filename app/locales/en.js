@@ -16,7 +16,7 @@ const locale = {
     diameter: 'roll diameter',
     consumption: 'consumption / 1,000 die cuts',
     price_roll: 'price / roll',
-    price_m2: 'price / area'
+    price_m2: 'price / m'
   },
   contact: {
     name: 'Name',
@@ -53,7 +53,7 @@ const locale = {
   },
   calculation_consumptation: {
     consumptation: 'CONSUMPTION',
-    punch_line: 'Consumptation / 1000 punch line',
+    punch_line: 'Consumption / 1000 punch line',
     length_x: 'LENGTH(X)',
     width_y: 'WIDTH(Y)',
     without_waste: 'Please note that the Consumption is pure material Consumption, without waste.',

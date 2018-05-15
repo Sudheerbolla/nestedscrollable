@@ -29,7 +29,7 @@ class Details extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      unit: 'm',
+      unit: 'm2',
       areaValue: '4.80',
       widthValue: '0.019',
       lengthValueInM:'0',
@@ -71,7 +71,6 @@ class Details extends Component {
                 supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11, color: COLORS.DARK_GREY }}
                 style={styles.unitItem}
                 text={getLabel(selectedItem)}
-                sup={'2'}
               />
             </View>
           )}
@@ -82,57 +81,57 @@ class Details extends Component {
 
   updateAllValues = () => {
     this.setState({
-      lengthValueInM:this.getCalculatedValue('m'),
-      lengthValueInY:this.getCalculatedValue('yards'),
-      lengthValueInF:this.getCalculatedValue('feet'),
-      lengthValueInI:this.getCalculatedValue('inches')
+      lengthValueInM:this.getCalculatedValue('m2'),
+      lengthValueInY:this.getCalculatedValue('yards2'),
+      lengthValueInF:this.getCalculatedValue('feet2'),
+      lengthValueInI:this.getCalculatedValue('inches2')
     });
   }
 
   getCalculatedValue = (conv) => {
     var outPut = '';
-    if (this.state.unit == 'm') {
+    if (this.state.unit == 'm2') {
       var lengthInM=this.state.areaValue / this.state.widthValue;
-      if (conv == 'm')
+      if (conv == 'm2')
         outPut = lengthInM
-      else if (conv == 'yards') {
+      else if (conv == 'yards2') {
         outPut = 1.09361 * lengthInM
-      } else if (conv == 'feet') {
+      } else if (conv == 'feet2') {
         outPut = 3.28084 * lengthInM
-      } else if (conv == 'inches') {
+      } else if (conv == 'inches2') {
         outPut = 39.3701 * lengthInM
       }
-    } else if (this.state.unit == 'yards') {
+    } else if (this.state.unit == 'yards2') {
       var lengthInY=this.state.areaValue / this.state.widthValue;
-      if (conv == 'm')
+      if (conv == 'm2')
         outPut = 0.9144 * lengthInY
-      else if (conv == 'yards') {
+      else if (conv == 'yards2') {
         outPut = lengthInY
-      } else if (conv == 'feet') {
+      } else if (conv == 'feet2') {
         outPut = 3 * lengthInY
-      } else if (conv == 'inches') {
+      } else if (conv == 'inches2') {
         outPut = 36 * lengthInY
       }
-    } else if (this.state.unit == 'feet') {
+    } else if (this.state.unit == 'feet2') {
       var lengthInF=this.state.areaValue / this.state.widthValue;
-      if (conv == 'm')
+      if (conv == 'm2')
         outPut = 0.3048 * lengthInF
-      else if (conv == 'yards') {
+      else if (conv == 'yards2') {
         outPut = 0.333333 * lengthInF
-      } else if (conv == 'feet') {
+      } else if (conv == 'feet2') {
         outPut = lengthInF
-      } else if (conv == 'inches') {
+      } else if (conv == 'inches2') {
         outPut = 12 * lengthInF
       }
-    } else if (this.state.unit == 'inches') {
+    } else if (this.state.unit == 'inches2') {
       var lengthInI=this.state.areaValue / this.state.widthValue;
-      if (conv == 'm')
+      if (conv == 'm2')
         outPut = 0.0254*lengthInI
-      else if (conv == 'yards') {
+      else if (conv == 'yards2') {
         outPut = 0.0277778 * lengthInI
-      } else if (conv == 'feet') {
+      } else if (conv == 'feet2') {
         outPut = 0.0833333 * lengthInI
-      } else if (conv == 'inches') {
+      } else if (conv == 'inches2') {
         outPut = lengthInI
       }
     }
@@ -151,6 +150,19 @@ class Details extends Component {
     +'\n'+this.state.lengthValueInF+' Feet'
     +'\n'+this.state.lengthValueInI+' Inches';
 
+    if(Platform.OS === 'ios') {
+      Share.share({
+        message: textToShare,
+        subject: emailsubject
+      }, {
+        dialogTitle: emailsubject,
+        excludedActivityTypes: [
+          'com.apple.UIKit.activity.PostToTwitter',
+        ]
+      })
+      .then(this._showResult)
+      .catch(err => console.log(err))
+    } else{
       Share.share({
         message: textToShare,
         title: emailsubject,
@@ -165,7 +177,9 @@ class Details extends Component {
       })
       .then(this._showResult)
       .catch(err => console.log(err))
+    }
   }
+
   validateDecimal = (value) => {
       var RE = /^\d*\.?\d{0,2}$/
       if(RE.test(value)){
@@ -336,7 +350,7 @@ class Details extends Component {
                 {Platform.select({
                   android: (
                     <CustomPicker
-                      options={['yards', 'm', 'feet', 'inches']}
+                      options={['yards2', 'm2', 'feet2', 'inches2']}
                       fieldTemplate={this.renderField}
                       style={{ paddingLeft: 30, marginTop: 15, height: 20 }}
                       value={this.state.unit}
@@ -371,7 +385,7 @@ class Details extends Component {
                   textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 18 }}
                   supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11 }}
                   style={styles.unitItem}
-                  text={this.state.unit}
+                  text={this.state.unit.toString().slice(0, -1)}
                 />
               </View>
 
