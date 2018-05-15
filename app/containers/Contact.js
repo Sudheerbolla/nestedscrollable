@@ -15,7 +15,19 @@ import applyLetterSpacing from '../utils/applyLetterSpacing';
 
 const deviceCountry = DeviceInfo.getDeviceCountry();
 
+// var express = require('express'),
+//     path = require('path'),
+//     nodeMailer = require('nodemailer');
+//
+//     var app = express();
+//     var port = 3000;
+
+    // app.listen(port, function(req, res){
+    //   console.log('Server is running at port: ',port);
+    // });
+
 class Calculation extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -91,6 +103,37 @@ class Calculation extends Component {
         var SendIntentAndroid = require('react-native-send-intent');
         SendIntentAndroid.sendMail(this.state.mailTo, 'Tape Calculator - Contact', this.state.message);
       }
+      // app.post('/send-email', function (req, res) {
+      //   let transporter = nodeMailer.createTransport({
+      //       host: 'smtp.1und1.de',
+      //       port: 587,
+      //       secure: false,
+      //       auth: {
+      //           user: 'info@itpe-germany.de',
+      //           pass: 'Itpe!9877'
+      //       }
+      //   });
+      //   let mailOptions = {
+      //       from: '"Tesa" <nagasudheerbolla@gmail.com>', // sender address
+      //       to: "nagasudheerbolla@gmail.com", // list of receivers
+      //       subject: "Subject", // Subject line
+      //       text: "Body message", // plain text body
+      //   };
+      //
+      //   transporter.sendMail(mailOptions, (error, info) => {
+      //       if (error) {
+      //         alert(error);
+      //           return console.log(error);
+      //       }
+      //       console.log('Message %s sent: %s', info.messageId, info.response);
+      //         alert('Message %s sent: %s', info.messageId, info.response);
+      //       });
+      //   });
+      //
+      //   app.listen(port, function(){
+      //     console.log('Server is running at port: ',port);
+      //   });
+
     }
   }
 
