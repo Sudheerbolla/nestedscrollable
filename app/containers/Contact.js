@@ -107,11 +107,7 @@ export default class Calculation extends Component {
       mailbox: this.state.mailTo
     },
     subject: 'Tape Calculator - Contact',
-    htmlBody:
-              'Name : '+this.state.name+ <br/>+
-              'Firm : '+this.state.firm+<br/>+
-              'Email : '+this.state.email+<br/>+
-              'Message : '+this.state.message+'.'
+    htmlBody: `Name : ${this.state.name} <br/> Firm : ${this.state.firm} <br/> Email : ${this.state.email} <br/> Message : ${this.state.message}`
 
   }).then((result) => {
     if(result.status==='SUCCESS'){

@@ -102,9 +102,6 @@ dependencies {
     compile "com.android.support:appcompat-v7:23.0.1"
     compile ("com.facebook.react:react-native:0.54.1") {force=true}  // From node_modules
 
-    compile files('libs/activation.jar')
-    compile files('libs/additionnal.jar')
-    compile files('libs/mail.jar')
 }
 
 // Run this once to be able to run the application with BUCK
