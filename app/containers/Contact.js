@@ -140,7 +140,7 @@ export default class Calculation extends Component {
   }).then((result) => {
     if(result.status==='SUCCESS'){
       this.setState({ name: '' ,firm: '' ,email: '' ,message: '' })
-      alert('Email has been sent');
+      alert('Email has been sent from info@itpe-germany.de to '+this.state.mailTo);
     } else {
       alert(result.status);
     }

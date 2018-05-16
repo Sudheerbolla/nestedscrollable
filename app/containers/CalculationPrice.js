@@ -76,7 +76,7 @@ class Details extends Component {
     var pricePerRoll='';
     if (this.state.unit == 'm') {
       pricePerRoll=this.state.priceValue*this.state.widthValue*this.state.lengthValue;
-    } 
+    }
     pricePerRoll=this.round(pricePerRoll, 3);
     return pricePerRoll.toString();
   }
@@ -344,7 +344,7 @@ class Details extends Component {
 
             <View style={styles.resultUnitContainer}>
               <SupText
-                textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 18 }}
+                textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 15 }}
                 supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11 }}
                 style={styles.unitItem}
                 text={applyLetterSpacing(i18n.t('calculation_price.price_roll'), 1)}
