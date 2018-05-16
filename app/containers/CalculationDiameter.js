@@ -51,28 +51,19 @@ export default class CalculationDiameter extends Component {
   }
 
   shareTextWithTitle() {
-<<<<<<< HEAD
-    let emailsubject ='Tesa Tape Calculator - Diameter';
+  let emailsubject ='Tesa Tape Calculator - Diameter';
   if(Platform.OS === 'ios') {
     Share.share({
       message: this.state.textToShare,
       subject: emailsubject
     }, {
       dialogTitle: emailsubject,
-=======
-    Share.share({
-      message: this.state.textToShare,
-      subject: 'Tesa Tape Calculator - Diameter'
-    }, {
-      dialogTitle: 'Tesa Tape Calculator - Diameter',
->>>>>>> e30fcea7e212198209aa2330f3215ea13778c389
       excludedActivityTypes: [
         'com.apple.UIKit.activity.PostToTwitter',
       ]
     })
     .then(this._showResult)
     .catch(err => console.log(err))
-<<<<<<< HEAD
   } else{
     Share.share({
       message: this.state.textToShare,
@@ -89,24 +80,7 @@ export default class CalculationDiameter extends Component {
     .then(this._showResult)
     .catch(err => console.log(err))
   }
-  
-=======
 
-   Share.share({
-     message: this.state.textToShare,
-     title: 'Tesa Tape Calculator - Diameter',
-     url: this.state.textToShare,
-     subject: 'Tesa Tape Calculator - Diameter'
-   }, {
-     dialogTitle: 'Tesa Tape Calculator - Diameter',
-     excludedActivityTypes: [
-       'com.apple.UIKit.activity.PostToTwitter',
-     ],
-    tintColor: 'green'
-   })
-   .then(this._showResult)
-   .catch(err => console.log(err))
->>>>>>> e30fcea7e212198209aa2330f3215ea13778c389
   }
 
   updateShareText(result){

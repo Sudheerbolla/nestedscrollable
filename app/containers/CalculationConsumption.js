@@ -64,7 +64,6 @@ export default class CalculationConsumptation extends Component {
     +'\n'+'\n'
     +'Result: \n'
     + this.state.consumptationValueInM2 +' m2';
-<<<<<<< HEAD
 
     if(Platform.OS === 'ios') {
       Share.share({
@@ -94,19 +93,7 @@ export default class CalculationConsumptation extends Component {
       .then(this._showResult)
       .catch(err => console.log(err))
     }
-=======
-    Share.share({
-      message: textToShare,
-      subject: emailsubject
-    }, {
-      dialogTitle: emailsubject,
-      excludedActivityTypes: [
-        'com.apple.UIKit.activity.PostToTwitter',
-      ]
-    })
-    .then(this._showResult)
-    .catch(err => console.log(err))
->>>>>>> e30fcea7e212198209aa2330f3215ea13778c389
+    
   }
 
   validateDecimal = (value) => {

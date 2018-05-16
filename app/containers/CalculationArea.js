@@ -174,13 +174,12 @@ export default class CalculationArea extends Component {
     +'\n'+this.state.areaValueInF+' feet2'
     +'\n'+this.state.areaValueInI+' inches2';
 
-<<<<<<< HEAD
   if(Platform.OS === 'ios') {
     Share.share({
       message: textToShare,
       subject: emailsubject
     }, {
-      dialogTitle: emailsubject,
+      subject: emailsubject,
       excludedActivityTypes: [
         'com.apple.UIKit.activity.PostToTwitter',
       ]
@@ -203,20 +202,6 @@ export default class CalculationArea extends Component {
     .then(this._showResult)
     .catch(err => console.log(err))
   }
-
-=======
-     Share.share({
-       message: textToShare,
-       subject: emailsubject
-     }, {
-       dialogTitle: emailsubject,
-       excludedActivityTypes: [
-         'com.apple.UIKit.activity.PostToTwitter',
-       ]
-     })
-     .then(this._showResult)
-     .catch(err => console.log(err))
->>>>>>> e30fcea7e212198209aa2330f3215ea13778c389
   }
 
   render() {

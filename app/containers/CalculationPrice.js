@@ -93,7 +93,6 @@ class Details extends Component {
     +'Result: \n'
     + this.state.pricePerRoll +' Price/roll';
 
-<<<<<<< HEAD
     if(Platform.OS === 'ios') {
       Share.share({
         message: textToShare,
@@ -122,20 +121,6 @@ class Details extends Component {
       .then(this._showResult)
       .catch(err => console.log(err))
     }
-=======
-    Share.share({
-      message: textToShare,
-      subject: emailsubject
-    }, {
-      dialogTitle: emailsubject,
-      excludedActivityTypes: [
-        'com.apple.UIKit.activity.PostToTwitter',
-      ]
-    })
-    .then(this._showResult)
-    .catch(err => console.log(err))
-
->>>>>>> e30fcea7e212198209aa2330f3215ea13778c389
   }
 
   validateDecimal = (value) => {

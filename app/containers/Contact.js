@@ -16,10 +16,6 @@ import applyLetterSpacing from '../utils/applyLetterSpacing';
 import MailCore from 'react-native-mailcore';
 
 const deviceCountry = DeviceInfo.getDeviceCountry();
-<<<<<<< HEAD
-=======
-// import Boilerplate from 'react-native-android-library-sudheer'
->>>>>>> e30fcea7e212198209aa2330f3215ea13778c389
 
 export default class Calculation extends Component {
 
@@ -92,54 +88,10 @@ export default class Calculation extends Component {
     } else if (!this.state.message) {
       alert('please enter Message')
     } else {
-<<<<<<< HEAD
       this.sendMail();
-=======
-      if(Platform.OS === 'ios') {
-        Communications.email(this.state.mailTo.toString(), null, null, 'Tape Calculator - Contact', this.state.message);
-      } else {
-        var SendIntentAndroid = require('react-native-send-intent');
-        SendIntentAndroid.sendMail(this.state.mailTo, 'Tape Calculator - Contact', this.state.message);
-      }
-
-      // Boilerplate.show('Boilerplate runs fine', Boilerplate.LONG)
-
-      // ToastModule.show('Awesome', ToastExample.SHORT);
-      // this.sendEmailInBackGround();
-      // app.post('/send-email', function (req, res) {
-      //   let transporter = nodeMailer.createTransport({
-      //       host: 'smtp.1und1.de',
-      //       port: 587,
-      //       secure: false,
-      //       auth: {
-      //           user: 'info@itpe-germany.de',
-      //           pass: 'Itpe!9877'
-      //       }
-      //   });
-      //   let mailOptions = {
-      //       from: '"Tesa" <nagasudheerbolla@gmail.com>', // sender address
-      //       to: "nagasudheerbolla@gmail.com", // list of receivers
-      //       subject: "Subject", // Subject line
-      //       text: "Body message", // plain text body
-      //   };
-      //
-      //   transporter.sendMail(mailOptions, (error, info) => {
-      //       if (error) {
-      //         alert(error);
-      //           return console.log(error);
-      //       }
-      //       console.log('Message %s sent: %s', info.messageId, info.response);
-      //         alert('Message %s sent: %s', info.messageId, info.response);
-      //       });
-      //   });
-      //
-      //   app.listen(port, function(){
-      //     console.log('Server is running at port: ',port);
-      //   });
-
->>>>>>> e30fcea7e212198209aa2330f3215ea13778c389
     }
   }
+
   sendMail = () => MailCore.sendMail({
     hostname: 'smtp.gmail.com',
     port: 465,
@@ -151,16 +103,16 @@ export default class Calculation extends Component {
     },
     to: {
       addressWithDisplayName: 'Tesa',
-      mailbox: 'nagasudheerbolla@gmail.com'
-      // mailbox: this.state.mailTo
+      // mailbox: 'nagasudheerbolla@gmail.com'
+      mailbox: this.state.mailTo
     },
     subject: 'Tape Calculator - Contact',
     htmlBody:
-              'Name : '+this.state.name+', \n\n'+
-              'Firm : '+this.state.firm+', \n\n'+
-              'Email : '+this.state.email+', \n\n'+
+              'Name : '+this.state.name+ <br/>+
+              'Firm : '+this.state.firm+<br/>+
+              'Email : '+this.state.email+<br/>+
               'Message : '+this.state.message+'.'
-            
+
   }).then((result) => {
     if(result.status==='SUCCESS'){
       this.setState({ name: '' ,firm: '' ,email: '' ,message: '' })
