@@ -74,13 +74,9 @@ class Details extends Component {
 
   getCalculatedValue = () => {
     var pricePerRoll='';
-    if (this.state.unit == 'pro 100 m') {
+    if (this.state.unit == 'm') {
       pricePerRoll=this.state.priceValue*this.state.widthValue*this.state.lengthValue;
-    } else if (this.state.unit == 'pro m') {
-      pricePerRoll=this.state.priceValue*this.state.widthValue*this.state.lengthValue;
-    } else if (this.state.unit == 'pro m2') {
-      pricePerRoll=this.state.priceValue*this.state.widthValue*this.state.lengthValue;
-    }
+    } 
     pricePerRoll=this.round(pricePerRoll, 3);
     return pricePerRoll.toString();
   }
