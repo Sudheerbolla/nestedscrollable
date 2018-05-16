@@ -17,6 +17,34 @@ import MailCore from 'react-native-mailcore';
 
 const deviceCountry = DeviceInfo.getDeviceCountry();
 
+// sendMail = () => MailCore.sendMail({
+//   hostname: 'smtp.gmail.com',
+//   port: 465,
+//   username: 'alphabittest@gmail.com',
+//   password: 'alphabit@123',
+//   from: {
+//     addressWithDisplayName: 'Tesa',
+//     mailbox: 'alphabittest@gmail.com'
+//   },
+//   to: {
+//     addressWithDisplayName: 'Tesa',
+//     // mailbox: 'nagasudheerbolla@gmail.com'
+//     mailbox: this.state.mailTo
+//   },
+//   subject: 'Tape Calculator - Contact',
+//   htmlBody: `Name : ${this.state.name} <br/> Firm : ${this.state.firm} <br/> Email : ${this.state.email} <br/> Message : ${this.state.message}`
+//
+// }).then((result) => {
+//   if(result.status==='SUCCESS'){
+//     this.setState({ name: '' ,firm: '' ,email: '' ,message: '' })
+//     alert('Email has been sent');
+//   } else {
+//     alert(result.status);
+//   }
+// }).catch((error) => {
+//   alert(error);
+// })
+
 export default class Calculation extends Component {
 
   constructor(props) {
@@ -93,13 +121,13 @@ export default class Calculation extends Component {
   }
 
   sendMail = () => MailCore.sendMail({
-    hostname: 'smtp.gmail.com',
-    port: 465,
-    username: 'alphabittest@gmail.com',
-    password: 'alphabit@123',
+    hostname: 'smtp.1und1.de',
+    port: 587,
+    username: 'info@itpe-germany.de',
+    password: 'Itpe!9877',
     from: {
       addressWithDisplayName: 'Tesa',
-      mailbox: 'alphabittest@gmail.com'
+      mailbox: 'info@itpe-germany.de'
     },
     to: {
       addressWithDisplayName: 'Tesa',
@@ -119,29 +147,6 @@ export default class Calculation extends Component {
   }).catch((error) => {
     alert(error);
   })
-
-  // sendMail = () => MailCore.sendMail({
-  //   hostname: 'smtp.1und1.de',
-  //   port: 587,
-  //   username: 'info@itpe-germany.de',
-  //   password: 'Itpe!9877',
-  //   from: {
-  //     addressWithDisplayName: 'Tesa',
-  //     mailbox: 'info@itpe-germany.de'
-  //   },
-  //   to: {
-  //     addressWithDisplayName: 'Tesa',
-  //     mailbox: 'nagasudheerbolla@gmail.com'
-  //   },
-  //   subject: 'Testing RN MailCore' + new Date(),
-  //   htmlBody: `<h1> How is it going </h1>
-  //             <p> Test message </p>
-  //           `
-  // }).then((result) => {
-  //   alert(result.status);
-  // }).catch((error) => {
-  //   alert(error);
-  // })
 
   validateEmail = () => {
     var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
