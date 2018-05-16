@@ -166,7 +166,7 @@ export default class CalculationArea extends Component {
   shareTextWithTitle() {
     let emailsubject='Tesa Tape Calculator - Area';
 
-    let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+', Width: '+this.state.widthValue+' '
+    let textToShare='Input: \n Length: '+this.state.lengthValue+' '+this.state.unit+' , Width: '+this.state.widthValue+' '+this.state.unit
     +'\n'+'\n'
     +'Result: \n'
     + this.state.areaValueInM +' m2'
@@ -203,7 +203,7 @@ export default class CalculationArea extends Component {
       .catch(err => console.log(err))
     }
   }
-    
+
   render() {
     const { params } = this.props.navigation.state;
     const space = Platform.select({ ios: 5, android: 2 });

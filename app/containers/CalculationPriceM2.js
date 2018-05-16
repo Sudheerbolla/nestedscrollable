@@ -52,7 +52,7 @@ class Details extends Component {
   }
 
   getCalculatedValue = () => {
-    var pricePerRoll=this.state.priceValue*this.state.widthValue*this.state.lengthValue;
+    var pricePerRoll=this.state.priceValue*(this.state.widthValue*0.001)*this.state.lengthValue;
     pricePerRoll=this.round(pricePerRoll, 3);
     return pricePerRoll.toString();
   }
@@ -60,7 +60,7 @@ class Details extends Component {
   shareTextWithTitle() {
     let emailsubject='Tesa Tape Calculator - Price/M2';
 
-    let textToShare='Input: \n'+ 'Price: '+this.state.priceValue+', Width: '+this.state.widthValue+', Length: '+this.state.lengthValue+' '
+    let textToShare='Input: \n'+ 'Price: '+this.state.priceValue+'m , Width: '+this.state.widthValue+' mm, Length: '+this.state.lengthValue+' m'
     +'\n'+'\n'
     +'Result: \n'
     + this.state.pricePerRoll +' Price/M2';

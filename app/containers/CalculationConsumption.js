@@ -60,7 +60,7 @@ export default class CalculationConsumptation extends Component {
   shareTextWithTitle() {
     let emailsubject='Tesa Tape Calculator - Consumption';
 
-    let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+'mm, Width: '+this.state.widthValue+'μm '+
+    let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+' mm, Width: '+this.state.widthValue+' μm '+
     +'\n'+'\n'
     +'Result: \n'
     + this.state.consumptationValueInM2 +' m2';
@@ -70,7 +70,7 @@ export default class CalculationConsumptation extends Component {
         message: textToShare,
         subject: emailsubject
       }, {
-        dialogTitle: emailsubject,
+        subject: emailsubject,
         excludedActivityTypes: [
           'com.apple.UIKit.activity.PostToTwitter',
         ]

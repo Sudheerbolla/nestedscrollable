@@ -212,7 +212,7 @@ class Details extends Component {
   shareTextWithTitle() {
     let emailsubject='Tesa Tape Calculator - Force';
 
-    let textToShare='Input: '+this.state.lengthValue+' '
+    let textToShare='Input: '+this.state.lengthValue+' '+this.state.unit
     +'\n'+'\n'
     +'Result: \n'
     + this.state.lengthValueInNM +' N/M'
@@ -227,7 +227,7 @@ class Details extends Component {
         message: textToShare,
         subject: emailsubject
       }, {
-        dialogTitle: emailsubject,
+        subject: emailsubject,
         excludedActivityTypes: [
           'com.apple.UIKit.activity.PostToTwitter',
         ]

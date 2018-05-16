@@ -142,8 +142,7 @@ class Details extends Component {
   shareTextWithTitle() {
     let emailsubject='Tesa Tape Calculator - Length';
 
-    let textToShare='Input: \n'+ 'Area: '+this.state.areaValue+', Width: '+this.state.widthValue+' '
-    +'\n'+'\n'
+    let textToShare='Input: \n'+ 'Area: '+this.state.areaValue+' '+this.state.unit+', Width: '+this.state.widthValue+' '+this.state.unit.toString().slice(0, -1)+'\n'+'\n'
     +'Result: \n'
     + this.state.lengthValueInM +' m'
     +'\n'+this.state.lengthValueInY+' yards'
@@ -155,6 +154,7 @@ class Details extends Component {
         message: textToShare,
         subject: emailsubject
       }, {
+        subject: emailsubject,
         dialogTitle: emailsubject,
         excludedActivityTypes: [
           'com.apple.UIKit.activity.PostToTwitter',

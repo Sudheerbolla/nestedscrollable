@@ -51,34 +51,34 @@ export default class CalculationDiameter extends Component {
   }
 
   shareTextWithTitle() {
-  let emailsubject ='Tesa Tape Calculator - Diameter';
-  if(Platform.OS === 'ios') {
-    Share.share({
-      message: this.state.textToShare,
-      subject: emailsubject
-    }, {
-      dialogTitle: emailsubject,
-      excludedActivityTypes: [
-        'com.apple.UIKit.activity.PostToTwitter',
-      ]
-    })
-    .then(this._showResult)
-    .catch(err => console.log(err))
-  } else{
-    Share.share({
-      message: this.state.textToShare,
-      title: emailsubject,
-      url: this.state.textToShare,
-      subject: emailsubject
-    }, {
-      dialogTitle: emailsubject,
-      excludedActivityTypes: [
-        'com.apple.UIKit.activity.PostToTwitter',
-      ],
-      tintColor: 'green'
-    })
-    .then(this._showResult)
-    .catch(err => console.log(err))
+    let emailsubject ='Tesa Tape Calculator - Diameter';
+    if(Platform.OS === 'ios') {
+      Share.share({
+        message: this.state.textToShare,
+        subject: emailsubject
+      }, {
+        subject: emailsubject,
+        excludedActivityTypes: [
+          'com.apple.UIKit.activity.PostToTwitter',
+        ]
+      })
+      .then(this._showResult)
+      .catch(err => console.log(err))
+    } else{
+      Share.share({
+        message: this.state.textToShare,
+        title: emailsubject,
+        url: this.state.textToShare,
+        subject: emailsubject
+      }, {
+        dialogTitle: emailsubject,
+        excludedActivityTypes: [
+          'com.apple.UIKit.activity.PostToTwitter',
+        ],
+        tintColor: 'green'
+      })
+      .then(this._showResult)
+      .catch(err => console.log(err))
   }
 
   }
@@ -237,7 +237,7 @@ class TellerrollenScreen extends React.Component {
   }
 
   shareTextWithTitle() {
-    let textToShare = 'Input: \n'+ 'Length: '+this.state.lengthValue+', ThickNesss: '+this.state.thickNessValue+' '
+    let textToShare = 'Input: \n'+ 'Length: '+this.state.lengthValue+' m, ThickNesss: '+this.state.thickNessValue+' μm'
     +'\n'+'\n'
     +'Result: \n'
     + this.state.diameterInMM +' MM'
@@ -535,7 +535,8 @@ class SAFRollenScreen extends React.Component {
     shareTextWithTitle() {
       let emailsubject='Tesa Tape Calculator - Diameter';
 
-      let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+', ThickNesss: '+this.state.thickNessValue+' '+ 'Width(Core): '+this.state.coreWidthValue+', Width(Material): '+this.state.widthValue
+      let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+' m, ThickNesss: '+this.state.thickNessValue+' μm, Width(Core): '+
+      this.state.coreWidthValue+' mm, Width(Material): '+this.state.widthValue+' mm'+
       +'\n'+'\n'
       +'Result: \n'
       + this.state.diameterInMM +' MM'

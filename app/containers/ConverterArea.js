@@ -240,7 +240,7 @@ export default class Details extends Component {
         message: textToShare,
         subject: emailsubject
       }, {
-        dialogTitle: emailsubject,
+        subject: emailsubject,
         excludedActivityTypes: [
           'com.apple.UIKit.activity.PostToTwitter',
         ]

@@ -86,7 +86,7 @@ class Details extends Component {
         number = number.replace(/[^\d.-]/g, '');
       }
     }
-    
+
     if(number){
       if((number.split('\.').length-1)>1){
         alert(i18n.t('converter_area.outOfRangeAlert'));
@@ -267,7 +267,7 @@ class Details extends Component {
         message: textToShare,
         subject: emailsubject
       }, {
-        dialogTitle: emailsubject,
+        subject: emailsubject,
         excludedActivityTypes: [
           'com.apple.UIKit.activity.PostToTwitter',
         ]
