@@ -93,7 +93,7 @@ class Details extends Component {
       .then(this._showResult)
       .catch(err => console.log(err))
     }
-    
+
   }
 
   validateDecimal = (value) => {
@@ -130,6 +130,12 @@ class Details extends Component {
               title={i18n.t('calculation_price_m2.price').toUpperCase()}
               value={this.state.priceValue}
               onChangeText={(number) => {
+                if(Platform.OS === 'android') {
+                  if (number) {
+                    number = number.replace(/[^\d.-]/g, '');
+                  }
+                }
+
                 if(number){
                   if((number.split('\.').length-1)>1){
                     alert(i18n.t('converter_area.outOfRangeAlert'));
@@ -183,6 +189,12 @@ class Details extends Component {
               title={i18n.t('calculation_price_m2.length').toUpperCase()}
               value={this.state.lengthValue}
               onChangeText={(number) => {
+                if(Platform.OS === 'android') {
+                  if (number) {
+                    number = number.replace(/[^\d.-]/g, '');
+                  }
+                }
+
                 if(number){
                   if((number.split('\.').length-1)>1){
                     alert(i18n.t('converter_area.outOfRangeAlert'));
@@ -235,6 +247,12 @@ class Details extends Component {
               title={i18n.t('calculation_price_m2.width').toUpperCase()}
               value={this.state.widthValue}
               onChangeText={(number) => {
+                if(Platform.OS === 'android') {
+                  if (number) {
+                    number = number.replace(/[^\d.-]/g, '');
+                  }
+                }
+
                 if(number){
                   if((number.split('\.').length-1)>1){
                     alert(i18n.t('converter_area.outOfRangeAlert'));

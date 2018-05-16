@@ -174,36 +174,36 @@ export default class CalculationArea extends Component {
     +'\n'+this.state.areaValueInF+' feet2'
     +'\n'+this.state.areaValueInI+' inches2';
 
-  if(Platform.OS === 'ios') {
-    Share.share({
-      message: textToShare,
-      subject: emailsubject
-    }, {
-      subject: emailsubject,
-      excludedActivityTypes: [
-        'com.apple.UIKit.activity.PostToTwitter',
-      ]
-    })
-    .then(this._showResult)
-    .catch(err => console.log(err))
-  } else{
-    Share.share({
-      message: textToShare,
-      title: emailsubject,
-      url: textToShare,
-      subject: emailsubject
-    }, {
-      dialogTitle: emailsubject,
-      excludedActivityTypes: [
-        'com.apple.UIKit.activity.PostToTwitter',
-      ],
-      tintColor: 'green'
-    })
-    .then(this._showResult)
-    .catch(err => console.log(err))
+    if(Platform.OS === 'ios') {
+      Share.share({
+        message: textToShare,
+        subject: emailsubject
+      }, {
+        subject: emailsubject,
+        excludedActivityTypes: [
+          'com.apple.UIKit.activity.PostToTwitter',
+        ]
+      })
+      .then(this._showResult)
+      .catch(err => console.log(err))
+    } else{
+      Share.share({
+        message: textToShare,
+        title: emailsubject,
+        url: textToShare,
+        subject: emailsubject
+      }, {
+        dialogTitle: emailsubject,
+        excludedActivityTypes: [
+          'com.apple.UIKit.activity.PostToTwitter',
+        ],
+        tintColor: 'green'
+      })
+      .then(this._showResult)
+      .catch(err => console.log(err))
+    }
   }
-  }
-
+    
   render() {
     const { params } = this.props.navigation.state;
     const space = Platform.select({ ios: 5, android: 2 });
@@ -231,6 +231,11 @@ export default class CalculationArea extends Component {
                 setNativeProps={this.state.lengthValue}
                 onChangeText={(number) => {
                   if(number){
+                    if(Platform.OS === 'android') {
+                      if (number) {
+                        number = number.replace(/[^\d.-]/g, '');
+                      }
+                    }
                     if((number.split('\.').length-1)>1){
                       alert(i18n.t('converter_area.outOfRangeAlert'));
                       return;
@@ -278,6 +283,12 @@ export default class CalculationArea extends Component {
                 title={i18n.t('calculation_area.width').toUpperCase()}
                 value={this.state.widthValue}
                 onChangeText={(number) => {
+                  if(Platform.OS === 'android') {
+                    if (number) {
+                      number = number.replace(/[^\d.-]/g, '');
+                    }
+                  }
+
                   if(number){
                     if((number.split('\.').length-1)>1){
                       alert(i18n.t('converter_area.outOfRangeAlert'));

@@ -261,6 +261,12 @@ class TellerrollenScreen extends React.Component {
             title={i18n.t('calculation_diameter.length').toUpperCase()}
             value={this.state.lengthValue}
             onChangeText={(number) => {
+              if(Platform.OS === 'android') {
+                if (number) {
+                  number = number.replace(/[^\d.-]/g, '');
+                }
+              }
+
               if(number){
                 if((number.split('\.').length-1)>1){
                   alert(i18n.t('converter_area.outOfRangeAlert'));
@@ -315,6 +321,12 @@ class TellerrollenScreen extends React.Component {
             title={i18n.t('calculation_diameter.thickness').toUpperCase()}
             value={this.state.thickNessValue}
             onChangeText={(number) => {
+              if(Platform.OS === 'android') {
+                if (number) {
+                  number = number.replace(/[^\d.-]/g, '');
+                }
+              }
+
               if(number){
                 if((number.split('\.').length-1)>1){
                   alert(i18n.t('converter_area.outOfRangeAlert'));
@@ -556,6 +568,12 @@ class SAFRollenScreen extends React.Component {
             title={'width(Core)'.toUpperCase()}
             value={this.state.coreWidthValue}
             onChangeText={(number) => {
+              if(Platform.OS === 'android') {
+                if (number) {
+                  number = number.replace(/[^\d.-]/g, '');
+                }
+              }
+
               if(number){
                 if((number.split('\.').length-1)>1){
                   alert(i18n.t('converter_area.outOfRangeAlert'));
@@ -607,6 +625,12 @@ class SAFRollenScreen extends React.Component {
             title={i18n.t('calculation_diameter.thickness').toUpperCase()}
             value={this.state.thickNessValue}
             onChangeText={(number) => {
+              if(Platform.OS === 'android') {
+                if (number) {
+                  number = number.replace(/[^\d.-]/g, '');
+                }
+              }
+
               if(number){
                 if((number.split('\.').length-1)>1){
                   alert(i18n.t('converter_area.outOfRangeAlert'));
@@ -661,6 +685,12 @@ class SAFRollenScreen extends React.Component {
             title={i18n.t('calculation_diameter.length').toUpperCase()}
             value={this.state.lengthValue}
             onChangeText={(number) => {
+              if(Platform.OS === 'android') {
+                if (number) {
+                  number = number.replace(/[^\d.-]/g, '');
+                }
+              }
+
               if(number){
                 if((number.split('\.').length-1)>1){
                   alert(i18n.t('converter_area.outOfRangeAlert'));
@@ -714,6 +744,12 @@ class SAFRollenScreen extends React.Component {
             title={'Width(Material)'.toUpperCase()}
             value={this.state.widthValue}
             onChangeText={(number) => {
+              if(Platform.OS === 'android') {
+                if (number) {
+                  number = number.replace(/[^\d.-]/g, '');
+                }
+              }
+
               if(number){
                 if((number.split('\.').length-1)>1){
                   alert(i18n.t('converter_area.outOfRangeAlert'));

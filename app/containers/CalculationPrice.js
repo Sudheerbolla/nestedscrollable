@@ -152,6 +152,12 @@ class Details extends Component {
               title={i18n.t('calculation_price.price').toUpperCase()}
               value={this.state.priceValue}
               onChangeText={(number) => {
+                if(Platform.OS === 'android') {
+                  if (number) {
+                    number = number.replace(/[^\d.-]/g, '');
+                  }
+                }
+                
                 if(number){
                   if((number.split('\.').length-1)>1){
                     alert(i18n.t('converter_area.outOfRangeAlert'));
@@ -193,7 +199,6 @@ class Details extends Component {
                   alert(i18n.t('converter_area.negativeAlert'));
                 }
 
-
                 this.setState({ priceValue: number },function(){this.updateAllValues()});
                 }
               }
@@ -205,6 +210,12 @@ class Details extends Component {
               title={i18n.t('calculation_price.length').toUpperCase()}
               value={this.state.lengthValue}
               onChangeText={(number) => {
+                if(Platform.OS === 'android') {
+                  if (number) {
+                    number = number.replace(/[^\d.-]/g, '');
+                  }
+                }
+
                 if(number){
                   if((number.split('\.').length-1)>1){
                     alert(i18n.t('converter_area.outOfRangeAlert'));
@@ -258,6 +269,12 @@ class Details extends Component {
               title={i18n.t('calculation_price.width').toUpperCase()}
               value={this.state.widthValue}
               onChangeText={(number) => {
+                if(Platform.OS === 'android') {
+                  if (number) {
+                    number = number.replace(/[^\d.-]/g, '');
+                  }
+                }
+
                 if(number){
                   if((number.split('\.').length-1)>1){
                     alert(i18n.t('converter_area.outOfRangeAlert'));

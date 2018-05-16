@@ -14,6 +14,7 @@ import i18n from '../utils/i18n';
 import applyLetterSpacing from '../utils/applyLetterSpacing';
 
 import MailCore from 'react-native-mailcore';
+import { PermissionsAndroid } from 'react-native';
 
 const deviceCountry = DeviceInfo.getDeviceCountry();
 
@@ -57,11 +58,67 @@ export default class Calculation extends Component {
       limitMsg: 0,
       callTo: '',
       mailTo: '',
-      displayPhone: ''
+      displayPhone: '',
+      error:'',
+      latitude:'',
+      longitude:'',
     };
   }
 
-  componentDidMount() {
+  async requestLocationPermission() {
+    try {
+      const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, {
+          'title': 'Tesa App Location Permission',
+          'message': 'Tesa App needs access to your location so that we can provide you proper support based on your country.'
+      })
+
+      if (granted) {
+        console.log("You can use the location")
+        this.getLocation();
+      } else {
+        console.log("location permission denied")
+        requestLocationPermission();
+      }
+    } catch (err) {
+      console.warn(err)
+    }
+  }
+
+  getLocation =() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      // const initialPosition = JSON.stringify(position);
+      // alert(initialPosition);
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null,
+        },function(){
+          this.setUpDetails();
+        });
+        this.callApi(position.coords.latitude,position.coords.longitude);
+      },
+      (error) => {
+        this.setState({ error: error.message })
+        alert(error.message);
+      },
+      { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 },
+    );
+  }
+
+  callApi(myLat,myLon){
+    fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + myLat + ',' + myLon + '&key=' + "")
+            .then((response) => response.json())
+            .then((responseJson) => {
+            alert(JSON.stringify(responseJson));
+            console.log('ADDRESS GEOCODE is BACK!! => ' + JSON.stringify(responseJson));
+    })
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchId);
+  }
+
+  setUpDetails(){
     let mailTo = '';
     let displayPhone = '';
     let callTo = 1234567890;
@@ -108,6 +165,12 @@ export default class Calculation extends Component {
     });
   }
 
+  componentDidMount() {
+    // this.requestLocationPermission();
+    // this.getLocation();
+    this.setUpDetails();
+  }
+
   checkForValidations = () => {
     if(!this.state.name) {
       alert('please enter Name')
@@ -125,9 +188,12 @@ export default class Calculation extends Component {
     port: 587,
     username: 'info@itpe-germany.de',
     password: 'Itpe!9877',
+    secure:false,
     from: {
       addressWithDisplayName: 'Tesa',
-      mailbox: 'info@itpe-germany.de'
+      // mailbox: 'info@itpe-germany.de',
+      // mailbox: 'tesa@tesa-app.de',
+      mailbox: 'support@flyingcircle.de'
     },
     to: {
       addressWithDisplayName: 'Tesa',
@@ -136,11 +202,10 @@ export default class Calculation extends Component {
     },
     subject: 'Tape Calculator - Contact',
     htmlBody: `Name : ${this.state.name} <br/> Firm : ${this.state.firm} <br/> Email : ${this.state.email} <br/> Message : ${this.state.message}`
-
   }).then((result) => {
-    if(result.status==='SUCCESS'){
-      this.setState({ name: '' ,firm: '' ,email: '' ,message: '' })
-      alert('Email has been sent from info@itpe-germany.de to '+this.state.mailTo);
+    if(result.status==='SUCCESS') {
+      this.setState({ name: '' , firm: '' , email: '' , message: '' })
+      // alert('Email has been sent from info@itpe-germany.de to '+this.state.mailTo);
     } else {
       alert(result.status);
     }

@@ -81,6 +81,12 @@ class Details extends Component {
   }
 
   updateAllValues = (number) => {
+    if(Platform.OS === 'android') {
+      if (number) {
+        number = number.replace(/[^\d.-]/g, '');
+      }
+    }
+    
     if(number){
       if((number.split('\.').length-1)>1){
         alert(i18n.t('converter_area.outOfRangeAlert'));
@@ -284,7 +290,7 @@ class Details extends Component {
       .then(this._showResult)
       .catch(err => console.log(err))
     }
-    
+
   }
 
 

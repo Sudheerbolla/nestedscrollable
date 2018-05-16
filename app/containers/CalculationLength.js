@@ -178,7 +178,7 @@ class Details extends Component {
       .then(this._showResult)
       .catch(err => console.log(err))
     }
-    
+
   }
 
   validateDecimal = (value) => {
@@ -214,6 +214,12 @@ class Details extends Component {
                 title={i18n.t('calculation_length.area').toUpperCase()}
                 value={this.state.areaValue}
                 onChangeText={(number) => {
+                  if(Platform.OS === 'android') {
+                    if (number) {
+                      number = number.replace(/[^\d.-]/g, '');
+                    }
+                  }
+
                   if(number){
                     if((number.split('\.').length-1)>1){
                       alert(i18n.t('converter_area.outOfRangeAlert'));
@@ -269,6 +275,12 @@ class Details extends Component {
                 title={i18n.t('calculation_length.width').toUpperCase()}
                 value={this.state.widthValue}
                 onChangeText={(number) => {
+                  if(Platform.OS === 'android') {
+                    if (number) {
+                      number = number.replace(/[^\d.-]/g, '');
+                    }
+                  }
+
                   if(number){
                     if((number.split('\.').length-1)>1){
                       alert(i18n.t('converter_area.outOfRangeAlert'));

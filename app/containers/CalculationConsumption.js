@@ -93,7 +93,7 @@ export default class CalculationConsumptation extends Component {
       .then(this._showResult)
       .catch(err => console.log(err))
     }
-    
+
   }
 
   validateDecimal = (value) => {
@@ -132,6 +132,13 @@ export default class CalculationConsumptation extends Component {
               title={i18n.t('calculation_consumptation.length_x').toUpperCase()}
               value={this.state.lengthValue}
               onChangeText={(number) => {
+                if(Platform.OS === 'android') {
+                  if (number) {
+                    number = number.replace(/[^\d.-]/g, '');
+                  }
+                }
+
+
                 if(number){
                   if((number.split('\.').length-1)>1){
                     alert(i18n.t('converter_area.outOfRangeAlert'));
@@ -186,6 +193,12 @@ export default class CalculationConsumptation extends Component {
               title={i18n.t('calculation_consumptation.width_y').toUpperCase()}
               value={this.state.widthValue}
               onChangeText={(number) => {
+                if(Platform.OS === 'android') {
+                  if (number) {
+                    number = number.replace(/[^\d.-]/g, '');
+                  }
+                }
+
                 if(number){
                   if((number.split('\.').length-1)>1){
                     alert(i18n.t('converter_area.outOfRangeAlert'));
