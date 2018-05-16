@@ -14,7 +14,7 @@ const locale = {
     area: 'area',
     length: 'metro',
     diameter: 'diámetro del rollo',
-    consumption: 'consumo / 1,000 die cuts',
+    consumption: 'consumo',
     price_roll: 'precio / rollo',
     price_m2: 'precio / m'
   },

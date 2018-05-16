@@ -14,7 +14,7 @@ const locale = {
     area: 'area',
     length: 'length',
     diameter: 'roll diameter',
-    consumption: 'consumption / 1,000 die cuts',
+    consumption: 'consumption',
     price_roll: 'price / roll',
     price_m2: 'price / m'
   },

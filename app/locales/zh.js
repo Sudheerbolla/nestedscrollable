@@ -14,7 +14,7 @@ const locale = {
     area: '粘接面积',
     length: '長さ',
     diameter: '直径',
-    consumption: '消耗量/1000 模切件',
+    consumption: '消耗量',
     price_roll: '价格/卷',
     price_m2: '价格/平方米'
   },

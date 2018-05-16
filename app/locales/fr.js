@@ -14,7 +14,7 @@ const locale = {
     area: 'superficie',
     length: 'mètre linéaire',
     diameter: 'diamètre du rouleau',
-    consumption: 'consommation / 1 000 pièces',
+    consumption: 'consommation',
     price_roll: 'prix / rouleau',
     price_m2: 'prix / m'
   },
