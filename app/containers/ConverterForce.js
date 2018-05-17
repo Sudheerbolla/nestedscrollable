@@ -485,7 +485,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   unitContainer: {
-    width: 100,
+    width: 120,
     ...Platform.select({
       android: {
         paddingTop: 85,

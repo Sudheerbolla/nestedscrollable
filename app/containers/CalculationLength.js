@@ -142,12 +142,11 @@ class Details extends Component {
   shareTextWithTitle() {
     let emailsubject='Tesa Tape Calculator - Length';
 
-    let textToShare='Input: \n'+ 'Area: '+this.state.areaValue+' '+this.state.unit+', Width: '+this.state.widthValue+' '+this.state.unit.toString().slice(0, -1)+'\n'+'\n'
-    +'Result: \n'
+    let textToShare='Input: \n'+ 'Area: '+this.state.areaValue+' '+this.state.unit+', Width: '+this.state.widthValue+' '+this.state.unit.toString().slice(0, -1)+'\n \n Result: \n'
     + this.state.lengthValueInM +' m'
     +'\n'+this.state.lengthValueInY+' yards'
-    +'\n'+this.state.lengthValueInF+' Feet'
-    +'\n'+this.state.lengthValueInI+' Inches';
+    +'\n'+this.state.lengthValueInF+' feet'
+    +'\n'+this.state.lengthValueInI+' inches';
 
     if(Platform.OS === 'ios') {
       Share.share({

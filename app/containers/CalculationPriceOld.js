@@ -17,16 +17,12 @@ class Details extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      unit: 'm',
+      unit: 'pro m',
       priceValue: '0',
       lengthValue: '66.00',
       widthValue: '205',
       pricePerRoll:'280'
     };
-  }
-
-  componentDidMount(){
-    this.updateAllValues();
   }
 
   renderField(settings) {
@@ -74,32 +70,25 @@ class Details extends Component {
 
   getCalculatedValue = () => {
     var pricePerRoll='';
-    if (this.state.unit == 'm') {
-      pricePerRoll=this.state.priceValue*this.state.widthValue*0.001*this.state.lengthValue;
+    if (this.state.unit == 'pro 100 m') {
+      pricePerRoll=this.state.priceValue*this.state.widthValue*this.state.lengthValue;
+    } else if (this.state.unit == 'pro m') {
+      pricePerRoll=this.state.priceValue*this.state.widthValue*this.state.lengthValue;
+    } else if (this.state.unit == 'pro m2') {
+      pricePerRoll=this.state.priceValue*this.state.widthValue*this.state.lengthValue;
     }
     pricePerRoll=this.round(pricePerRoll, 3);
     return pricePerRoll.toString();
   }
 
   shareTextWithTitle() {
-    let emailsubject='Tesa Tape Calculator - Price /roll';
+    let emailsubject='Tesa Tape Calculator - Price';
 
-    let textToShare='Input: \n'+ 'Price: '+this.state.priceValue+' m, Width: '+this.state.widthValue+' mm, Length: '+this.state.lengthValue+' m \n \n Result: \n'
+    let textToShare='Input: \n'+ 'Price: '+this.state.priceValue+', Width: '+this.state.widthValue+', Length: '+this.state.lengthValue+' '+this.state.unit+
+    +'\n'+'\n'
+    +'Result: \n'
     + this.state.pricePerRoll +' Price/roll';
 
-    if(Platform.OS === 'ios') {
-      Share.share({
-        message: textToShare,
-        subject: emailsubject
-      }, {
-        subject: emailsubject,
-        excludedActivityTypes: [
-          'com.apple.UIKit.activity.PostToTwitter',
-        ]
-      })
-      .then(this._showResult)
-      .catch(err => console.log(err))
-    } else{
       Share.share({
         message: textToShare,
         title: emailsubject,
@@ -114,7 +103,6 @@ class Details extends Component {
       })
       .then(this._showResult)
       .catch(err => console.log(err))
-    }
   }
 
   validateDecimal = (value) => {
@@ -150,12 +138,6 @@ class Details extends Component {
               title={i18n.t('calculation_price.price').toUpperCase()}
               value={this.state.priceValue}
               onChangeText={(number) => {
-                if(Platform.OS === 'android') {
-                  if (number) {
-                    number = number.replace(/[^\d.-]/g, '');
-                  }
-                }
-
                 if(number){
                   if((number.split('\.').length-1)>1){
                     alert(i18n.t('converter_area.outOfRangeAlert'));
@@ -197,6 +179,7 @@ class Details extends Component {
                   alert(i18n.t('converter_area.negativeAlert'));
                 }
 
+
                 this.setState({ priceValue: number },function(){this.updateAllValues()});
                 }
               }
@@ -208,12 +191,6 @@ class Details extends Component {
               title={i18n.t('calculation_price.length').toUpperCase()}
               value={this.state.lengthValue}
               onChangeText={(number) => {
-                if(Platform.OS === 'android') {
-                  if (number) {
-                    number = number.replace(/[^\d.-]/g, '');
-                  }
-                }
-
                 if(number){
                   if((number.split('\.').length-1)>1){
                     alert(i18n.t('converter_area.outOfRangeAlert'));
@@ -267,12 +244,6 @@ class Details extends Component {
               title={i18n.t('calculation_price.width').toUpperCase()}
               value={this.state.widthValue}
               onChangeText={(number) => {
-                if(Platform.OS === 'android') {
-                  if (number) {
-                    number = number.replace(/[^\d.-]/g, '');
-                  }
-                }
-
                 if(number){
                   if((number.split('\.').length-1)>1){
                     alert(i18n.t('converter_area.outOfRangeAlert'));
@@ -344,7 +315,7 @@ class Details extends Component {
               {Platform.select({
                 android: (
                   <CustomPicker
-                    options={['m']}
+                    options={['pro 100 m', 'pro m', 'pro m2']}
                     fieldTemplate={this.renderField}
                     style={{ paddingLeft: 30, marginTop: 15, height: 20 }}
                     value={this.state.unit}
@@ -360,7 +331,9 @@ class Details extends Component {
                     onValueChange={(itemValue, itemIndex) => {
                       this.setState({ unit: itemValue },function(){this.updateAllValues()});
                     }}>
-                    <Picker.Item label="m" value="m" />
+                    <Picker.Item label="pro	100	m" value="pro	100	m" />
+                    <Picker.Item label="pro	m" value="pro m" />
+                    <Picker.Item label="pro	m2" value="pro m2" />
                   </Picker>
                 ),
               })}
@@ -382,7 +355,7 @@ class Details extends Component {
 
             <View style={styles.resultUnitContainer}>
               <SupText
-                textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 15 }}
+                textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 18 }}
                 supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11 }}
                 style={styles.unitItem}
                 text={applyLetterSpacing(i18n.t('calculation_price.price_roll'), 1)}

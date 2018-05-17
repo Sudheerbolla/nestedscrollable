@@ -237,8 +237,7 @@ class TellerrollenScreen extends React.Component {
   }
 
   shareTextWithTitle() {
-    let textToShare = 'Input: \n'+ 'Length: '+this.state.lengthValue+' m, ThickNesss: '+this.state.thickNessValue+' μm'
-    +'\n'+'\n'
+    let textToShare = 'Input: \n'+ 'Length: '+this.state.lengthValue+' m, Thicknesss: '+this.state.thickNessValue+' μm \n \n'
     +'Result: \n'
     + this.state.diameterInMM +' MM'
     +'\n'+this.state.diameterInInches+' Inches';
@@ -535,9 +534,7 @@ class SAFRollenScreen extends React.Component {
     shareTextWithTitle() {
       let emailsubject='Tesa Tape Calculator - Diameter';
 
-      let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+' m, ThickNesss: '+this.state.thickNessValue+' μm, Width(Core): '+
-      this.state.coreWidthValue+' mm, Width(Material): '+this.state.widthValue+' mm'+
-      +'\n'+'\n'
+      let textToShare='Input: \n'+ 'Length: '+this.state.lengthValue+' m, Thicknesss: '+this.state.thickNessValue+' μm, Width(Core): '+ this.state.coreWidthValue+' mm, Width(Material): '+this.state.widthValue+' mm \n \n'
       +'Result: \n'
       + this.state.diameterInMM +' MM'
       +'\n'+this.state.diameterInInches+' Inches';

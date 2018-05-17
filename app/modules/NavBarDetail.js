@@ -26,7 +26,7 @@ class NavBar extends Component {
         </TouchableOpacity>
         <View style={styles.titleContainer}>
           <SupText
-            textStyle={[styles.title, titleStyle, { fontFamily: FONTS.FONT_BOLD, fontSize: 18 }]}
+            textStyle={[styles.title, titleStyle, { fontFamily: FONTS.FONT_BOLD, fontSize: 16.5 }]}
             supStyle={[{ fontFamily: FONTS.FONT_BOLD, fontSize: 11, color: COLORS.BLUE }]}
             style={styles.unitItem}
             text={applyLetterSpacing(title, Platform.select({ ios: 5, android: 2 }))}

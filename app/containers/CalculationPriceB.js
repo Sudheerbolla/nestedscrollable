@@ -82,9 +82,11 @@ class Details extends Component {
   }
 
   shareTextWithTitle() {
-    let emailsubject='Tesa Tape Calculator - Price /roll';
+    let emailsubject='Tesa Tape Calculator - Price';
 
-    let textToShare='Input: \n'+ 'Price: '+this.state.priceValue+' m, Width: '+this.state.widthValue+' mm, Length: '+this.state.lengthValue+' m \n \n Result: \n'
+    let textToShare='Input: \n'+ 'Price: '+this.state.priceValue+' m, Width: '+this.state.widthValue+' mm, Length: '+this.state.lengthValue+' m'
+    +'\n'+'\n'
+    +'Result: \n'
     + this.state.pricePerRoll +' Price/roll';
 
     if(Platform.OS === 'ios') {
@@ -336,37 +338,14 @@ class Details extends Component {
           </View>
 
           <View style={styles.rightContainer}>
-            <View style={{ height: 24 }} />
 
-            <View style={styles.unitContainer}>
-              <View style={styles.pickerTopBorder} />
+            <View style={{ height: 45 }} />
 
-              {Platform.select({
-                android: (
-                  <CustomPicker
-                    options={['m']}
-                    fieldTemplate={this.renderField}
-                    style={{ paddingLeft: 30, marginTop: 15, height: 20 }}
-                    value={this.state.unit}
-                    onValueChange={(value) => {
-                      this.setState({ unit: value },function(){this.updateAllValues()});
-                    }}
-                  />
-                ),
-                ios: (
-                  <Picker
-                    selectedValue={this.state.unit}
-                    itemStyle={{ fontSize: 15, color: COLORS.DARK_GREY }}
-                    onValueChange={(itemValue, itemIndex) => {
-                      this.setState({ unit: itemValue },function(){this.updateAllValues()});
-                    }}>
-                    <Picker.Item label="m" value="m" />
-                  </Picker>
-                ),
-              })}
-
-              <View style={styles.pickerBottomBorder} />
+            <View style={styles.unitWidth}>
+              <Text style={styles.unitWidthLabel}>m</Text>
             </View>
+
+            <View style={{ height: 56 }} />
 
             <View style={styles.unitWidth}>
               <Text style={styles.unitWidthLabel}>m</Text>

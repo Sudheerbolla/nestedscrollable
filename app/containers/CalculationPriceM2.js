@@ -60,7 +60,7 @@ class Details extends Component {
   shareTextWithTitle() {
     let emailsubject='Tesa Tape Calculator - Price/M2';
 
-    let textToShare='Input: \n'+ 'Price: '+this.state.priceValue+'m , Width: '+this.state.widthValue+' mm, Length: '+this.state.lengthValue+' m'
+    let textToShare='Input: \n'+ 'Price: '+this.state.priceValue+' m , Width: '+this.state.widthValue+' mm, Length: '+this.state.lengthValue+' m'
     +'\n'+'\n'
     +'Result: \n'
     + this.state.pricePerRoll +' Price/M2';
