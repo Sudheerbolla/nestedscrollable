@@ -37,12 +37,16 @@ const locale = {
     length: 'longitud',
     width: 'ancho',
     result: 'resultado',
+    lengthValue: '66,00',
+    widthValue: '0,019'
   },
   calculation_length: {
     length: 'LONGITUD',
     area: 'ZONA',
     width: 'ANCHURA',
     result: 'RESULTADO',
+    areaValue: '4,80',
+    widthValue: '0,019'
   },
   calculation_diameter: {
     diameter: 'diámetro externo del rollo',
@@ -58,6 +62,8 @@ const locale = {
     width_y: 'ancho (y)',
     without_waste: 'Tenga en cuenta que el consumo es consumo de material, sin contar el desperdicio.',
     result: 'RESULTADO',
+    lengthValue: '66,00',
+    widthValue: '205'
   },
   calculation_price: {
     price_roll: 'PRECIO / RODAR',

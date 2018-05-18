@@ -36,13 +36,17 @@ const locale = {
     area: 'AREA',
     length: 'length (linear)',
     width: 'width',
-    result: 'result'
+    result: 'result',
+    lengthValue: '66.00',
+    widthValue: '0.019'
   },
   calculation_length: {
     length: 'LENGTH',
     area: 'AREA',
     width: 'WIDTH',
-    result: 'RESULT'
+    result: 'RESULT',
+    areaValue: '4.80',
+    widthValue: '0.019'
   },
   calculation_diameter: {
     diameter: 'outer roll diameter',
@@ -57,7 +61,9 @@ const locale = {
     length_x: 'LENGTH(X)',
     width_y: 'WIDTH(Y)',
     without_waste: 'Please note that the Consumption is pure material Consumption, without waste.',
-    result: 'RESULT'
+    result: 'RESULT',
+    lengthValue: '66.00',
+    widthValue: '205'
   },
   calculation_price: {
     price_roll: 'Price / Roll',

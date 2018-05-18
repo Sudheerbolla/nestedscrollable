@@ -21,6 +21,7 @@ import i18n from '../utils/i18n';
 import SupText from '../utils/SupText';
 import applyLetterSpacing from '../utils/applyLetterSpacing';
 import MarqueeText from 'react-native-marquee';
+var needToReplaceDotWithComma=false;
 
 const { width, height } = Dimensions.get('window');
 
@@ -30,8 +31,8 @@ class Details extends Component {
     super(props);
     this.state = {
       unit: 'm2',
-      areaValue: '4.80',
-      widthValue: '0.019',
+      areaValue: i18n.t('calculation_length.areaValue'),
+      widthValue: i18n.t('calculation_area.widthValue'),
       lengthValueInM:'0',
       lengthValueInY:'0',
       lengthValueInI:'0',
@@ -43,6 +44,10 @@ class Details extends Component {
     this.updateAllValues();
   }
 
+  componentWillUnmount(){
+    needToReplaceDotWithComma=false;
+  }
+
   round(number, precision) {
     var shift = function (number, precision, reverseShift) {
       if (reverseShift) {
@@ -52,10 +57,6 @@ class Details extends Component {
       return +(numArray[0] + "e" + (numArray[1] ? (+numArray[1] + precision) : precision));
     };
     return shift(Math.round(shift(number, precision, false)), precision, true);
-  }
-
-  getNewChar(str){
-    return str[str.length - 1];
   }
 
   renderField(settings) {
@@ -80,6 +81,10 @@ class Details extends Component {
   }
 
   updateAllValues = () => {
+    if(this.state.areaValue.includes(',')||this.state.widthValue.includes(','))
+      needToReplaceDotWithComma=true
+    else needToReplaceDotWithComma=false
+
     this.setState({
       lengthValueInM:this.getCalculatedValue('m2'),
       lengthValueInY:this.getCalculatedValue('yards2'),
@@ -90,8 +95,21 @@ class Details extends Component {
 
   getCalculatedValue = (conv) => {
     var outPut = '';
+    var areaValue=this.state.areaValue;
+    var widthValue=this.state.widthValue;
+    if(Platform.OS === 'ios') {
+      if(areaValue.includes(',')){
+         areaValue = areaValue.toString().replace(',', '.')
+         needToReplaceDotWithComma=true;
+      }
+      if(widthValue.includes(',')){
+         widthValue = widthValue.toString().replace(',', '.')
+         needToReplaceDotWithComma=true;
+      }
+    }
+
     if (this.state.unit == 'm2') {
-      var lengthInM=this.state.areaValue / this.state.widthValue;
+      var lengthInM=areaValue / widthValue;
       if (conv == 'm2')
         outPut = lengthInM
       else if (conv == 'yards2') {
@@ -102,7 +120,7 @@ class Details extends Component {
         outPut = 39.3701 * lengthInM
       }
     } else if (this.state.unit == 'yards2') {
-      var lengthInY=this.state.areaValue / this.state.widthValue;
+      var lengthInY=areaValue / widthValue;
       if (conv == 'm2')
         outPut = 0.9144 * lengthInY
       else if (conv == 'yards2') {
@@ -113,7 +131,7 @@ class Details extends Component {
         outPut = 36 * lengthInY
       }
     } else if (this.state.unit == 'feet2') {
-      var lengthInF=this.state.areaValue / this.state.widthValue;
+      var lengthInF=areaValue / widthValue;
       if (conv == 'm2')
         outPut = 0.3048 * lengthInF
       else if (conv == 'yards2') {
@@ -124,7 +142,7 @@ class Details extends Component {
         outPut = 12 * lengthInF
       }
     } else if (this.state.unit == 'inches2') {
-      var lengthInI=this.state.areaValue / this.state.widthValue;
+      var lengthInI=areaValue / widthValue;
       if (conv == 'm2')
         outPut = 0.0254*lengthInI
       else if (conv == 'yards2') {
@@ -136,6 +154,11 @@ class Details extends Component {
       }
     }
     outPut=this.round(outPut, 3);
+    if(needToReplaceDotWithComma){
+      if(outPut.toString().includes('.')){
+         outPut = outPut.toString().replace('.', ',');
+      }
+    }
     return outPut.toString();
   }
 
@@ -181,12 +204,29 @@ class Details extends Component {
   }
 
   validateDecimal = (value) => {
-      var RE = /^\d*\.?\d{0,2}$/
-      if(RE.test(value)){
-         return true;
-      }else{
-         return false;
-      }
+    var RE=''
+    if(value.toString().includes(',') && needToReplaceDotWithComma){
+      RE = /^\d*\,?\d{0,2}$/
+    } else
+      RE = /^\d*\.?\d{0,2}$/
+    return RE.test(value);
+  }
+
+  validateDecimal3 = (value) => {
+    var RE=''
+    if(value.toString().includes(',') && needToReplaceDotWithComma){
+      RE = /^\d*\,?\d{0,3}$/
+    } else
+      RE = /^\d*\.?\d{0,3}$/
+    return RE.test(value);
+  }
+
+  isNumberGreaterThanLimit = (value,limit) => {
+    return parseFloat(value) > limit;
+  }
+
+  hasMoreThanOneDecimalPoints = (value) => {
+    return ((value.split('\.').value-1)>1||(value.split('\,').value-1)>1);
   }
 
   render() {
@@ -213,55 +253,30 @@ class Details extends Component {
                 title={i18n.t('calculation_length.area').toUpperCase()}
                 value={this.state.areaValue}
                 onChangeText={(number) => {
-                  if(Platform.OS === 'android') {
-                    if (number) {
-                      number = number.replace(/[^\d.-]/g, '');
-                    }
-                  }
-
                   if(number){
-                    if((number.split('\.').length-1)>1){
-                      alert(i18n.t('converter_area.outOfRangeAlert'));
-                        return;
+                    if(Platform.OS === 'android') {
+                      number = number.replace(/[^\d.,-]/g, '');
+                      if(number.includes(',')){
+                         number=number.toString().replace(',','.');
+                      }
+                    } else {
+                      if(number.includes(',')){
+                         needToReplaceDotWithComma=true;
+                      }
                     }
-                  }
-
-                  if(number>10000000){
-                    alert(i18n.t('converter_area.outOfRangeAlert'));
-                    return;
-                  }
-                  // if(number===''){
-                  //   alert(i18n.t('converter_area.noValueAlert'));
-                  // }
-                  if(number.includes(',')){
-                     var exceptLast = number.toString();
-                     exceptLast = exceptLast.replace(',', '');
-                     number=exceptLast
-                  }
-
-                  if(this.getNewChar(number.toString())==='.'){
-                    var exceptLast = number.toString();
-                    exceptLast = exceptLast.slice(0, -1);
-                    if (exceptLast.toString().includes('.')) {
+                    if(this.hasMoreThanOneDecimalPoints(number)){
                       alert(i18n.t('converter_area.outOfRangeAlert'));
-                      number=exceptLast
+                      return;
                     }
-                  }
-
-                  if(number>0){
+                    if(this.isNumberGreaterThanLimit(number , 10000000)){
+                      alert(i18n.t('converter_area.outOfRangeAlert'));
+                      return;
+                    }
                     if(!this.validateDecimal(number)) {
                       alert(i18n.t('converter_area.outOfRangeAlert'));
                       return;
                     }
-                 }
-
-                 if(number.toString().includes('-')) {
-                    var exceptLast = number.toString();
-                    exceptLast = exceptLast.replace('-', '');
-                    number=exceptLast
-                    alert(i18n.t('converter_area.negativeAlert'));
                   }
-
 
                   this.setState({ areaValue: number },function(){this.updateAllValues()});
                   }
@@ -274,52 +289,29 @@ class Details extends Component {
                 title={i18n.t('calculation_length.width').toUpperCase()}
                 value={this.state.widthValue}
                 onChangeText={(number) => {
-                  if(Platform.OS === 'android') {
-                    if (number) {
-                      number = number.replace(/[^\d.-]/g, '');
-                    }
-                  }
-
                   if(number){
-                    if((number.split('\.').length-1)>1){
-                      alert(i18n.t('converter_area.outOfRangeAlert'));
-                        return;
+                    if(Platform.OS === 'android') {
+                      number = number.replace(/[^\d.,-]/g, '');
+                      if(number.includes(',')){
+                         number=number.toString().replace(',','.');
+                      }
+                    } else {
+                      if(number.includes(',')){
+                         needToReplaceDotWithComma=true;
+                      }
                     }
-                  }
-
-                  if(number>10000){
-                    alert(i18n.t('converter_area.outOfRangeAlert'));
-                    return;
-                  }
-                  // if(number===''){
-                  //   alert(i18n.t('converter_area.noValueAlert'));
-                  // }
-                  if(number.includes(',')){
-                     var exceptLast = number.toString();
-                     exceptLast = exceptLast.replace(',', '');
-                     number=exceptLast
-                  }
-                  if(this.getNewChar(number.toString())==='.'){
-                    var exceptLast = number.toString();
-                    exceptLast = exceptLast.slice(0, -1);
-                    if (exceptLast.toString().includes('.')) {
-                      alert(i18n.t('converter_area.outOfRangeAlert'));
-                      number=exceptLast
-                    }
-                  }
-
-                  if(number>0){
-                    if(!this.validateDecimal(number)) {
+                    if(this.hasMoreThanOneDecimalPoints(number)){
                       alert(i18n.t('converter_area.outOfRangeAlert'));
                       return;
                     }
-                 }
-
-                 if(number.toString().includes('-')) {
-                    var exceptLast = number.toString();
-                    exceptLast = exceptLast.replace('-', '');
-                    number=exceptLast
-                    alert(i18n.t('converter_area.negativeAlert'));
+                    if(this.isNumberGreaterThanLimit(number , 10000)){
+                      alert(i18n.t('converter_area.outOfRangeAlert'));
+                      return;
+                    }
+                    if(!this.validateDecimal3(number)) {
+                      alert(i18n.t('converter_area.outOfRangeAlert'));
+                      return;
+                    }
                   }
 
                   this.setState({ widthValue: number },function(){this.updateAllValues()});

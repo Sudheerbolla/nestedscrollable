@@ -37,12 +37,16 @@ const locale = {
     length: '長さ',
     width: '幅',
     result: '計算結果',
+    lengthValue: '66.00',
+    widthValue: '0.019'
   },
   calculation_length: {
     length: '⻑さ',
     area: 'エリア',
     width: '幅',
     result: '結果',
+    areaValue: '4.80',
+    widthValue: '0.019'
   },
   calculation_diameter: {
     diameter: '外径',
@@ -58,6 +62,8 @@ const locale = {
     width_y: '幅(y)',
     without_waste: '消費は無駄なく純粋な材料消費であることに注意してください。',
     result: '結果',
+    lengthValue: '66.00',
+    widthValue: '205'
   },
   calculation_price: {
     price_roll: '価格/ロール',

@@ -189,10 +189,7 @@ class Details extends Component {
               onChangeText={(number) => {
                 if(number){
                   if(Platform.OS === 'android') {
-                    number = number.replace(/[^\d.,-]/g, '');
-                    if(number.includes(',')){
-                       number=number.toString().replace(',','.');
-                    }
+                    number = number.replace(/[^\d.-]/g, '');
                   } else {
                     if(number.includes(',')){
                        needToReplaceDotWithComma=true;
@@ -223,12 +220,10 @@ class Details extends Component {
               title={i18n.t('calculation_price.length').toUpperCase()}
               value={this.state.lengthValue}
               onChangeText={(number) => {
+
                 if(number){
                   if(Platform.OS === 'android') {
-                    number = number.replace(/[^\d.,-]/g, '');
-                    if(number.includes(',')){
-                       number=number.toString().replace(',','.');
-                    }
+                    number = number.replace(/[^\d.-]/g, '');
                   } else {
                     if(number.includes(',')){
                        needToReplaceDotWithComma=true;
@@ -258,12 +253,10 @@ class Details extends Component {
               title={i18n.t('calculation_price.width').toUpperCase()}
               value={this.state.widthValue}
               onChangeText={(number) => {
+
                 if(number){
                   if(Platform.OS === 'android') {
-                    number = number.replace(/[^\d.,-]/g, '');
-                    if(number.includes(',')){
-                       number=number.toString().replace(',','.');
-                    }
+                    number = number.replace(/[^\d.-]/g, '');
                   } else {
                     if(number.includes(',')){
                        needToReplaceDotWithComma=true;
@@ -308,7 +301,7 @@ class Details extends Component {
             <View style={styles.unitContainer}>
               <View style={styles.pickerTopBorder} />
 
-              {/* {Platform.select({
+              {Platform.select({
                 android: (
                   <CustomPicker
                     options={['m']}
@@ -330,15 +323,13 @@ class Details extends Component {
                     <Picker.Item label="m" value="m" />
                   </Picker>
                 ),
-              })} */}
-                <Text style={[styles.unitWidthLabel,{paddingLeft: 40, marginTop: 15, height: 20,fontSize: 15}]}>m</Text>
-
+              })}
 
               <View style={styles.pickerBottomBorder} />
             </View>
 
             <View style={styles.unitWidth}>
-              <Text style={[styles.unitWidthLabel,{paddingLeft: 5, marginTop: 15, height: 20,fontSize: 15}]}>m</Text>
+              <Text style={styles.unitWidthLabel>m</Text>
             </View>
 
             <View style={{ height: Platform.select({ ios: 54, android: 65 }) }} />

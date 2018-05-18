@@ -37,12 +37,16 @@ const locale = {
     length: 'longueur',
     width: 'largeur',
     result: 'résultat',
+    lengthValue: '66,00',
+    widthValue: '0,019'
   },
   calculation_length: {
     length: 'LONGUEUR',
     area: 'LONGUEUR',
     width: 'LARGEUR',
     result: 'RÉSULTAT',
+    areaValue: '4,80',
+    widthValue: '0,019'
   },
   calculation_diameter: {
     diameter: 'diamètre',
@@ -58,6 +62,8 @@ const locale = {
     width_y: 'largeur',
     without_waste: "S'il vous plaît noter que la consommation est la consommation de matériaux purs, sans gaspillage.",
     result: 'RÉSULTAT',
+    lengthValue: '66,00',
+    widthValue: '205'
   },
   calculation_price: {
     price_roll: 'PRIC/ROULEAU',

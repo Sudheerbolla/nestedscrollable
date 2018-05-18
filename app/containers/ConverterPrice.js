@@ -22,6 +22,7 @@ import applyLetterSpacing from '../utils/applyLetterSpacing';
 import MarqueeText from 'react-native-marquee';
 
 const { width, height } = Dimensions.get('window');
+var needToReplaceDotWithComma=false;
 
 class Details extends Component {
 
@@ -37,6 +38,10 @@ class Details extends Component {
       hideView:'Preis / m2'
     };
   }
+
+    componentWillUnmount(){
+      needToReplaceDotWithComma=false;
+    }
 
   renderField(settings) {
     const { selectedItem, defaultText, getLabel, clear } = settings;
@@ -74,76 +79,62 @@ class Details extends Component {
     return shift(Math.round(shift(number, precision, false)), precision, true);
   }
 
-  getNewChar(str) {
-    return str[str.length - 1];
+  validateDecimal = (value) => {
+    var RE=''
+    if(value.toString().includes(',') && needToReplaceDotWithComma){
+      RE = /^\d*\,?\d{0,2}$/
+    } else
+      RE = /^\d*\.?\d{0,2}$/
+    return RE.test(value);
   }
 
-  validateDecimal = (value) => {
-      var RE = /^\d*\.?\d{0,2}$/
-      if(RE.test(value)){
-         return true;
-      }else{
-         return false;
-      }
-  }
+    isNumberGreaterThanLimit = (value,limit) => {
+      return parseFloat(value) > limit;
+    }
+
+    hasMoreThanOneDecimalPoints = (value) => {
+      return ((value.split('\.').value-1)>1||(value.split('\,').value-1)>1);
+    }
 
   updateAllValues = (number) => {
-    if(Platform.OS === 'android') {
-      if (number) {
-        number = number.replace(/[^\d.-]/g, '');
-      }
-    }
-
+    var numberModified=number;
     if(number){
-      if((number.split('\.').length-1)>1){
+      if(Platform.OS === 'android') {
+        number = number.replace(/[^\d.,-]/g, '');
+        if(number.includes(',')){
+           number=number.toString().replace(',','.');
+        }
+      } else {
+        if(number.includes(',')){
+           needToReplaceDotWithComma=true;
+        }
+      }
+      if(this.hasMoreThanOneDecimalPoints(number)){
         alert(i18n.t('converter_area.outOfRangeAlert'));
-          return;
+        return;
       }
-    }
-
-    if(number>10000){
-      alert(i18n.t('converter_area.outOfRangeAlert'));
-      return;
-    }
-
-    // if(number===''){
-    //   alert(i18n.t('converter_area.noValueAlert'));
-    // }
-    if(number.includes(',')){
-       var exceptLast = number.toString();
-       exceptLast = exceptLast.replace(',', '');
-       number=exceptLast
-    }
-
-    if (this.getNewChar(number.toString()) === '.') {
-      var exceptLast = number.toString();
-      exceptLast = exceptLast.slice(0, -1);
-      if (exceptLast.toString().includes('.')) {
-        alert('A Number cannot have two decimals points');
-        number = exceptLast
+      if(this.isNumberGreaterThanLimit(number , 10000)){
+        alert(i18n.t('converter_area.outOfRangeAlert'));
+        return;
       }
-    }
-
-    if(number>0){
       if(!this.validateDecimal(number)) {
         alert(i18n.t('converter_area.outOfRangeAlert'));
         return;
       }
-   }
-
-   if(number.toString().includes('-')) {
-      var exceptLast = number.toString();
-      exceptLast = exceptLast.replace('-', '');
-      number=exceptLast
-      alert(i18n.t('converter_area.negativeAlert'));
+      var input=number;
+      if(Platform.OS === 'ios') {
+        if(input.includes(',')){
+           numberModified = input.toString().replace(',', '.')
+           needToReplaceDotWithComma=true;
+        }
+      }
     }
-
     this.setState({
       lengthValue: number,
-      lengthValueInPM: this.getCalculatedValue(number, 'Preis / m2'),
-      lengthValueInPY: this.getCalculatedValue(number, 'Preis / yd2'),
-      lengthValueInPF: this.getCalculatedValue(number, 'Preis / ft2'),
-      lengthValueInPMSI: this.getCalculatedValue(number, 'Preis / MSI'),
+      lengthValueInPM: this.getCalculatedValue(numberModified, 'Preis / m2'),
+      lengthValueInPY: this.getCalculatedValue(numberModified, 'Preis / yd2'),
+      lengthValueInPF: this.getCalculatedValue(numberModified, 'Preis / ft2'),
+      lengthValueInPMSI: this.getCalculatedValue(numberModified, 'Preis / MSI'),
     });
   }
 
@@ -191,6 +182,11 @@ class Details extends Component {
       }
     }
     outPut = this.round(outPut, 3);
+    if(needToReplaceDotWithComma){
+      if(outPut.toString().includes('.')){
+         outPut = outPut.toString().replace('.', ',');
+      }
+    }
     return outPut.toString();
   }
 

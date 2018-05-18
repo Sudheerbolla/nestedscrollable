@@ -36,13 +36,17 @@ const locale = {
     area: 'FLÄCHE',
     length: 'Länge (Laufmeter)',
     width: 'Breite',
-    result: 'Ergebnis'
+    result: 'Ergebnis',
+    lengthValue: '66,00',
+    widthValue: '0,019'
   },
   calculation_length: {
     length: 'LAUFMETER',
     area: 'FLÄCHE',
     width: 'BREITE',
-    result: 'ERGEBNIS'
+    result: 'ERGEBNIS',
+    areaValue: '4,80',
+    widthValue: '0,019'
   },
   calculation_diameter: {
     diameter: `ÄUSSERER\nROLLENDURCHMESSER`,
@@ -57,7 +61,10 @@ const locale = {
     length_x: 'LÄNGE (X)',
     width_y: 'Breite (Y)',
     without_waste: 'Bitte beachten Sie, dass es sich bei dem Verbrauch um den reinen Materialverbrauch, ohne Verschnitt, handelt.',
-    result: 'ERGEBNIS'
+    result: 'ERGEBNIS',
+    lengthValue: '66,00',
+    widthValue: '205'
+
   },
   calculation_price: {
     price_roll: 'Preis / Rolle',

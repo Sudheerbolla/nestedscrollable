@@ -14,6 +14,7 @@ import MarqueeText from 'react-native-marquee';
 import Communications from 'react-native-communications';
 
 const { width, height } = Dimensions.get('window');
+var needToReplaceDotWithComma=false;
 
 export default class CalculationDiameter extends Component {
 
@@ -176,6 +177,10 @@ class TellerrollenScreen extends React.Component {
     this.updateAllValues();
   }
 
+  componentWillUnmount(){
+    needToReplaceDotWithComma=false;
+  }
+
   round(number, precision) {
     var shift = function (number, precision, reverseShift) {
       if (reverseShift) {
@@ -187,19 +192,28 @@ class TellerrollenScreen extends React.Component {
     return shift(Math.round(shift(number, precision, false)), precision, true);
   }
 
-  getNewChar(str){
-    return str[str.length - 1];
-  }
-
   calculateOuterDiameter = () => {
     var coreDiameter=1;
+    var length=this.state.lengthValue;
+    var thicknessValue=this.state.thickNessValue;
+    if(Platform.OS === 'ios') {
+      if(length.includes(',')){
+         length = length.toString().replace(',', '.')
+         needToReplaceDotWithComma=true;
+      }
+      if(thicknessValue.includes(',')){
+         thicknessValue = thicknessValue.toString().replace(',', '.')
+         needToReplaceDotWithComma=true;
+      }
+    }
+
     if(this.state.unit=='3-Zoll-Kern'){
       coreDiameter=82;
-    }else if (this.state.unit=='6-Zoll-Kern') {
+    } else if (this.state.unit=='6-Zoll-Kern') {
       coreDiameter=160;
     }
 
-    var underRootValue=(((coreDiameter/1000)*(coreDiameter/1000))+(4/3.141592)*this.state.lengthValue*(this.state.thickNessValue/1000000))
+    var underRootValue=(((coreDiameter/1000)*(coreDiameter/1000))+(4/3.141592)*length*(thicknessValue/1000000))
     // var underRootValue=((this.state.thickNessValue*this.state.lengthValue)/3.141)+((coreDiameter/2)*(coreDiameter/2));
 
     var diameter=1000*(Math.sqrt(underRootValue))
@@ -207,15 +221,19 @@ class TellerrollenScreen extends React.Component {
   }
 
   validateDecimal = (value) => {
-      var RE = /^\d*\.?\d{0,2}$/
-      if(RE.test(value)){
-         return true;
-      }else{
-         return false;
-      }
+    var RE=''
+    if(value.toString().includes(',') && needToReplaceDotWithComma){
+      RE = /^\d*\,?\d{0,2}$/
+    } else
+      RE = /^\d*\.?\d{0,2}$/
+    return RE.test(value);
   }
 
   updateAllValues = () => {
+    if(this.state.lengthValue.includes(',')||this.state.thickNessValue.includes(','))
+      needToReplaceDotWithComma=true
+    else needToReplaceDotWithComma=false
+
     this.setState({
       diameterInMM:this.getCalculatedValue('mm'),
       diameterInInches:this.getCalculatedValue('inches')
@@ -233,7 +251,20 @@ class TellerrollenScreen extends React.Component {
       outPut=diameterInInches;
     }
     outPut=this.round(outPut, 3);
+    if(needToReplaceDotWithComma){
+      if(outPut.toString().includes('.')){
+         outPut = outPut.toString().replace('.', ',');
+      }
+    }
     return outPut.toString();
+  }
+
+  isNumberGreaterThanLimit = (value,limit) => {
+    return parseFloat(value) > limit;
+  }
+
+  hasMoreThanOneDecimalPoints = (value) => {
+    return ((value.split('\.').value-1)>1||(value.split('\,').value-1)>1);
   }
 
   shareTextWithTitle() {
@@ -260,53 +291,31 @@ class TellerrollenScreen extends React.Component {
             title={i18n.t('calculation_diameter.length').toUpperCase()}
             value={this.state.lengthValue}
             onChangeText={(number) => {
-              if(Platform.OS === 'android') {
-                if (number) {
-                  number = number.replace(/[^\d.-]/g, '');
-                }
-              }
-
               if(number){
-                if((number.split('\.').length-1)>1){
-                  alert(i18n.t('converter_area.outOfRangeAlert'));
-                    return;
+                if(Platform.OS === 'android') {
+                  number = number.replace(/[^\d.,-]/g, '');
+                  if(number.includes(',')){
+                     number=number.toString().replace(',','.');
+                  }
+                } else {
+                  if(number.includes(',')){
+                     needToReplaceDotWithComma=true;
+                  }
                 }
-              }
-
-              if(number>500000){
-                alert(i18n.t('converter_area.outOfRangeAlert'));
-                return;
-              }
-              // if(number===''){
-              //   alert(i18n.t('converter_area.noValueAlert'));
-              // }
-              if(number.includes(',')){
-                 var exceptLast = number.toString();
-                 exceptLast = exceptLast.replace(',', '');
-                 number=exceptLast
-              }
-
-              if(this.getNewChar(number.toString())==='.'){
-                var exceptLast = number.toString();
-                exceptLast = exceptLast.slice(0, -1);
-                if (exceptLast.toString().includes('.')) {
+                if(this.hasMoreThanOneDecimalPoints(number)){
                   alert(i18n.t('converter_area.outOfRangeAlert'));
-                  number=exceptLast
+                  return;
                 }
-              }
+                if(this.isNumberGreaterThanLimit(number, 500000)){
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  return;
+                }
 
-              if(number>0){
                 if(!this.validateDecimal(number)) {
                   alert(i18n.t('converter_area.outOfRangeAlert'));
                   return;
                 }
-             }
 
-             if(number.toString().includes('-')) {
-                var exceptLast = number.toString();
-                exceptLast = exceptLast.replace('-', '');
-                number=exceptLast
-                alert(i18n.t('converter_area.negativeAlert'));
               }
 
               this.setState({ lengthValue: number },function(){this.updateAllValues()});
@@ -320,53 +329,31 @@ class TellerrollenScreen extends React.Component {
             title={i18n.t('calculation_diameter.thickness').toUpperCase()}
             value={this.state.thickNessValue}
             onChangeText={(number) => {
-              if(Platform.OS === 'android') {
-                if (number) {
-                  number = number.replace(/[^\d.-]/g, '');
-                }
-              }
-
               if(number){
-                if((number.split('\.').length-1)>1){
-                  alert(i18n.t('converter_area.outOfRangeAlert'));
-                    return;
+                if(Platform.OS === 'android') {
+                  number = number.replace(/[^\d.,-]/g, '');
+                  if(number.includes(',')){
+                     number=number.toString().replace(',','.');
+                  }
+                } else {
+                  if(number.includes(',')){
+                     needToReplaceDotWithComma=true;
+                  }
                 }
-              }
-
-              if(number>25000){
-                alert(i18n.t('converter_area.outOfRangeAlert'));
-                return;
-              }
-              // if(number===''){
-              //   alert(i18n.t('converter_area.noValueAlert'));
-              // }
-              if(number.includes(',')){
-                 var exceptLast = number.toString();
-                 exceptLast = exceptLast.replace(',', '');
-                 number=exceptLast
-              }
-
-              if(this.getNewChar(number.toString())==='.'){
-                var exceptLast = number.toString();
-                exceptLast = exceptLast.slice(0, -1);
-                if (exceptLast.toString().includes('.')) {
+                if(this.hasMoreThanOneDecimalPoints(number)){
                   alert(i18n.t('converter_area.outOfRangeAlert'));
-                  number=exceptLast
+                  return;
                 }
-              }
+                if(this.isNumberGreaterThanLimit(number, 25000)){
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  return;
+                }
 
-              if(number>0){
                 if(!this.validateDecimal(number)) {
                   alert(i18n.t('converter_area.outOfRangeAlert'));
                   return;
                 }
-             }
 
-             if(number.toString().includes('-')) {
-                var exceptLast = number.toString();
-                exceptLast = exceptLast.replace('-', '');
-                number=exceptLast
-                alert(i18n.t('converter_area.negativeAlert'));
               }
 
               this.setState({ thickNessValue: number },function(){this.updateAllValues()});
@@ -477,8 +464,13 @@ class SAFRollenScreen extends React.Component {
       };
       this.shareTextWithTitle();
     }
+
     componentDidMount(){
       this.updateAllValues();
+    }
+
+    componentWillUnmount(){
+      needToReplaceDotWithComma=false;
     }
 
     round(number, precision) {
@@ -492,25 +484,49 @@ class SAFRollenScreen extends React.Component {
       return shift(Math.round(shift(number, precision, false)), precision, true);
     }
 
-    getNewChar(str){
-      return str[str.length - 1];
-    }
-
     calculateOuterDiameter = () => {
       var coreDiameter=1;
+      var lengthValue=this.state.lengthValue;
+      var coreWidthValue=this.state.coreWidthValue;
+      var thickNessValue=this.state.thickNessValue;
+      var widthValue=this.state.widthValue;
+      if(Platform.OS === 'ios') {
+        if(widthValue.includes(',')){
+           widthValue = widthValue.toString().replace(',', '.')
+           needToReplaceDotWithComma=true;
+        }
+        if(thickNessValue.includes(',')){
+           thickNessValue = thickNessValue.toString().replace(',', '.')
+           needToReplaceDotWithComma=true;
+        }
+        if(coreWidthValue.includes(',')){
+           coreWidthValue = coreWidthValue.toString().replace(',', '.')
+           needToReplaceDotWithComma=true;
+        }
+        if(lengthValue.includes(',')){
+           lengthValue = lengthValue.toString().replace(',', '.')
+           needToReplaceDotWithComma=true;
+        }
+      }
+
       if(this.state.unit=='3-Zoll-Kern'){
         coreDiameter=82;
       } else if (this.state.unit=='6-Zoll-Kern') {
         coreDiameter=160;
       }
 
-      var underRootValue=(((coreDiameter/1000)*(coreDiameter/1000))+(4/this.state.coreWidthValue)*1000*(this.state.lengthValue/3.141592)*(this.state.thickNessValue/1000000))*(this.state.widthValue/1000)
+      var underRootValue=(((coreDiameter/1000)*(coreDiameter/1000))+(4/coreWidthValue)*1000*(lengthValue/3.141592)*(thickNessValue/1000000))*(widthValue/1000)
 
       var diameter=1000*(Math.sqrt(underRootValue))*1.1
       return diameter;
     }
 
     updateAllValues = () => {
+
+      if(this.state.coreWidthValue.includes(',')||this.state.widthValue.includes(',')||this.state.lengthValue.includes(',')||this.state.thickNessValue.includes(','))
+        needToReplaceDotWithComma=true
+      else needToReplaceDotWithComma=false
+
       this.setState({
         diameterInMM:this.getCalculatedValue('mm'),
         diameterInInches:this.getCalculatedValue('inches')
@@ -528,6 +544,11 @@ class SAFRollenScreen extends React.Component {
         outPut=diameterInInches;
       }
       outPut=this.round(outPut, 3);
+      if(needToReplaceDotWithComma){
+        if(outPut.toString().includes('.')){
+           outPut = outPut.toString().replace('.', ',');
+        }
+      }
       return outPut.toString();
     }
 
@@ -543,12 +564,20 @@ class SAFRollenScreen extends React.Component {
     }
 
     validateDecimal = (value) => {
-        var RE = /^\d*\.?\d{0,2}$/
-        if(RE.test(value)){
-           return true;
-        }else{
-           return false;
-        }
+      var RE=''
+      if(value.toString().includes(',') && needToReplaceDotWithComma){
+        RE = /^\d*\,?\d{0,2}$/
+      }else
+        RE = /^\d*\.?\d{0,2}$/
+      return RE.test(value);
+    }
+
+    isNumberGreaterThanLimit = (value,limit) => {
+      return parseFloat(value) > limit;
+    }
+
+    hasMoreThanOneDecimalPoints = (value) => {
+      return ((value.split('\.').value-1)>1||(value.split('\,').value-1)>1);
     }
 
     render() {
@@ -566,52 +595,33 @@ class SAFRollenScreen extends React.Component {
             title={'width(Core)'.toUpperCase()}
             value={this.state.coreWidthValue}
             onChangeText={(number) => {
-              if(Platform.OS === 'android') {
-                if (number) {
-                  number = number.replace(/[^\d.-]/g, '');
-                }
-              }
-
               if(number){
-                if((number.split('\.').length-1)>1){
-                  alert(i18n.t('converter_area.outOfRangeAlert'));
-                    return;
+                if(Platform.OS === 'android') {
+                  number = number.replace(/[^\d.,-]/g, '');
+                  if(number.includes(',')){
+                     number=number.toString().replace(',','.');
+                  }
+                } else {
+                  if(number.includes(',')){
+                     needToReplaceDotWithComma=true;
+                  }
                 }
-              }
-
-              if(number>10000){
-                alert(i18n.t('converter_area.outOfRangeAlert'));
-                return;
-              }
-
-              if(number.includes(',')){
-                 var exceptLast = number.toString();
-                 exceptLast = exceptLast.replace(',', '');
-                 number=exceptLast
-              }
-
-              if(this.getNewChar(number.toString())==='.'){
-                var exceptLast = number.toString();
-                exceptLast = exceptLast.slice(0, -1);
-                if (exceptLast.toString().includes('.')) {
+                if(this.hasMoreThanOneDecimalPoints(number)){
                   alert(i18n.t('converter_area.outOfRangeAlert'));
-                  number=exceptLast
+                  return;
                 }
-              }
+                if(this.isNumberGreaterThanLimit(number, 10000)){
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  return;
+                }
 
-              if(number>0){
                 if(!this.validateDecimal(number)) {
                   alert(i18n.t('converter_area.outOfRangeAlert'));
                   return;
                 }
-             }
 
-             if(number.toString().includes('-')) {
-                var exceptLast = number.toString();
-                exceptLast = exceptLast.replace('-', '');
-                number=exceptLast
-                alert(i18n.t('converter_area.negativeAlert'));
               }
+
               this.setState({ coreWidthValue: number },function(){this.updateAllValues()});
               }
             }
@@ -623,53 +633,29 @@ class SAFRollenScreen extends React.Component {
             title={i18n.t('calculation_diameter.thickness').toUpperCase()}
             value={this.state.thickNessValue}
             onChangeText={(number) => {
-              if(Platform.OS === 'android') {
-                if (number) {
-                  number = number.replace(/[^\d.-]/g, '');
-                }
-              }
-
               if(number){
-                if((number.split('\.').length-1)>1){
-                  alert(i18n.t('converter_area.outOfRangeAlert'));
-                    return;
+                if(Platform.OS === 'android') {
+                  number = number.replace(/[^\d.,-]/g, '');
+                  if(number.includes(',')){
+                     number=number.toString().replace(',','.');
+                  }
+                } else {
+                  if(number.includes(',')){
+                     needToReplaceDotWithComma=true;
+                  }
                 }
-              }
-
-              if(number>25000){
-                alert(i18n.t('converter_area.outOfRangeAlert'));
-                return;
-              }
-              // if(number===''){
-              //   alert(i18n.t('converter_area.noValueAlert'));
-              // }
-              if(number.includes(',')){
-                 var exceptLast = number.toString();
-                 exceptLast = exceptLast.replace(',', '');
-                 number=exceptLast
-              }
-
-              if(this.getNewChar(number.toString())==='.'){
-                var exceptLast = number.toString();
-                exceptLast = exceptLast.slice(0, -1);
-                if (exceptLast.toString().includes('.')) {
+                if(this.hasMoreThanOneDecimalPoints(number)){
                   alert(i18n.t('converter_area.outOfRangeAlert'));
-                  number=exceptLast
+                  return;
                 }
-              }
-
-              if(number>0){
+                if(this.isNumberGreaterThanLimit(number, 25000)){
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  return;
+                }
                 if(!this.validateDecimal(number)) {
                   alert(i18n.t('converter_area.outOfRangeAlert'));
                   return;
                 }
-             }
-
-             if(number.toString().includes('-')) {
-                var exceptLast = number.toString();
-                exceptLast = exceptLast.replace('-', '');
-                number=exceptLast
-                alert(i18n.t('converter_area.negativeAlert'));
               }
 
               this.setState({ thickNessValue: number },function(){this.updateAllValues()});
@@ -683,54 +669,31 @@ class SAFRollenScreen extends React.Component {
             title={i18n.t('calculation_diameter.length').toUpperCase()}
             value={this.state.lengthValue}
             onChangeText={(number) => {
-              if(Platform.OS === 'android') {
-                if (number) {
-                  number = number.replace(/[^\d.-]/g, '');
-                }
-              }
-
               if(number){
-                if((number.split('\.').length-1)>1){
-                  alert(i18n.t('converter_area.outOfRangeAlert'));
-                    return;
+                if(Platform.OS === 'android') {
+                  number = number.replace(/[^\d.,-]/g, '');
+                  if(number.includes(',')){
+                     number=number.toString().replace(',','.');
+                  }
+                } else {
+                  if(number.includes(',')){
+                     needToReplaceDotWithComma=true;
+                  }
                 }
-              }
-
-              if(number>500000){
-                alert(i18n.t('converter_area.outOfRangeAlert'));
-                return;
-              }
-              // if(number===''){
-              //   alert(i18n.t('converter_area.noValueAlert'));
-              // }
-              if(number.includes(',')){
-                 var exceptLast = number.toString();
-                 exceptLast = exceptLast.replace(',', '');
-                 number=exceptLast
-              }
-
-              if(this.getNewChar(number.toString())==='.'){
-                var exceptLast = number.toString();
-                exceptLast = exceptLast.slice(0, -1);
-                if (exceptLast.toString().includes('.')) {
+                if(this.hasMoreThanOneDecimalPoints(number)){
                   alert(i18n.t('converter_area.outOfRangeAlert'));
-                  number=exceptLast
+                  return;
                 }
-              }
-
-              if(number>0){
+                if(this.isNumberGreaterThanLimit(number, 500000)){
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  return;
+                }
                 if(!this.validateDecimal(number)) {
                   alert(i18n.t('converter_area.outOfRangeAlert'));
                   return;
                 }
               }
 
-             if(number.toString().includes('-')) {
-                var exceptLast = number.toString();
-                exceptLast = exceptLast.replace('-', '');
-                number=exceptLast
-                alert(i18n.t('converter_area.negativeAlert'));
-              }
               this.setState({ lengthValue: number },function(){this.updateAllValues()});
               }
             }
@@ -742,54 +705,31 @@ class SAFRollenScreen extends React.Component {
             title={'Width(Material)'.toUpperCase()}
             value={this.state.widthValue}
             onChangeText={(number) => {
-              if(Platform.OS === 'android') {
-                if (number) {
-                  number = number.replace(/[^\d.-]/g, '');
-                }
-              }
-
               if(number){
-                if((number.split('\.').length-1)>1){
-                  alert(i18n.t('converter_area.outOfRangeAlert'));
-                    return;
+                if(Platform.OS === 'android') {
+                  number = number.replace(/[^\d.,-]/g, '');
+                  if(number.includes(',')){
+                     number=number.toString().replace(',','.');
+                  }
+                } else {
+                  if(number.includes(',')){
+                     needToReplaceDotWithComma=true;
+                  }
                 }
-              }
-
-              if(number>25000){
-                alert(i18n.t('converter_area.outOfRangeAlert'));
-                return;
-              }
-              // if(number===''){
-              //   alert(i18n.t('converter_area.noValueAlert'));
-              // }
-              if(number.includes(',')){
-                 var exceptLast = number.toString();
-                 exceptLast = exceptLast.replace(',', '');
-                 number=exceptLast
-              }
-
-              if(this.getNewChar(number.toString())==='.'){
-                var exceptLast = number.toString();
-                exceptLast = exceptLast.slice(0, -1);
-                if (exceptLast.toString().includes('.')) {
+                if(this.hasMoreThanOneDecimalPoints(number)){
                   alert(i18n.t('converter_area.outOfRangeAlert'));
-                  number=exceptLast
+                  return;
                 }
-              }
-
-              if(number>0){
+                if(this.isNumberGreaterThanLimit(number, 25000)){
+                  alert(i18n.t('converter_area.outOfRangeAlert'));
+                  return;
+                }
                 if(!this.validateDecimal(number)) {
                   alert(i18n.t('converter_area.outOfRangeAlert'));
                   return;
                 }
-             }
-
-             if(number.toString().includes('-')) {
-                var exceptLast = number.toString();
-                exceptLast = exceptLast.replace('-', '');
-                number=exceptLast
-                alert(i18n.t('converter_area.negativeAlert'));
               }
+
               this.setState({ widthValue: number },function(){this.updateAllValues()});
               }
             }

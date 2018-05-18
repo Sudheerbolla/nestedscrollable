@@ -37,12 +37,16 @@ const locale = {
     length: '長度',
     width: '寬度',
     result: '結果',
+    lengthValue: '66.00',
+    widthValue: '0.019'
   },
   calculation_length: {
     length: '長度',
     area: '區',
     width: '寬度',
     result: '結果',
+    areaValue: '4.80',
+    widthValue: '0.019'
   },
   calculation_diameter: {
     diameter: '直徑',
@@ -58,6 +62,8 @@ const locale = {
     width_y: '寬度 (Y)',
     without_waste: '请注意，请注意，这里的物料消耗量指未考虑浪费情况下的纯物料消耗这里的物料消耗量指未考虑浪费情况下的纯物料消耗',
     result: '結果',
+    lengthValue: '66.00',
+    widthValue: '205'
   },
   calculation_price: {
     price_roll: '價錢/滾',

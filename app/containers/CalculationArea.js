@@ -26,17 +26,48 @@ import SupText from '../utils/SupText';
 import applyLetterSpacing from '../utils/applyLetterSpacing';
 import MarqueeText from 'react-native-marquee';
 import Communications from 'react-native-communications';
+import DeviceInfo from 'react-native-device-info';
 
+const deviceCountry = DeviceInfo.getDeviceCountry
 const { width, height } = Dimensions.get('window');
+var needToReplaceDotWithComma=false;
 
 export default class CalculationArea extends Component {
 
   constructor(props) {
     super(props);
+    // var len='0';
+    // var wid='0';
+    // switch (deviceCountry) {
+    //   case 'DE':
+    //     len='66,00',
+    //     wid='66,00'
+    //     break;
+    //   case 'FR':
+    //     len='66,00',
+    //     wid='66,00'
+    //   break;
+    //   case 'DK':
+    //     len='66,00',
+    //     wid='66,00'
+    //   break;
+    //   case 'EE':
+    //     len='66,00',
+    //     wid='66,00'
+    //   break;
+    //   case 'FI':
+    //     len='66,00',
+    //     wid='66,00'
+    //   break;
+    //   default:
+    //     len='66,00',
+    //     wid='66,00'
+    //   break
+
     this.state = {
       unit: 'm',
-      lengthValue: '66.00',
-      widthValue: '0.019',
+      lengthValue: i18n.t('calculation_area.lengthValue'),
+      widthValue: i18n.t('calculation_area.widthValue'),
       areaValueInM: '10',
       areaValueInY: '10',
       areaValueInF: '10',
@@ -46,6 +77,10 @@ export default class CalculationArea extends Component {
 
   componentDidMount(){
     this.updateAllValues();
+  }
+
+  componentWillUnmount(){
+    needToReplaceDotWithComma=false;
   }
 
   renderField(settings) {
@@ -81,29 +116,37 @@ export default class CalculationArea extends Component {
     return shift(Math.round(shift(number, precision, false)), precision, true);
   }
 
-  getNewChar(str){
-    return str[str.length - 1];
-  }
-
   validateDecimal2 = (value) => {
-      var RE = /^\d*\.?\d{0,2}$/
-      if(RE.test(value)){
-         return true;
-      } else{
-         return false;
-      }
+    var RE=''
+    if(value.toString().includes(',') && needToReplaceDotWithComma){
+      RE = /^\d*\,?\d{0,2}$/
+    } else
+      RE = /^\d*\.?\d{0,2}$/
+    return RE.test(value);
   }
 
   validateDecimal3 = (value) => {
-      var RE = /^\d*\.?\d{0,3}$/
-      if(RE.test(value)){
-         return true;
-      } else{
-         return false;
-      }
+    var RE=''
+    if(value.toString().includes(',') && needToReplaceDotWithComma){
+      RE = /^\d*\,?\d{0,3}$/
+    }else
+      RE = /^\d*\.?\d{0,3}$/
+    return RE.test(value);
+  }
+
+  isNumberGreaterThanLimit = (value,limit) => {
+    return parseFloat(value) > limit;
+  }
+
+  hasMoreThanOneDecimalPoints = (value) => {
+    return ((value.split('\.').value-1)>1||(value.split('\,').value-1)>1);
   }
 
   updateAllValues = () => {
+    if(this.state.lengthValue.includes(',')||this.state.widthValue.includes(','))
+      needToReplaceDotWithComma=true
+    else needToReplaceDotWithComma=false
+
     this.setState({
       areaValueInM:this.getCalculatedValue('m'),
       areaValueInY:this.getCalculatedValue('yards'),
@@ -114,8 +157,21 @@ export default class CalculationArea extends Component {
 
   getCalculatedValue = (conv) => {
     var outPut = '';
+    var length=this.state.lengthValue;
+    var width=this.state.widthValue;
+    if(Platform.OS === 'ios') {
+      if(length.includes(',')){
+         length = length.toString().replace(',', '.')
+         needToReplaceDotWithComma=true;
+      }
+      if(width.includes(',')){
+         width = width.toString().replace(',', '.')
+         needToReplaceDotWithComma=true;
+      }
+    }
+
     if (this.state.unit == 'm') {
-      var areaInM=this.state.lengthValue * this.state.widthValue;
+      var areaInM=length * width;
       if (conv == 'm')
         outPut = areaInM
       else if (conv == 'yards') {
@@ -126,7 +182,7 @@ export default class CalculationArea extends Component {
         outPut = 1550.0030400210816879 * areaInM
       }
     } else if (this.state.unit == 'yards') {
-      var areaInY=this.state.lengthValue * this.state.widthValue;
+      var areaInY=length * width;
       if (conv == 'm')
         outPut = 0.836127 * areaInY
       else if (conv == 'yards') {
@@ -137,7 +193,7 @@ export default class CalculationArea extends Component {
         outPut = 1295.9994419942399873 * areaInY
       }
     } else if (this.state.unit == 'feet') {
-      var areaInF=this.state.lengthValue * this.state.widthValue;
+      var areaInF=length * width;
       if (conv == 'm')
         outPut = 0.092902999999667099096 * areaInF
       else if (conv == 'yards') {
@@ -148,7 +204,7 @@ export default class CalculationArea extends Component {
         outPut = 143.99993799936001437 * areaInF
       }
     } else if (this.state.unit == 'inches') {
-      var areaInI=this.state.lengthValue * this.state.widthValue;
+      var areaInI=length * width;
       if (conv == 'm')
         outPut = 0.0006451597222199103622*areaInI
       else if (conv == 'yards') {
@@ -160,6 +216,11 @@ export default class CalculationArea extends Component {
       }
     }
     outPut=this.round(outPut, 3);
+    if(needToReplaceDotWithComma){
+      if(outPut.toString().includes('.')){
+         outPut = outPut.toString().replace('.', ',');
+      }
+    }
     return outPut.toString();
   }
 
@@ -231,43 +292,27 @@ export default class CalculationArea extends Component {
                 onChangeText={(number) => {
                   if(number){
                     if(Platform.OS === 'android') {
-                      if (number) {
-                        number = number.replace(/[^\d.-]/g, '');
+                      number = number.replace(/[^\d.,-]/g, '');
+                      if(number.includes(',')){
+                         number=number.toString().replace(',','.');
+                      }
+                    } else {
+                      if(number.includes(',')){
+                         needToReplaceDotWithComma=true;
                       }
                     }
-                    if((number.split('\.').length-1)>1){
+                    if(this.hasMoreThanOneDecimalPoints(number)){
                       alert(i18n.t('converter_area.outOfRangeAlert'));
                       return;
                     }
-                    if(number>10000000){
+                    if(this.isNumberGreaterThanLimit(number , 10000000)){
                       alert(i18n.t('converter_area.outOfRangeAlert'));
                       return;
-                    }
-                    if(number.includes(',')){
-                       var exceptLast = number.toString();
-                       exceptLast = exceptLast.replace(',', '');
-                       number =exceptLast
-                    }
-                    if(number>0){
-                      if(!this.validateDecimal2(number)) {
-                        alert(i18n.t('converter_area.outOfRangeAlert'));
-                        return;
-                      }
-                    }
-                    if(this.getNewChar(number.toString())==='.'){
-                      var exceptLast = number.toString();
-                      exceptLast = exceptLast.slice(0, -1);
-                      if (exceptLast.toString().includes('.')) {
-                        alert('A Number cannot have two decimals points');
-                        number =exceptLast
-                      }
                     }
 
-                   if(number.toString().includes('-')) {
-                      var exceptLast = number.toString();
-                      exceptLast = exceptLast.replace('-', '');
-                      number =exceptLast
-                      alert(i18n.t('converter_area.negativeAlert'));
+                    if(!this.validateDecimal2(number)) {
+                      alert(i18n.t('converter_area.outOfRangeAlert'));
+                      return;
                     }
 
                   }
@@ -282,50 +327,29 @@ export default class CalculationArea extends Component {
                 title={i18n.t('calculation_area.width').toUpperCase()}
                 value={this.state.widthValue}
                 onChangeText={(number) => {
-                  if(Platform.OS === 'android') {
-                    if (number) {
-                      number = number.replace(/[^\d.-]/g, '');
-                    }
-                  }
 
-                  if(number){
-                    if((number.split('\.').length-1)>1){
-                      alert(i18n.t('converter_area.outOfRangeAlert'));
-                        return;
+                  if(Platform.OS === 'android') {
+                    number = number.replace(/[^\d.,-]/g, '');
+                    if(number.includes(',')){
+                       number=number.toString().replace(',','.');
+                    }
+                  } else {
+                    if(number.includes(',')){
+                       needToReplaceDotWithComma=true;
                     }
                   }
-                  if(number>10000){
+                  if(this.hasMoreThanOneDecimalPoints(number)){
                     alert(i18n.t('converter_area.outOfRangeAlert'));
                     return;
                   }
-                  // if(number===''){
-                  //   alert(i18n.t('converter_area.noValueAlert'));
-                  // }
-                  if(number.includes(',')){
-                     var exceptLast = number.toString();
-                     exceptLast = exceptLast.replace(',', '');
-                     number=exceptLast
+                  if(this.isNumberGreaterThanLimit(number , 10000)){
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
                   }
-                  if(this.getNewChar(number.toString())==='.'){
-                    var exceptLast = number.toString();
-                    exceptLast = exceptLast.slice(0, -1);
-                    if (exceptLast.toString().includes('.')) {
-                      alert('A Number cannot have two decimals points');
-                      number=exceptLast
-                    }
-                  }
-                  if(number>0){
-                    if(!this.validateDecimal3(number)) {
-                      alert(i18n.t('converter_area.outOfRangeAlert'));
-                      return;
-                    }
-                 }
 
-                 if(number.toString().includes('-')) {
-                    var exceptLast = number.toString();
-                    exceptLast = exceptLast.replace('-', '');
-                    number=exceptLast
-                    alert(i18n.t('converter_area.negativeAlert'));
+                  if(!this.validateDecimal3(number)) {
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
                   }
 
                   this.setState({ widthValue: number },function(){this.updateAllValues()});
@@ -341,16 +365,16 @@ export default class CalculationArea extends Component {
                 </Text>
                 <View style={styles.resultNumber}>
                   <MarqueeText style={styles.number} duration={3000} marqueeOnStart loop marqueeDelay={1000} marqueeResetDelay={1000}>
-                           {applyLetterSpacing(this.state.areaValueInM==="NaN"?0:this.state.areaValueInM, 1)}
+                           {applyLetterSpacing(this.state.areaValueInM, 1)}
                   </MarqueeText>
                   <MarqueeText style={styles.number} duration={3000} marqueeOnStart loop marqueeDelay={1000} marqueeResetDelay={1000}>
-                           {applyLetterSpacing(this.state.areaValueInY==="NaN"?0:this.state.areaValueInY, 1)}
+                           {applyLetterSpacing(this.state.areaValueInY, 1)}
                   </MarqueeText>
                   <MarqueeText style={styles.number} duration={3000} marqueeOnStart loop marqueeDelay={1000} marqueeResetDelay={1000}>
-                           {applyLetterSpacing(this.state.areaValueInF==="NaN"?0:this.state.areaValueInF, 1)}
+                           {applyLetterSpacing(this.state.areaValueInF, 1)}
                   </MarqueeText>
                   <MarqueeText style={styles.number} duration={3000} marqueeOnStart loop marqueeDelay={1000} marqueeResetDelay={1000}>
-                           {applyLetterSpacing(this.state.areaValueInI==="NaN"?0:this.state.areaValueInI, 1)}
+                           {applyLetterSpacing(this.state.areaValueInI, 1)}
                   </MarqueeText>
                 </View>
               </View>
@@ -541,33 +565,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-// {Platform.select({
-//   android: (
-//     <CustomPicker
-//       options={['yards', 'm', 'feet', 'inches']}
-//       fieldTemplate={this.renderField}
-//       style={{ paddingLeft: 30, marginTop: 10, height: 20 }}
-//       value={this.state.unit}
-//       onValueChange={(value) => {
-//         this.setState({ unit: value },function(){this.updateAllValues()});
-//       }}
-//     />
-//   ),
-//   ios: (
-//     <Picker
-//       selectedValue={this.state.unit}
-//       itemStyle={{ fontSize: 15, color: COLORS.DARK_GREY }}
-//       style={{
-//         paddingLeft: Platform.select({ ios: 10 }),
-//         marginLeft: Platform.select({ android: 20 }),
-//       }}
-//       onValueChange={(itemValue, itemIndex) => {
-//         this.setState({ unit: itemValue },function(){this.updateAllValues()});
-//       }}>
-//       <Picker.Item label="yards" value="yards" />
-//       <Picker.Item label="m" value="m" />
-//       <Picker.Item label="feet" value="feet" />
-//       <Picker.Item label="inches" value="inches" />
-//     </Picker>
-//   ),
-// })}

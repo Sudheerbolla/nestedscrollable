@@ -7,6 +7,7 @@ const colors = {
   LIGHT_GREY: '#dadada',
   BLUE_3: '#C6E2ED',
   BLANK: 'transparent',
+  WHITE: '#ffffff',
 };
 
 module.exports = colors;

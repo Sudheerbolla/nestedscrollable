@@ -13,6 +13,8 @@ import MarqueeText from 'react-native-marquee';
 
 const { width, height } = Dimensions.get('window');
 
+var needToReplaceDotWithComma=false;
+
 class Details extends Component {
 
   constructor(props) {
@@ -20,7 +22,7 @@ class Details extends Component {
     this.state = {
       unit: 'Roll',
       priceValue:'0',
-      lengthValue: '66.00',
+      lengthValue: i18n.t('calculation_area.lengthValue'),
       widthValue: '19',
       pricePerRoll:'0'
     };
@@ -28,6 +30,10 @@ class Details extends Component {
 
   componentDidMount(){
     this.updateAllValues();
+  }
+
+  componentWillUnmount(){
+    needToReplaceDotWithComma=false;
   }
 
   round(number, precision) {
@@ -41,19 +47,41 @@ class Details extends Component {
     return shift(Math.round(shift(number, precision, false)), precision, true);
   }
 
-  getNewChar(str){
-    return str[str.length - 1];
-  }
-
   updateAllValues = () => {
+    if(this.state.priceValue.includes(',')||this.state.lengthValue.includes(',')||this.state.widthValue.includes(','))
+      needToReplaceDotWithComma=true
+    else needToReplaceDotWithComma=false
+
     this.setState({
       pricePerRoll:this.getCalculatedValue(),
     });
   }
 
   getCalculatedValue = () => {
-    var pricePerRoll=this.state.priceValue*(this.state.widthValue*0.001)*this.state.lengthValue;
+    var priceValue=this.state.priceValue;
+    var lengthValue=this.state.lengthValue;
+    var widthValue=this.state.widthValue;
+    if(Platform.OS === 'ios') {
+      if(priceValue.includes(',')){
+         priceValue = priceValue.toString().replace(',', '.')
+         needToReplaceDotWithComma=true;
+      }
+      if(lengthValue.includes(',')){
+         lengthValue = lengthValue.toString().replace(',', '.')
+         needToReplaceDotWithComma=true;
+      }
+      if(widthValue.includes(',')){
+         widthValue = widthValue.toString().replace(',', '.')
+         needToReplaceDotWithComma=true;
+      }
+    }
+    var pricePerRoll=priceValue*(widthValue*0.001)*lengthValue;
     pricePerRoll=this.round(pricePerRoll, 3);
+    if(needToReplaceDotWithComma){
+      if(pricePerRoll.toString().includes('.')){
+         pricePerRoll = pricePerRoll.toString().replace('.', ',');
+      }
+    }
     return pricePerRoll.toString();
   }
 
@@ -97,12 +125,20 @@ class Details extends Component {
   }
 
   validateDecimal = (value) => {
-      var RE = /^\d*\.?\d{0,2}$/
-      if(RE.test(value)){
-         return true;
-      }else{
-         return false;
-      }
+    var RE=''
+    if(value.toString().includes(',') && needToReplaceDotWithComma){
+      RE = /^\d*\,?\d{0,2}$/
+    } else
+      RE = /^\d*\.?\d{0,2}$/
+    return RE.test(value);
+  }
+
+  isNumberGreaterThanLimit = (value,limit) => {
+    return parseFloat(value) > limit;
+  }
+
+  hasMoreThanOneDecimalPoints = (value) => {
+    return ((value.split('\.').value-1)>1||(value.split('\,').value-1)>1);
   }
 
   render() {
@@ -130,54 +166,30 @@ class Details extends Component {
               title={i18n.t('calculation_price_m2.price').toUpperCase()}
               value={this.state.priceValue}
               onChangeText={(number) => {
-                if(Platform.OS === 'android') {
-                  if (number) {
-                    number = number.replace(/[^\d.-]/g, '');
-                  }
-                }
-
                 if(number){
-                  if((number.split('\.').length-1)>1){
-                    alert(i18n.t('converter_area.outOfRangeAlert'));
-                      return;
+                  if(Platform.OS === 'android') {
+                    number = number.replace(/[^\d.,-]/g, '');
+                    if(number.includes(',')){
+                       number=number.toString().replace(',','.');
+                    }
+                  } else {
+                    if(number.includes(',')){
+                       needToReplaceDotWithComma=true;
+                    }
                   }
-                }
-
-                if(number>1000000){
-                  alert(i18n.t('converter_area.outOfRangeAlert'));
-                  return;
-                }
-
-                if(number.includes(',')){
-                   var exceptLast = number.toString();
-                   exceptLast = exceptLast.replace(',', '');
-                   number=exceptLast
-                }
-
-                if(this.getNewChar(number.toString())==='.'){
-                  var exceptLast = number.toString();
-                  exceptLast = exceptLast.slice(0, -1);
-                  if (exceptLast.toString().includes('.')) {
+                  if(this.hasMoreThanOneDecimalPoints(number)){
                     alert(i18n.t('converter_area.outOfRangeAlert'));
-                    number=exceptLast
+                    return;
                   }
-                }
-
-                if(number>0){
+                  if(this.isNumberGreaterThanLimit(number , 1000000)){
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
+                  }
                   if(!this.validateDecimal(number)) {
                     alert(i18n.t('converter_area.outOfRangeAlert'));
                     return;
                   }
-               }
-
-               if(number.toString().includes('-')) {
-                  var exceptLast = number.toString();
-                  exceptLast = exceptLast.replace('-', '');
-                  number=exceptLast
-                  alert(i18n.t('converter_area.negativeAlert'));
                 }
-
-
                 this.setState({ priceValue: number },function(){this.updateAllValues()});
                 }
               }
@@ -189,51 +201,30 @@ class Details extends Component {
               title={i18n.t('calculation_price_m2.length').toUpperCase()}
               value={this.state.lengthValue}
               onChangeText={(number) => {
-                if(Platform.OS === 'android') {
-                  if (number) {
-                    number = number.replace(/[^\d.-]/g, '');
-                  }
-                }
 
                 if(number){
-                  if((number.split('\.').length-1)>1){
-                    alert(i18n.t('converter_area.outOfRangeAlert'));
-                      return;
+                  if(Platform.OS === 'android') {
+                    number = number.replace(/[^\d.,-]/g, '');
+                    if(number.includes(',')){
+                       number=number.toString().replace(',','.');
+                    }
+                  } else {
+                    if(number.includes(',')){
+                       needToReplaceDotWithComma=true;
+                    }
                   }
-                }
-
-                if(number>1000000){
-                  alert(i18n.t('converter_area.outOfRangeAlert'));
-                  return;
-                }
-
-                if(number.includes(',')){
-                   var exceptLast = number.toString();
-                   exceptLast = exceptLast.replace(',', '');
-                   number=exceptLast
-                }
-
-                if(this.getNewChar(number.toString())==='.'){
-                  var exceptLast = number.toString();
-                  exceptLast = exceptLast.slice(0, -1);
-                  if (exceptLast.toString().includes('.')) {
+                  if(this.hasMoreThanOneDecimalPoints(number)){
                     alert(i18n.t('converter_area.outOfRangeAlert'));
-                    number=exceptLast
+                    return;
                   }
-                }
-
-                if(number>0){
+                  if(this.isNumberGreaterThanLimit(number , 1000000)){
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
+                  }
                   if(!this.validateDecimal(number)) {
                     alert(i18n.t('converter_area.outOfRangeAlert'));
                     return;
                   }
-               }
-
-               if(number.toString().includes('-')) {
-                  var exceptLast = number.toString();
-                  exceptLast = exceptLast.replace('-', '');
-                  number=exceptLast
-                  alert(i18n.t('converter_area.negativeAlert'));
                 }
 
                 this.setState({ lengthValue: number },function(){this.updateAllValues()});
@@ -247,53 +238,30 @@ class Details extends Component {
               title={i18n.t('calculation_price_m2.width').toUpperCase()}
               value={this.state.widthValue}
               onChangeText={(number) => {
-                if(Platform.OS === 'android') {
-                  if (number) {
-                    number = number.replace(/[^\d.-]/g, '');
-                  }
-                }
-
                 if(number){
-                  if((number.split('\.').length-1)>1){
-                    alert(i18n.t('converter_area.outOfRangeAlert'));
-                      return;
+                  if(Platform.OS === 'android') {
+                    number = number.replace(/[^\d.,-]/g, '');
+                    if(number.includes(',')){
+                       number=number.toString().replace(',','.');
+                    }
+                  } else {
+                    if(number.includes(',')){
+                       needToReplaceDotWithComma=true;
+                    }
                   }
-                }
-
-                if(number>1000000){
-                  alert(i18n.t('converter_area.outOfRangeAlert'));
-                  return;
-                }
-
-                if(number.includes(',')){
-                   var exceptLast = number.toString();
-                   exceptLast = exceptLast.replace(',', '');
-                   number=exceptLast
-                }
-
-                if(this.getNewChar(number.toString())==='.'){
-                  var exceptLast = number.toString();
-                  exceptLast = exceptLast.slice(0, -1);
-                  if (exceptLast.toString().includes('.')) {
+                  if(this.hasMoreThanOneDecimalPoints(number)){
                     alert(i18n.t('converter_area.outOfRangeAlert'));
-                    number=exceptLast
+                    return;
                   }
-                }
-
-                if(number>0){
+                  if(this.isNumberGreaterThanLimit(number , 1000000)){
+                    alert(i18n.t('converter_area.outOfRangeAlert'));
+                    return;
+                  }
                   if(!this.validateDecimal(number)) {
                     alert(i18n.t('converter_area.outOfRangeAlert'));
                     return;
                   }
-               }
-
-               if(number.toString().includes('-')) {
-                  var exceptLast = number.toString();
-                  exceptLast = exceptLast.replace('-', '');
-                  number=exceptLast
-                  alert(i18n.t('converter_area.negativeAlert'));
                 }
-
 
                 this.setState({ widthValue: number },function(){this.updateAllValues()});
                 }
@@ -333,7 +301,7 @@ class Details extends Component {
               <Text style={styles.unitWidthLabel}>mm</Text>
             </View>
 
-            <View style={{ height: 15 }} />
+            <View style={{ height: 16 }} />
 
             <View style={styles.resultUnitContainer}>
               <SupText
