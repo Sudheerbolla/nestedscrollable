@@ -21,7 +21,7 @@ class Details extends Component {
     this.state = {
       unit: 'm',
       priceValue: '0',
-      lengthValue: i18n.t('calculation_area.lengthValue'),
+      lengthValue: Platform.OS === 'ios'?i18n.t('calculation_area.lengthValue'):'66.00',
       widthValue: '205',
       pricePerRoll:'280'
     };

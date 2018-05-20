@@ -31,8 +31,8 @@ class Details extends Component {
     super(props);
     this.state = {
       unit: 'm2',
-      areaValue: i18n.t('calculation_length.areaValue'),
-      widthValue: i18n.t('calculation_area.widthValue'),
+      areaValue: Platform.OS === 'ios'?i18n.t('calculation_length.areaValue'):'4.80',
+      widthValue: Platform.OS === 'ios'?i18n.t('calculation_area.widthValue'):'0.019',
       lengthValueInM:'0',
       lengthValueInY:'0',
       lengthValueInI:'0',

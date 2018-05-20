@@ -17,7 +17,13 @@ const DetailTextInput = ({value, onChangeText, title}) => {
   return (<View>
     <Text style={styles.label}>{applyLetterSpacing(title, space)}</Text>
 
-    <TextInput underlineColorAndroid="rgba(0,0,0,0)" keyboardType={'numeric'} returnKeyType="done" style={styles.input} value={value} onChangeText={onChangeText} />
+    <TextInput
+      underlineColorAndroid="rgba(0,0,0,0)"
+      keyboardType={'numeric'} 
+      returnKeyType="done"
+      style={styles.input}
+      value={value}
+      onChangeText={onChangeText} />
   </View>);
 };
 

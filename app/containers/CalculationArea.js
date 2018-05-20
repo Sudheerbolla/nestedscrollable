@@ -66,8 +66,8 @@ export default class CalculationArea extends Component {
 
     this.state = {
       unit: 'm',
-      lengthValue: i18n.t('calculation_area.lengthValue'),
-      widthValue: i18n.t('calculation_area.widthValue'),
+      lengthValue: Platform.OS === 'ios'?i18n.t('calculation_area.lengthValue'):'66.00',
+      widthValue: Platform.OS === 'ios'?i18n.t('calculation_area.widthValue'):'0.019',
       areaValueInM: '10',
       areaValueInY: '10',
       areaValueInF: '10',
@@ -288,7 +288,6 @@ export default class CalculationArea extends Component {
               <DetailTextInput
                 title={i18n.t('calculation_area.length').toUpperCase()}
                 value={this.state.lengthValue.toString()}
-                setNativeProps={this.state.lengthValue}
                 onChangeText={(number) => {
                   if(number){
                     if(Platform.OS === 'android') {

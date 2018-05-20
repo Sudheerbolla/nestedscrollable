@@ -19,8 +19,8 @@ export default class CalculationConsumptation extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lengthValue: i18n.t('calculation_consumptation.lengthValue'),
-      widthValue: i18n.t('calculation_consumptation.widthValue'),
+      lengthValue: Platform.OS === 'ios'?i18n.t('calculation_consumptation.lengthValue'):'66.00',
+      widthValue: '205',
       consumptationValueInM2: '13530000',
     };
   }
