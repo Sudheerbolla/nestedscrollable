@@ -1,15 +1,28 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
-import { Linking, StyleSheet, View, Text, TextInput, Dimensions, Image, ImageBackground, TouchableOpacity, ScrollView, Platform } from 'react-native';
+import {
+  Linking,
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  Dimensions,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+  ScrollView,
+  Platform,
+  ActivityIndicator
+} from 'react-native';
 import call from 'react-native-phone-call';
 import DeviceInfo from 'react-native-device-info';
 import Communications from 'react-native-communications';
 
-import { Grid, ImageButton } from '../components';
+import {Grid, ImageButton} from '../components';
 import NavBar from '../modules/NavBar';
-import { COLORS, ICONS, FONTS } from '../constants';
+import {COLORS, ICONS, FONTS} from '../constants';
 import i18n from '../utils/i18n';
 import applyLetterSpacing from '../utils/applyLetterSpacing';
 
@@ -28,24 +41,28 @@ export default class Calculation extends Component {
       callTo: '',
       mailTo: '',
       displayPhone: '',
-      error:'',
-      latitude:'',
-      longitude:'',
+      error: '',
+      latitude: '',
+      longitude: '',
+      animating: false
     };
   }
 
-  setUpDetails(){
+  setUpDetails() {
     let mailTo = '';
     let displayPhone = '';
     let callTo = 1234567890;
     switch (deviceCountry) {
       case 'DE':
-        mailTo = 'malte.spaniol@itpe-germany.de';
+        // These are for prod.
         // mailTo = 'tesa.industrieinternetanfragen@tesa.com';
         // displayPhone = '+49 40 888 99 0';
+        // callTo = 4940888990;
+
+        mailTo = 'malte.spaniol@itpe-germany.de';
         displayPhone = '+49 40 53257770';
         callTo = '494053257770';
-        // callTo = 4940888990;
+
         break;
       case 'FR':
         mailTo = 'contact.france@tesa.com';
@@ -71,14 +88,10 @@ export default class Calculation extends Component {
         mailTo = 'kmrinal@gmail.com';
         displayPhone = '+91-9916164906';
         callTo = '9916164906';
-      break
+        break
     }
 
-    this.setState({
-      mailTo:mailTo,
-      displayPhone:displayPhone,
-      callTo:callTo
-    });
+    this.setState({mailTo: mailTo, displayPhone: displayPhone, callTo: callTo});
   }
 
   componentDidMount() {
@@ -86,7 +99,7 @@ export default class Calculation extends Component {
   }
 
   checkForValidations = () => {
-    if(!this.state.name) {
+    if (!this.state.name) {
       alert('please enter Name')
     } else if (!this.state.email && !this.validateEmail(this.state.email)) {
       alert(i18n.t('contact.emailvalidation'))
@@ -98,27 +111,30 @@ export default class Calculation extends Component {
   }
 
   sendMail = () => {
+    this.setState({animating: true})
     // 192.168.0.103
     fetch('http://192.168.1.30:3000/sendMail', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        emailSubject: 'Tape Calculator - Contact',
-        emailBody: `Name : ${this.state.name} <br/> Firm : ${this.state.firm} <br/> Email : ${this.state.email} <br/> Message : ${this.state.message}`,
-        receivierEmailAddress:this.state.mailTo,
-        senderEmailAddress:this.state.mailTo
-        // senderEmailAddress:"support@flyingcircle.de"
-      }),
-    }).then((response) => response.json())
-        .then((responseJson) => {
-          return responseJson.movies;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      body: JSON.stringify({emailSubject: 'tesa SE -tape Calculator - Contact', emailBody: `Name : ${this.state.name} <br/> Firm : ${this.state.firm} <br/> Email : ${this.state.email} <br/> Message : ${this.state.message}`, receivierEmailAddress: this.state.mailTo, senderEmailAddress: 'tape-calculator@tesa.com'})
+    }).then((response) => response.json()).then((responseJson) => {
+      if (responseJson.hasOwnProperty("success")) {
+        this.setState({name: '', firm: '', email: '', message: ''})
+        alert('Email has been sent from info@itpe-germany.de to ' + this.state.mailTo);
+        this.setState({animating: false})
+      } else if (responseJson.hasOwnProperty("error")) {
+        alert("Error Sending Email");
+        this.setState({animating: false})
+      }
+      return responseJson;
+    }).catch((error) => {
+      console.error(error);
+      alert("Error Sending Email");
+      this.setState({animating: false})
+    });
   }
 
   validateEmail = () => {
@@ -127,153 +143,125 @@ export default class Calculation extends Component {
   };
 
   render() {
-    const { params } = this.props.navigation.state;
+    const {params} = this.props.navigation.state;
     const textLength = this.state.message.length;
     const textLimit = 1000 - textLength;
     const callTo = {
       number: this.state.callTo,
       prompt: false
     };
-    return (
-      <Grid>
-        <NavBar
-          onBack={() => {
-            this.props.navigation.goBack();
-          }}
-          title={params.title}
-        />
-        <View style={{ flex: 1 }}>
+    return (<Grid>
+      <NavBar onBack={() => {
+          this.props.navigation.goBack();
+        }} title={params.title}/>
+      <View style={{
+          flex: 1
+        }}>
 
-          <ScrollView keyboardDismissMode='on-drag'
-                keyboardShouldPersistTaps="always">
-            <View style={styles.form}>
+        <ScrollView keyboardDismissMode='on-drag' keyboardShouldPersistTaps="always">
+          <View style={styles.form}>
 
-              <View style={styles.field}>
-                <TextInput
-                  returnKeyType={ "next" }
-                  ref={(input) => { this.nameTextInput = input; }}
-                  maxLength={48}
-                  underlineColorAndroid="rgba(0,0,0,0)"
-                  placeholderTextColor={COLORS.DARK_GREY}
-                  placeholder={applyLetterSpacing(i18n.t('contact.name').toUpperCase(), 1)}
-                  style={styles.input}
-                  blurOnSubmit={false}
-                  value={this.state.name}
-                  onChangeText={text => this.setState({ name: text })}
-                  onSubmitEditing={() => { this.firmTextInput.focus(); }}
-                />
-              </View>
+            <ActivityIndicator animating={this.state.animating} color='#0000ff' size='large' style={styles.ActivityIndicatorStyle}/>
 
-              <View style={styles.field}>
-                <TextInput
-                  ref={(input) => { this.firmTextInput = input; }}
-                  maxLength={48}
-                  returnKeyType={ "next" }
-                  blurOnSubmit={false}
-                  underlineColorAndroid="rgba(0,0,0,0)"
-                  placeholderTextColor={COLORS.DARK_GREY}
-                  placeholder={applyLetterSpacing(i18n.t('contact.firw').toUpperCase(), 1)}
-                  style={styles.input}
-                  value={this.state.firm}
-                  onChangeText={text => this.setState({ firm: text })}
-                  onSubmitEditing={() => { this.emailTextInput.focus(); }}
-                />
-              </View>
-
-              <View style={styles.field}>
-                <TextInput
-                  ref={(input) => { this.emailTextInput = input; }}
-                  underlineColorAndroid="rgba(0,0,0,0)"
-                  placeholderTextColor={COLORS.DARK_GREY}
-                  returnKeyType={ "next" }
-                  blurOnSubmit={false}
-                  placeholder={applyLetterSpacing(i18n.t('contact.email').toUpperCase(), 1)}
-                  style={styles.input}
-                  value={this.state.email}
-                  onChangeText={text => this.setState({ email: text })}
-                  onSubmitEditing={() => { this.messageTextInput.focus(); }}
-                />
-              </View>
-
-              <View style={styles.fieldDescription}>
-                <TextInput
-                  ref={(input) => { this.messageTextInput = input; }}
-                  maxLength={1000}
-                  underlineColorAndroid="rgba(0,0,0,0)"
-                  returnKeyType={ "done" }
-                  placeholderTextColor={COLORS.DARK_GREY}
-                  placeholder={applyLetterSpacing(i18n.t('contact.message').toUpperCase(), 1)}
-                  multiline={true}
-                  style={styles.inputDescription}
-                  value={this.state.message}
-                  onChangeText={text => this.setState({ message: text })}
-                />
-              </View>
-
-              <Text style={styles.footerDescription}>{applyLetterSpacing(`${textLimit}`+' '+i18n.t('contact.characters'), 5)}</Text>
-              {/* <Text style={styles.footerDescription}>{applyLetterSpacing(textLimit.toString()+" "+ 'contact.characters', 5)}</Text> */}
+            <View style={styles.field}>
+              <TextInput returnKeyType={"next"} ref={(input) => {
+                  this.nameTextInput = input;
+                }} maxLength={48} underlineColorAndroid="rgba(0,0,0,0)" placeholderTextColor={COLORS.DARK_GREY} placeholder={applyLetterSpacing(i18n.t('contact.name').toUpperCase(), 1)} style={styles.input} blurOnSubmit={false} value={this.state.name} onChangeText={text => this.setState({name: text})} onSubmitEditing={() => {
+                  this.firmTextInput.focus();
+                }}/>
             </View>
 
-            <View style={styles.row}>
-              <TouchableOpacity onPress={() => {
-                if(this.state.callTo) {
+            <View style={styles.field}>
+              <TextInput ref={(input) => {
+                  this.firmTextInput = input;
+                }} maxLength={48} returnKeyType={"next"} blurOnSubmit={false} underlineColorAndroid="rgba(0,0,0,0)" placeholderTextColor={COLORS.DARK_GREY} placeholder={applyLetterSpacing(i18n.t('contact.firw').toUpperCase(), 1)} style={styles.input} value={this.state.firm} onChangeText={text => this.setState({firm: text})} onSubmitEditing={() => {
+                  this.emailTextInput.focus();
+                }}/>
+            </View>
+
+            <View style={styles.field}>
+              <TextInput ref={(input) => {
+                  this.emailTextInput = input;
+                }} underlineColorAndroid="rgba(0,0,0,0)" placeholderTextColor={COLORS.DARK_GREY} returnKeyType={"next"} blurOnSubmit={false} placeholder={applyLetterSpacing(i18n.t('contact.email').toUpperCase(), 1)} style={styles.input} value={this.state.email} onChangeText={text => this.setState({email: text})} onSubmitEditing={() => {
+                  this.messageTextInput.focus();
+                }}/>
+            </View>
+
+            <View style={styles.fieldDescription}>
+              <TextInput ref={(input) => {
+                  this.messageTextInput = input;
+                }} maxLength={1000} underlineColorAndroid="rgba(0,0,0,0)" returnKeyType={"done"} placeholderTextColor={COLORS.DARK_GREY} placeholder={applyLetterSpacing(i18n.t('contact.message').toUpperCase(), 1)} multiline={true} style={styles.inputDescription} value={this.state.message} onChangeText={text => this.setState({message: text})}/>
+            </View>
+
+            <Text style={styles.footerDescription}>{applyLetterSpacing(`${textLimit}` + ' ' + i18n.t('contact.characters'), 5)}</Text>
+            {/* <Text style={styles.footerDescription}>{applyLetterSpacing(textLimit.toString()+" "+ 'contact.characters', 5)}</Text> */}
+          </View>
+
+          <View style={styles.row}>
+            <TouchableOpacity onPress={() => {
+                if (this.state.callTo) {
                   Communications.phonecall(this.state.callTo.toString(), false)
                 }
               }}>
-                <View style={styles.rowItem}>
-                  <ImageBackground source={require('../images/180310_PHONE.png')} style={styles.image}>
-                    <Text style={[styles.rowLabel, { paddingTop: 70 }]}>{applyLetterSpacing(i18n.t('contact.call').toUpperCase(), 1)}</Text>
-                    <Text style={styles.rowLabel}>{applyLetterSpacing(this.state.displayPhone, 1)}</Text>
-                  </ImageBackground>
-                </View>
-              </TouchableOpacity>
+              <View style={styles.rowItem}>
+                <ImageBackground source={require('../images/180310_PHONE.png')} style={styles.image}>
+                  <Text style={[
+                      styles.rowLabel, {
+                        paddingTop: 70
+                      }
+                    ]}>{applyLetterSpacing(i18n.t('contact.call').toUpperCase(), 1)}</Text>
+                  <Text style={styles.rowLabel}>{applyLetterSpacing(this.state.displayPhone, 1)}</Text>
+                </ImageBackground>
+              </View>
+            </TouchableOpacity>
 
-              <TouchableOpacity onPress={this.checkForValidations}>
-                <View style={[styles.rowItem, styles.mailButton]}>
-                  <ImageBackground source={require('../images/180310_MAIL.png')} style={styles.image}>
-                    <Text style={[styles.rowLabel, { paddingTop: 70 }]}>{applyLetterSpacing(i18n.t('contact.send'), 1)}</Text>
-                    <Text style={styles.rowLabel}>{applyLetterSpacing(' ', 1)}</Text>
-                  </ImageBackground>
-                </View>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity onPress={this.checkForValidations}>
+              <View style={[styles.rowItem, styles.mailButton]}>
+                <ImageBackground source={require('../images/180310_MAIL.png')} style={styles.image}>
+                  <Text style={[
+                      styles.rowLabel, {
+                        paddingTop: 70
+                      }
+                    ]}>{applyLetterSpacing(i18n.t('contact.send'), 1)}</Text>
+                  <Text style={styles.rowLabel}>{applyLetterSpacing(' ', 1)}</Text>
+                </ImageBackground>
+              </View>
+            </TouchableOpacity>
+          </View>
 
-            <View style={styles.footerContainer}>
-              <TouchableOpacity
-                onPress={() => {
-                  Communications.web('https://www.tesa.com/about-tesa/legal-information/imprint');
-                }}
-              >
-                <Text style={styles.footerText}>{applyLetterSpacing(i18n.t('contact.imprint'), 1)}</Text>
-              </TouchableOpacity>
-              <Text style={styles.footerText}> | </Text>
-              <TouchableOpacity
-                onPress={() => {
-                  Communications.web('https://www.tesa.com/about-tesa/legal-information/privacy-policy');
-                }}
-              >
-                <Text style={styles.footerText}>{applyLetterSpacing(i18n.t('contact.privacy').toUpperCase(), 1)}</Text>
-              </TouchableOpacity>
-              <Text style={styles.footerText}> | </Text>
+          <View style={styles.footerContainer}>
+            <TouchableOpacity onPress={() => {
+                Communications.web('https://www.tesa.com/about-tesa/legal-information/imprint');
+              }}>
+              <Text style={styles.footerText}>{applyLetterSpacing(i18n.t('contact.imprint'), 1)}</Text>
+            </TouchableOpacity>
+            <Text style={styles.footerText}>
+              |
+            </Text>
+            <TouchableOpacity onPress={() => {
+                Communications.web('https://www.tesa.com/about-tesa/legal-information/privacy-policy');
+              }}>
+              <Text style={styles.footerText}>{applyLetterSpacing(i18n.t('contact.privacy').toUpperCase(), 1)}</Text>
+            </TouchableOpacity>
+            <Text style={styles.footerText}>
+              |
+            </Text>
 
-              <TouchableOpacity
-                onPress={() => {
-                  Communications.web('https://www.tesa.com/about-tesa/legal-information/conditions-of-use');
-                }}
-              >
-                <Text style={styles.footerText}>{applyLetterSpacing(i18n.t('contact.condition'), 1)}</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity onPress={() => {
+                Communications.web('https://www.tesa.com/about-tesa/legal-information/conditions-of-use');
+              }}>
+              <Text style={styles.footerText}>{applyLetterSpacing(i18n.t('contact.condition'), 1)}</Text>
+            </TouchableOpacity>
+          </View>
 
-          </ScrollView>
-        </View>
-      </Grid>
-    );
+        </ScrollView>
+      </View>
+    </Grid>);
   }
 
 }
 
-const { width } = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 const screenHorizontalPadding = 50;
 
@@ -391,5 +379,15 @@ const styles = StyleSheet.create({
     top: -3,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  ActivityIndicatorStyle: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center'
+
   }
 });
