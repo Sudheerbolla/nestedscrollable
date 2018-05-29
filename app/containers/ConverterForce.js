@@ -124,7 +124,7 @@ class Details extends Component {
       } else if (conv == 'Kg/mils') {
         outPut = 2.590079180963938164e-6 * number
       } else if (conv == 'Pounds/In') {
-        outPut = 8.85075 * number
+        outPut = 0.00571015 * number
       } else if (conv == 'Ounces/In') {
         outPut = 141.612 * number
       }

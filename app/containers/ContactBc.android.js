@@ -13,20 +13,48 @@ import { COLORS, ICONS, FONTS } from '../constants';
 import i18n from '../utils/i18n';
 import applyLetterSpacing from '../utils/applyLetterSpacing';
 
-// import MailCore from 'react-native-mailcore';
+import MailCore from 'react-native-mailcore';
 import { PermissionsAndroid } from 'react-native';
 
 const deviceCountry = DeviceInfo.getDeviceCountry();
+
+// sendMail = () => MailCore.sendMail({
+//   hostname: 'smtp.gmail.com',
+//   port: 465,
+//   username: 'alphabittest@gmail.com',
+//   password: 'alphabit@123',
+//   from: {
+//     addressWithDisplayName: 'Tesa',
+//     mailbox: 'alphabittest@gmail.com'
+//   },
+//   to: {
+//     addressWithDisplayName: 'Tesa',
+//     // mailbox: 'nagasudheerbolla@gmail.com'
+//     mailbox: this.state.mailTo
+//   },
+//   subject: 'Tape Calculator - Contact',
+//   htmlBody: `Name : ${this.state.name} <br/> Firm : ${this.state.firm} <br/> Email : ${this.state.email} <br/> Message : ${this.state.message}`
+//
+// }).then((result) => {
+//   if(result.status==='SUCCESS'){
+//     this.setState({ name: '' ,firm: '' ,email: '' ,message: '' })
+//     alert('Email has been sent');
+//   } else {
+//     alert(result.status);
+//   }
+// }).catch((error) => {
+//   alert(error);
+// })
 
 export default class Calculation extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      email: '',
-      firm: '',
-      message: '',
+      name: 'suhdeer',
+      email: 'dsfg@gh.com',
+      firm: 'dsf',
+      message: 'asdfghj',
       limitMsg: 0,
       callTo: '',
       mailTo: '',
@@ -151,41 +179,97 @@ export default class Calculation extends Component {
     } else if (!this.state.message) {
       alert('please enter Message')
     } else {
-      // this.sendMail();
-      alert('Module Under Development');
+      this.sendMail();
     }
   }
 
-  sendMail = () => MailCore.sendMail({
-    hostname: 'smtp.1und1.de',
-    port: 587,
-    username: 'info@itpe-germany.de',
-    password: 'Itpe!9877',
-    secure:false,
-    from: {
-      addressWithDisplayName: 'Tesa',
-      // mailbox: 'info@itpe-germany.de',
-      // mailbox: 'tesa@tesa-app.de',
-      mailbox: 'support@flyingcircle.de'
-    },
-    to: {
-      addressWithDisplayName: 'Tesa',
-      // mailbox: 'nagasudheerbolla@gmail.com'
-      mailbox: this.state.mailTo
-    },
-    subject: 'Tape Calculator - Contact',
-    htmlBody: `Name : ${this.state.name} <br/> Firm : ${this.state.firm} <br/> Email : ${this.state.email} <br/> Message : ${this.state.message}`
-  }).then((result) => {
-    if(result.status==='SUCCESS') {
-      this.setState({ name: '' , firm: '' , email: '' , message: '' })
-      // alert('Email has been sent from info@itpe-germany.de to '+this.state.mailTo);
-    } else {
-      alert(result.status);
-    }
-  }).catch((error) => {
-    alert(error);
-  })
+  // https://myaccount.google.com/security?pli=1#connectedapps
 
+  // hostname: 'smtp.gmail.com',
+  // port: 465,
+  // username: 'alphabittest@gmail.com',
+  // password: 'alphabit@123',
+  // from: {
+  //   addressWithDisplayName: 'Tesa',
+  //   mailbox: 'support@flyingcircle.de'
+  // },
+  // to: {
+  //   addressWithDisplayName: 'Tesa',
+  //   mailbox: 'nagasudheerbolla@gmail.com'
+  // },
+
+  // hostname: 'smtp.1und1.de',
+  // port: 587,
+  // username: 'info@itpe-germany.de',
+  // password: 'Itpe!9877',
+  // connectiontype:'tsl',
+  // from: {
+  //   addressWithDisplayName: 'Tesa',
+  //   // mailbox: 'info@itpe-germany.de',
+  //   // mailbox: 'tesa@tesa-app.de',
+  //   mailbox: 'support@flyingcircle.de'
+  // },
+  // to: {
+  //   addressWithDisplayName: 'Tesa',
+  //   mailbox: 'nagasudheerbolla@gmail.com'
+  //   // mailbox: this.state.mailTo
+  // },
+
+  // sendMail = () => MailCore.sendMail({
+  //   hostname: 'smtp.1und1.de',
+  //   port: 25,
+  //   username: 'info@itpe-germany.de',
+  //   password: 'Itpe!9877',
+  //   from: {
+  //     addressWithDisplayName: 'Tesa',
+  //     mailbox: 'support@flyingcircle.de'
+  //   },
+  //   to: {
+  //     addressWithDisplayName: 'Tesa',
+  //     mailbox: 'nagasudheerbolla@gmail.com'
+  //   },
+  //   subject: 'Tape Calculator - Contact',
+  //   htmlBody: `Name : ${this.state.name} <br/> Firm : ${this.state.firm} <br/> Email : ${this.state.email} <br/> Message : ${this.state.message}`
+  // }).then((result) => {
+  //   if(result.status==='SUCCESS') {
+  //     this.setState({ name: '' , firm: '' , email: '' , message: '' })
+  //     // alert('Email has been sent from info@itpe-germany.de to '+this.state.mailTo);
+  //   } else {
+  //     alert(result.status);
+  //     console.log(result.status);
+  //   }
+  // }).catch((error) => {
+  //   alert(error);
+  //   console.log(error);
+  // })
+
+
+// {"emailSubject":"Test subject From post Man", "emailBody":"text body from post man","receivierEmailAddress":"nagasudheerbolla@gmail.com","senderEmailAddress":"nagasudheerbolla@gmail.com"}
+
+  sendMail = () => {
+    // 124.123.70.255
+    fetch('http://192.168.0.103:3000/sendMail', {
+    // fetch('http://124.123.70.255:3000/sendMail', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        emailSubject: 'Tape Calculator - Contact',
+        emailBody: `Name : ${this.state.name} <br/> Firm : ${this.state.firm} <br/> Email : ${this.state.email} <br/> Message : ${this.state.message}`,
+        receivierEmailAddress:this.state.mailTo,
+        senderEmailAddress:"support@flyingcircle.de"
+      }),
+    }).then((response) => response.json())
+        .then((responseJson) => {
+          return responseJson.movies;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+  }
+// receivierEmailAddress:this.state.mailTo,
   validateEmail = () => {
     var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return regex.test(this.state.email);

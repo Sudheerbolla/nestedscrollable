@@ -5,6 +5,7 @@ import android.app.Application;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.burnweb.rnsendintent.RNSendIntentPackage;
 import com.facebook.react.ReactApplication;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.reactlibrary.RNMailCorePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;

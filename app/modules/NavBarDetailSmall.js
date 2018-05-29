@@ -7,7 +7,7 @@ import { ICONS, FONTS, COLORS } from '../constants';
 import applyLetterSpacing from '../utils/applyLetterSpacing';
 import SupText from '../utils/SupText';
 
-class NavBar extends Component {
+class NavBarDetailSmall extends Component {
   static defaultProps = {
     rightButton: false,
     titleStyle: {},
@@ -26,7 +26,7 @@ class NavBar extends Component {
         </TouchableOpacity>
         <View style={styles.titleContainer}>
           <SupText
-            textStyle={[styles.title, titleStyle, { fontFamily: FONTS.FONT_BOLD, fontSize: 20 }]}
+            textStyle={[styles.title, titleStyle, { fontFamily: FONTS.FONT_BOLD, fontSize: 16.5 }]}
             supStyle={[{ fontFamily: FONTS.FONT_BOLD, fontSize: 11, color: COLORS.BLUE }]}
             style={styles.unitItem}
             text={applyLetterSpacing(title, Platform.select({ ios: 5, android: 2 }))}
@@ -81,4 +81,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NavBar;
+export default NavBarDetailSmall;

@@ -53,7 +53,13 @@ const locale = {
     core: 'Kern',
     length: 'LÄNGE',
     thickness: 'DICKE',
-    result: 'ERGEBNIS'
+    result: 'ERGEBNIS',
+    unit1:'Mandrin 3 pouves',
+    unit2:'Mandrin 6 pouves',
+    tellerrollen:'Rouleau',
+    saf_rollen:'bobine trancannée'
+    // unit1:'3-zoll-kern',
+    // unit2:'6-zoll-kern',
   },
   calculation_consumptation: {
     consumptation: 'VERBRAUCH',
@@ -68,7 +74,7 @@ const locale = {
   },
   calculation_price: {
     price_roll: 'Preis / Rolle',
-    price: 'PREIS',
+    price: 'pries',
     length: 'LÄNGE',
     width: 'BREITE',
     result: 'ERGEBNIS'

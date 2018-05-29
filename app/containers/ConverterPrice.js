@@ -29,13 +29,13 @@ class Details extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      unit: 'Preis / m2',
+      unit: i18n.t('converter_price.price')+' / m2',
       lengthValue: '0',
       lengthValueInPM: '0',
       lengthValueInPY: '0',
       lengthValueInPF: '0',
       lengthValueInPMSI: '0',
-      hideView:'Preis / m2'
+      hideView:i18n.t('converter_price.price')+' / m2'
     };
   }
 
@@ -131,53 +131,53 @@ class Details extends Component {
     }
     this.setState({
       lengthValue: number,
-      lengthValueInPM: this.getCalculatedValue(numberModified, 'Preis / m2'),
-      lengthValueInPY: this.getCalculatedValue(numberModified, 'Preis / yd2'),
-      lengthValueInPF: this.getCalculatedValue(numberModified, 'Preis / ft2'),
-      lengthValueInPMSI: this.getCalculatedValue(numberModified, 'Preis / MSI'),
+      lengthValueInPM: this.getCalculatedValue(numberModified, i18n.t('converter_price.price')+' / m2'),
+      lengthValueInPY: this.getCalculatedValue(numberModified, i18n.t('converter_price.price')+' / yd2'),
+      lengthValueInPF: this.getCalculatedValue(numberModified, i18n.t('converter_price.price')+' / ft2'),
+      lengthValueInPMSI: this.getCalculatedValue(numberModified, i18n.t('converter_price.price')+' / MSI'),
     });
   }
 
   getCalculatedValue = (number, conv) => {
     var outPut = '';
-    if (this.state.unit == 'Preis / m2') {
-      if (conv === 'Preis / m2')
+    if (this.state.unit == i18n.t('converter_price.price')+' / m2') {
+      if (conv === i18n.t('converter_price.price')+' / m2')
         outPut = number
-      else if (conv == 'Preis / yd2') {
+      else if (conv == i18n.t('converter_price.price')+' / yd2') {
         outPut = 0.836 * number
-      } else if (conv == 'Preis / ft2') {
+      } else if (conv == i18n.t('converter_price.price')+' / ft2') {
         outPut = 0.093 * number
-      } else if (conv == 'Preis / MSI') {
+      } else if (conv == i18n.t('converter_price.price')+' / MSI') {
         outPut = 0.645 * number
       }
-    } else if (this.state.unit == 'Preis / yd2') {
-      if (conv === 'Preis / m2')
+    } else if (this.state.unit == i18n.t('converter_price.price')+' / yd2') {
+      if (conv === i18n.t('converter_price.price')+' / m2')
         outPut = 1.20 * number
-      else if (conv == 'Preis / yd2') {
+      else if (conv ==i18n.t('converter_price.price')+' / yd2') {
         outPut = number
-      } else if (conv == 'Preis / ft2') {
+      } else if (conv == i18n.t('converter_price.price')+' / ft2') {
         outPut = 0.111 * number
-      } else if (conv == 'Preis / MSI') {
+      } else if (conv == i18n.t('converter_price.price')+' / MSI') {
         outPut = 0.77 * number
       }
-    } else if (this.state.unit == 'Preis / ft2') {
-      if (conv === 'Preis / m2')
+    } else if (this.state.unit == i18n.t('converter_price.price')+' / ft2') {
+      if (conv === i18n.t('converter_price.price')+' / m2')
         outPut = 10.764 * number
-      else if (conv == 'Preis / yd2') {
+      else if (conv == i18n.t('converter_price.price')+' / yd2') {
         outPut = 9 * number
-      } else if (conv == 'Preis / ft2') {
+      } else if (conv == i18n.t('converter_price.price')+' / ft2') {
         outPut = number
-      } else if (conv == 'Preis / MSI') {
+      } else if (conv == i18n.t('converter_price.price')+' / MSI') {
         outPut = 6.94 * number
       }
-    }  else if (this.state.unit == 'Preis / MSI')  {
-      if (conv === 'Preis / m2')
+    }  else if (this.state.unit == i18n.t('converter_price.price')+' / MSI')  {
+      if (conv === i18n.t('converter_price.price')+' / m2')
         outPut = 1.550 * number
-      else if (conv == 'Preis / yd2') {
+      else if (conv == i18n.t('converter_price.price')+' / yd2') {
         outPut = 1.296 * number
-      } else if (conv == 'Preis / ft2') {
+      } else if (conv == i18n.t('converter_price.price')+' / ft2') {
         outPut = 0.144 * number
-      } else if (conv == 'Preis / MSI') {
+      } else if (conv == i18n.t('converter_price.price')+' / MSI') {
         outPut = number
       }
     }
@@ -265,22 +265,22 @@ class Details extends Component {
                 {applyLetterSpacing(i18n.t('converter_price.result').toUpperCase(), 5)}
               </Text>
               <View style={styles.resultNumber}>
-                { this.state.hideView!='Preis / m2' &&
+                { this.state.hideView!=i18n.t('converter_price.price')+' / m2' &&
                 <MarqueeText style={styles.number} duration={3000} marqueeOnStart loop marqueeDelay={1000} marqueeResetDelay={1000}>
                          {applyLetterSpacing(this.state.lengthValueInPM, 1)}
                 </MarqueeText>
                 }
-                { this.state.hideView!='Preis / yd2' &&
+                { this.state.hideView!=i18n.t('converter_price.price')+' / yd2' &&
                 <MarqueeText style={styles.number} duration={3000} marqueeOnStart loop marqueeDelay={1000} marqueeResetDelay={1000}>
                          {applyLetterSpacing(this.state.lengthValueInPY, 1)}
                 </MarqueeText>
                 }
-                { this.state.hideView!='Preis / ft2' &&
+                { this.state.hideView!=i18n.t('converter_price.price')+' / ft2' &&
                 <MarqueeText style={styles.number} duration={3000} marqueeOnStart loop marqueeDelay={1000} marqueeResetDelay={1000}>
                          {applyLetterSpacing(this.state.lengthValueInPF, 1)}
                 </MarqueeText>
                 }
-                { this.state.hideView!='Preis / MSI' &&
+                { this.state.hideView!=i18n.t('converter_price.price')+' / MSI' &&
                 <MarqueeText style={styles.number} duration={3000} marqueeOnStart loop marqueeDelay={1000} marqueeResetDelay={1000}>
                          {applyLetterSpacing(this.state.lengthValueInPMSI, 1)}
                 </MarqueeText>
@@ -298,7 +298,7 @@ class Details extends Component {
               {Platform.select({
                 android: (
                   <CustomPicker
-                    options={['Preis / m2', 'Preis / yd2', 'Preis / ft2', 'Preis / MSI']}
+                    options={[i18n.t('converter_price.price')+' / m2', i18n.t('converter_price.price')+' / yd2', i18n.t('converter_price.price')+' / ft2', i18n.t('converter_price.price')+' / MSI']}
                     fieldTemplate={this.renderField}
                     style={{ paddingLeft: 30, marginTop: 13, height: 20 }}
                     value={this.state.unit}
@@ -314,10 +314,10 @@ class Details extends Component {
                     onValueChange={(itemValue, itemIndex) =>{
                       this.setState({ unit: itemValue,hideView:itemValue },function(){this.updateAllValues(this.state.lengthValue)});
                     }}>
-                    <Picker.Item label="Preis / m2" value="Preis / m2" />
-                    <Picker.Item label="Preis / yd2" value="Preis / yd2" />
-                    <Picker.Item label="Preis / ft2" value="Preis / ft2" />
-                    <Picker.Item label="Preis / MSI" value="Preis / MSI" />
+                    <Picker.Item label={i18n.t('converter_price.price')+' / m2'} value={i18n.t('converter_price.price')+' / m2'} />
+                    <Picker.Item label={i18n.t('converter_price.price')+' / yd2'} value={i18n.t('converter_price.price')+' / yd2'} />
+                    <Picker.Item label={i18n.t('converter_price.price')+' / ft2'} value={i18n.t('converter_price.price')+' / ft2'} />
+                    <Picker.Item label={i18n.t('converter_price.price')+' / MSI'} value={i18n.t('converter_price.price')+' / MSI'} />
                   </Picker>
                 ),
               })}
@@ -328,39 +328,39 @@ class Details extends Component {
             <View style={{ height: Platform.select({ ios: 2, android: 20 }) }} />
 
             <View style={styles.resultUnitContainer}>
-              { this.state.hideView!='Preis / m2' &&
+              { this.state.hideView!=i18n.t('converter_price.price')+' / m2' &&
               <SupText
                 textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 18 }}
                 supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11 }}
                 style={styles.unitItem}
-                text={'Preis/m'}
+                text={i18n.t('converter_price.price')+' / m'}
                 sup={'2'}
               />
               }
-              { this.state.hideView!='Preis / yd2' &&
+              { this.state.hideView!=i18n.t('converter_price.price')+' / yd2' &&
               <SupText
                 textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 18 }}
                 supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11 }}
                 style={styles.unitItem}
-                text={'Preis/yd'}
+                text={i18n.t('converter_price.price')+' / yd'}
                 sup={'2'}
               />
               }
-              { this.state.hideView!='Preis / ft2' &&
+              { this.state.hideView!=i18n.t('converter_price.price')+' / ft2' &&
                 <SupText
                   textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 18 }}
                   supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11 }}
                   style={styles.unitItem}
-                  text={'Preis/ft'}
+                  text={i18n.t('converter_price.price')+' / ft'}
                   sup={'2'}
                 />
               }
-              { this.state.hideView!='Preis / MSI' &&
+              { this.state.hideView!=i18n.t('converter_price.price')+' / MSI' &&
               <SupText
                 textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 18 }}
                 supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11 }}
                 style={styles.unitItem}
-                text={'Preis/MSI'}
+                text={i18n.t('converter_price.price')+' / MSI'}
               />
               }
             </View>

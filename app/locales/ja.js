@@ -54,6 +54,10 @@ const locale = {
     length: '⻑さ',
     thickness: '厚さ',
     result: '結果',
+    unit1:'3-zoll-kern',
+    unit2:'6-zoll-kern',
+    tellerrollen:'Rouleau',
+    saf_rollen:'bobine trancannée'
   },
   calculation_consumptation: {
     consumptation: '消費',

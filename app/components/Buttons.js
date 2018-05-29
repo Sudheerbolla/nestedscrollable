@@ -193,6 +193,10 @@ export class BtnResult extends Component {
   pressHandler = () => {
     const {currentState, value, click, prev} = this.props;
     console.log('currentState : ' + currentState + 'value : ' + value + 'prev : ' + prev);
+    var lastChar = currentState.charAt(currentState.length - 1);
+    if(lastChar==='+'||lastChar==='-'||lastChar==='/'||lastChar==='*'){
+      return;
+    }
     let operations = ['+', '-', '/', '*'];
     operations.forEach(operation => {
       currentState.split(operation).forEach((elem, index) => {

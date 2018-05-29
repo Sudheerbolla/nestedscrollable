@@ -6,7 +6,7 @@ const locale = {
   },
   general: {
     calculation: 'CALCUL',
-    converter: 'CONVERTISEUR',
+    converter: 'convertisseur',
     calculator: 'calculatrice',
     contact: 'contact'
   },
@@ -19,15 +19,15 @@ const locale = {
     price_m2: 'prix / m'
   },
   contact: {
-    name: 'PRÉNOM',
-    firw: 'ENTERPRISE',
+    name: 'Nom',
+    firw: 'ENTREPRISE',
     email: 'EMAIL',
     pwd: 'password',
     message: 'MESSAGE',
-    call: 'APPEL',
+    call: 'APPELER',
     send: 'ENVOYER',
-    imprint: 'IMPRIMER',
-    privacy: 'politique de confidentialité',
+    imprint: '',
+    privacy: 'Conditions de la politique de confidentialité',
     condition: 'Condiciones de Uso',
     characters:'caractères',
     emailvalidation:'Veuillez entrer une adresse e-mail valide'
@@ -42,7 +42,7 @@ const locale = {
   },
   calculation_length: {
     length: 'LONGUEUR',
-    area: 'LONGUEUR',
+    area: 'SURFACE',
     width: 'LARGEUR',
     result: 'RÉSULTAT',
     areaValue: '4,80',
@@ -54,10 +54,14 @@ const locale = {
     length: 'LONGUEUR',
     thickness: 'ÉPAISSEUR',
     result: 'RÉSULTAT',
+    unit1:'3-zoll-kern',
+    unit2:'6-zoll-kern',
+    tellerrollen:'Rouleau',
+    saf_rollen:'bobine trancannée'
   },
   calculation_consumptation: {
     consumptation: 'CONSOMMATION',
-    punch_line: 'Consomma tion / 1000 ligne de poinçon',
+    punch_line: 'Consommation / 1000 piéces',
     length_x: 'longueur',
     width_y: 'largeur',
     without_waste: "S'il vous plaît noter que la consommation est la consommation de matériaux purs, sans gaspillage.",
@@ -66,7 +70,7 @@ const locale = {
     widthValue: '205'
   },
   calculation_price: {
-    price_roll: 'PRIC/ROULEAU',
+    price_roll: 'PRIX/ROULEAU',
     price: 'PRIX',
     length: 'LONGUEUR',
     width: 'LARGEUR',
@@ -75,13 +79,13 @@ const locale = {
   calculation_price_m2: {
     price_m2: 'PRIX/M',
     price: 'PRIX',
-    roll: 'ROULEAU',
+    roll: 'AU ROULEAU',
     length: 'LONGUEUR',
     width: 'LARGEUR',
     result: 'RÉSULTAT',
   },
   converter_area: {
-    area: 'AREA',
+    area: 'SURFACE',
     result: 'RÉSULTAT',
     negativeAlert:'Les valeurs négatives ne sont pas acceptées',
     outOfRangeAlert:'Cette valeur est en dehors de la plage',
@@ -104,18 +108,9 @@ const locale = {
     result: 'RÉSULTAT',
   },
   converter_price: {
-    price: 'PRIX',
+    price: 'prix',
     result: 'RÉSULTAT',
   },
 };
-
-// area: 'AREA',
-// area: 'RÉGION',
-
-// area: 'SURFACE',
-// area: 'AREA',
-
-// converter: 'CONVERTIS',
-// converter: 'CONVERTISEUR',
 
 export default locale;

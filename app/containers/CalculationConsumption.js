@@ -33,6 +33,7 @@ export default class CalculationConsumptation extends Component {
     needToReplaceDotWithComma=false;
   }
 
+
   round(number, precision) {
     var shift = function (number, precision, reverseShift) {
       if (reverseShift) {
@@ -79,7 +80,7 @@ export default class CalculationConsumptation extends Component {
       }
     }
 
-    var outPut = length * width * 1000;
+    var outPut = length * width * 0.001;
     outPut=this.round(outPut, 3);
     if(needToReplaceDotWithComma){
       if(outPut.toString().includes('.')){
@@ -260,13 +261,13 @@ export default class CalculationConsumptation extends Component {
             <View style={{ height: 52.5 }} />
 
             <View style={styles.unitWidth}>
-              <Text style={styles.unitWidthLabel}>mm</Text>
+              <Text style={styles.unitWidthLabel}>m</Text>
             </View>
 
             <View style={{ height: 60.5 }} />
 
             <View style={styles.unitWidth}>
-              <Text style={styles.unitWidthLabel}>μm</Text>
+              <Text style={styles.unitWidthLabel}>mm</Text>
             </View>
 
             <View style={{ height: 38 }} />

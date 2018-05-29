@@ -54,6 +54,10 @@ const locale = {
     length: 'LONGITUD',
     thickness: 'ESPESOR',
     result: 'RESULTADO',
+    unit1:'3-zoll-kern',
+    unit2:'6-zoll-kern',
+    tellerrollen:'Rouleau',
+    saf_rollen:'bobine trancannée'
   },
   calculation_consumptation: {
     consumptation: 'CONSUMPTION',
@@ -104,7 +108,7 @@ const locale = {
     result: 'RESULTADO',
   },
   converter_price: {
-    price: 'PRECIO',
+    price: 'precio',
     result: 'RESULTADO',
   },
 };

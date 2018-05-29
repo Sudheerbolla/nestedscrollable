@@ -19,14 +19,19 @@ class Details extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      unit: 'm',
-      priceValue: '0',
+      unit: '€/m2',
+      priceValue: '20',
       lengthValue: Platform.OS === 'ios'?i18n.t('calculation_area.lengthValue'):'66.00',
       widthValue: '205',
       pricePerRoll:'280'
     };
   }
-
+//   <SupText
+    // textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 16 }}
+    // supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11 }}
+    // style={styles.unitWidthLabel}
+    // text={'€/m'}
+    // sup={'2'}/>
   componentDidMount(){
     this.updateAllValues();
   }
@@ -98,7 +103,7 @@ class Details extends Component {
       }
     }
 
-    if (this.state.unit == 'm') {
+    if (this.state.unit == '€/m2') {
       pricePerRoll=priceValue*widthValue*0.001*lengthValue;
     }
     pricePerRoll=this.round(pricePerRoll, 3);
@@ -113,7 +118,7 @@ class Details extends Component {
   shareTextWithTitle() {
     let emailsubject='Tesa Tape Calculator - Price /roll';
 
-    let textToShare='Input: \n'+ 'Price: '+this.state.priceValue+' m, Width: '+this.state.widthValue+' mm, Length: '+this.state.lengthValue+' m \n \n Result: \n'
+    let textToShare='Input: \n'+ 'Price: '+this.state.priceValue+' €/m2, Width: '+this.state.widthValue+' mm, Length: '+this.state.lengthValue+' m \n \n Result: \n'
     + this.state.pricePerRoll +' Price/roll';
 
     if(Platform.OS === 'ios') {
@@ -308,30 +313,12 @@ class Details extends Component {
             <View style={styles.unitContainer}>
               <View style={styles.pickerTopBorder} />
 
-              {/* {Platform.select({
-                android: (
-                  <CustomPicker
-                    options={['m']}
-                    fieldTemplate={this.renderField}
-                    style={{ paddingLeft: 30, marginTop: 15, height: 20 }}
-                    value={this.state.unit}
-                    onValueChange={(value) => {
-                      this.setState({ unit: value },function(){this.updateAllValues()});
-                    }}
-                  />
-                ),
-                ios: (
-                  <Picker
-                    selectedValue={this.state.unit}
-                    itemStyle={{ fontSize: 15, color: COLORS.DARK_GREY }}
-                    onValueChange={(itemValue, itemIndex) => {
-                      this.setState({ unit: itemValue },function(){this.updateAllValues()});
-                    }}>
-                    <Picker.Item label="m" value="m" />
-                  </Picker>
-                ),
-              })} */}
-                <Text style={[styles.unitWidthLabel,{paddingLeft: 40, marginTop: 15, height: 20,fontSize: 15}]}>m</Text>
+                 <SupText
+                  textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 16 }}
+                  supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11 }}
+                  style={[styles.unitWidthLabel,{paddingLeft: 40, marginTop: 15, height: 20}]}
+                  text={'€/m'}
+                  sup={'2'}/>
 
 
               <View style={styles.pickerBottomBorder} />
@@ -351,7 +338,7 @@ class Details extends Component {
 
             <View style={styles.resultUnitContainer}>
               <SupText
-                textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 15 }}
+                textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 13 }}
                 supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11 }}
                 style={styles.unitItem}
                 text={applyLetterSpacing(i18n.t('calculation_price.price_roll'), 1)}

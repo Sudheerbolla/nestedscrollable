@@ -126,7 +126,7 @@ export default class Details extends Component {
       lengthValueInY:this.getProperOutPut(this.getCalculatedValue(numberModified,'yard2')),
       lengthValueInF:this.getProperOutPut(this.getCalculatedValue(numberModified,'feet2')),
       lengthValueInI:this.getProperOutPut(this.getCalculatedValue(numberModified,'inches2')),
-      lengthValueInMSI:(this.getProperOutPut(this.getCalculatedValue(numberModified,'inches2') / 1000).toString()),
+      lengthValueInMSI:(this.getProperOutPut(this.getCalculatedValue(numberModified,'inches2') * 1000).toString()),
     });
   }
 
@@ -204,7 +204,7 @@ export default class Details extends Component {
         outPut = number
       }
     }else if (this.state.unit == 'MSI') {
-      var outPutInInches = 1000*number
+      var outPutInInches = number/1000
       if (conv === 'm2')
         outPut = 0.0006451597222199103622*outPutInInches
       else if (conv == 'cm2') {

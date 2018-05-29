@@ -5,7 +5,7 @@ import { CustomPicker } from 'react-native-custom-picker';
 import { StyleSheet, View, Text, TextInput, Picker, Dimensions, Platform, ImageBackground,TouchableOpacity, ScrollView,Share } from 'react-native';
 import { Grid, DetailTextInput } from '../components';
 import { COLORS, ICONS, FONTS } from '../constants';
-import NavBarDetail from '../modules/NavBarDetail';
+import NavBarDetailSmall from '../modules/NavBarDetailSmall';
 import i18n from '../utils/i18n';
 import SupText from '../utils/SupText';
 import applyLetterSpacing from '../utils/applyLetterSpacing';
@@ -81,7 +81,6 @@ export default class CalculationDiameter extends Component {
       .then(this._showResult)
       .catch(err => console.log(err))
   }
-
   }
 
   updateShareText(result){
@@ -93,7 +92,7 @@ export default class CalculationDiameter extends Component {
     return (
       <Grid>
         <View style={{ height: 22 }} />
-        <NavBarDetail
+        <NavBarDetailSmall
           onBack={() => {
             this.props.navigation.goBack();
           }}
@@ -162,7 +161,7 @@ class TellerrollenScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      unit: '3-Zoll-Kern',
+      unit: i18n.t('calculation_diameter.unit1'),
       lengthValue: '66',
       thickNessValue: '205',
       '3KernZollDiameter':82,//mm
@@ -207,9 +206,9 @@ class TellerrollenScreen extends React.Component {
       }
     }
 
-    if(this.state.unit=='3-Zoll-Kern'){
+    if(this.state.unit==i18n.t('calculation_diameter.unit1')){
       coreDiameter=82;
-    } else if (this.state.unit=='6-Zoll-Kern') {
+    } else if (this.state.unit==i18n.t('calculation_diameter.unit2')) {
       coreDiameter=160;
     }
 
@@ -385,7 +384,7 @@ class TellerrollenScreen extends React.Component {
             {Platform.select({
               android: (
                 <CustomPicker
-                  options={['3-Zoll-Kern', '6-Zoll-Kern']}
+                  options={[i18n.t('calculation_diameter.unit1'),i18n.t('calculation_diameter.unit2')]}
                   fieldTemplate={this.renderField}
                   style={{ paddingLeft: 20, marginTop: 22, height: 28 }}
                   value={this.state.unit}
@@ -402,8 +401,8 @@ class TellerrollenScreen extends React.Component {
                   onValueChange={(itemValue, itemIndex) => {
                     this.setState({ unit: itemValue },function(){this.updateAllValues()});
                   }}>
-                  <Picker.Item label="3-Zoll-Kern" value="3-Zoll-Kern" />
-                  <Picker.Item label="6-Zoll-Kern" value="6-Zoll-Kern" />
+                  <Picker.Item label={i18n.t('calculation_diameter.unit1')} value={i18n.t('calculation_diameter.unit1')} />
+                  <Picker.Item label={i18n.t('calculation_diameter.unit2')} value={i18n.t('calculation_diameter.unit2')} />
                 </Picker>
               ),
             })}
@@ -452,7 +451,7 @@ class SAFRollenScreen extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        unit: '3-Zoll-Kern',
+        unit: i18n.t('calculation_diameter.unit1'),
         lengthValue: '66',
         widthValue: '19',
         coreWidthValue: '600',
@@ -509,9 +508,9 @@ class SAFRollenScreen extends React.Component {
         }
       }
 
-      if(this.state.unit=='3-Zoll-Kern'){
+      if(this.state.unit==i18n.t('calculation_diameter.unit1')){
         coreDiameter=82;
-      } else if (this.state.unit=='6-Zoll-Kern') {
+      } else if (this.state.unit==i18n.t('calculation_diameter.unit2')) {
         coreDiameter=160;
       }
 
@@ -759,7 +758,7 @@ class SAFRollenScreen extends React.Component {
               {Platform.select({
                 android: (
                   <CustomPicker
-                    options={['3-Zoll-Kern', '6-Zoll-Kern']}
+                    options={[i18n.t('calculation_diameter.unit1'),i18n.t('calculation_diameter.unit2')]}
                     fieldTemplate={this.renderField}
                     style={{ paddingLeft: 20, marginTop: 22, height: 28 }}
                     value={this.state.unit}
@@ -776,8 +775,8 @@ class SAFRollenScreen extends React.Component {
                     onValueChange={(itemValue, itemIndex) => {
                       this.setState({ unit: itemValue },function(){this.updateAllValues()});
                     }}>
-                    <Picker.Item label="3-Zoll-Kern" value="3-Zoll-Kern" />
-                    <Picker.Item label="6-Zoll-Kern" value="6-Zoll-Kern" />
+                    <Picker.Item label={i18n.t('calculation_diameter.unit1')} value={i18n.t('calculation_diameter.unit1')} />
+                    <Picker.Item label={i18n.t('calculation_diameter.unit2')} value={i18n.t('calculation_diameter.unit2')} />
                   </Picker>
                 ),
               })}

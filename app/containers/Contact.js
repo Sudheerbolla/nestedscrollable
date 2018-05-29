@@ -13,38 +13,7 @@ import { COLORS, ICONS, FONTS } from '../constants';
 import i18n from '../utils/i18n';
 import applyLetterSpacing from '../utils/applyLetterSpacing';
 
-import MailCore from 'react-native-mailcore';
-import { PermissionsAndroid } from 'react-native';
-
 const deviceCountry = DeviceInfo.getDeviceCountry();
-
-// sendMail = () => MailCore.sendMail({
-//   hostname: 'smtp.gmail.com',
-//   port: 465,
-//   username: 'alphabittest@gmail.com',
-//   password: 'alphabit@123',
-//   from: {
-//     addressWithDisplayName: 'Tesa',
-//     mailbox: 'alphabittest@gmail.com'
-//   },
-//   to: {
-//     addressWithDisplayName: 'Tesa',
-//     // mailbox: 'nagasudheerbolla@gmail.com'
-//     mailbox: this.state.mailTo
-//   },
-//   subject: 'Tape Calculator - Contact',
-//   htmlBody: `Name : ${this.state.name} <br/> Firm : ${this.state.firm} <br/> Email : ${this.state.email} <br/> Message : ${this.state.message}`
-//
-// }).then((result) => {
-//   if(result.status==='SUCCESS'){
-//     this.setState({ name: '' ,firm: '' ,email: '' ,message: '' })
-//     alert('Email has been sent');
-//   } else {
-//     alert(result.status);
-//   }
-// }).catch((error) => {
-//   alert(error);
-// })
 
 export default class Calculation extends Component {
 
@@ -63,59 +32,6 @@ export default class Calculation extends Component {
       latitude:'',
       longitude:'',
     };
-  }
-
-  async requestLocationPermission() {
-    try {
-      const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, {
-          'title': 'Tesa App Location Permission',
-          'message': 'Tesa App needs access to your location so that we can provide you proper support based on your country.'
-      })
-
-      if (granted) {
-        console.log("You can use the location")
-        this.getLocation();
-      } else {
-        console.log("location permission denied")
-        requestLocationPermission();
-      }
-    } catch (err) {
-      console.warn(err)
-    }
-  }
-
-  getLocation =() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      // const initialPosition = JSON.stringify(position);
-      // alert(initialPosition);
-        this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          error: null,
-        },function(){
-          this.setUpDetails();
-        });
-        this.callApi(position.coords.latitude,position.coords.longitude);
-      },
-      (error) => {
-        this.setState({ error: error.message })
-        alert(error.message);
-      },
-      { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 },
-    );
-  }
-
-  callApi(myLat,myLon){
-    fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + myLat + ',' + myLon + '&key=' + "")
-            .then((response) => response.json())
-            .then((responseJson) => {
-            alert(JSON.stringify(responseJson));
-            console.log('ADDRESS GEOCODE is BACK!! => ' + JSON.stringify(responseJson));
-    })
-  }
-
-  componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchId);
   }
 
   setUpDetails(){
@@ -166,8 +82,6 @@ export default class Calculation extends Component {
   }
 
   componentDidMount() {
-    // this.requestLocationPermission();
-    // this.getLocation();
     this.setUpDetails();
   }
 
@@ -183,35 +97,29 @@ export default class Calculation extends Component {
     }
   }
 
-  sendMail = () => MailCore.sendMail({
-    hostname: 'smtp.1und1.de',
-    port: 587,
-    username: 'info@itpe-germany.de',
-    password: 'Itpe!9877',
-    secure:false,
-    from: {
-      addressWithDisplayName: 'Tesa',
-      // mailbox: 'info@itpe-germany.de',
-      // mailbox: 'tesa@tesa-app.de',
-      mailbox: 'support@flyingcircle.de'
-    },
-    to: {
-      addressWithDisplayName: 'Tesa',
-      // mailbox: 'nagasudheerbolla@gmail.com'
-      mailbox: this.state.mailTo
-    },
-    subject: 'Tape Calculator - Contact',
-    htmlBody: `Name : ${this.state.name} <br/> Firm : ${this.state.firm} <br/> Email : ${this.state.email} <br/> Message : ${this.state.message}`
-  }).then((result) => {
-    if(result.status==='SUCCESS') {
-      this.setState({ name: '' , firm: '' , email: '' , message: '' })
-      // alert('Email has been sent from info@itpe-germany.de to '+this.state.mailTo);
-    } else {
-      alert(result.status);
-    }
-  }).catch((error) => {
-    alert(error);
-  })
+  sendMail = () => {
+    // 192.168.0.103
+    fetch('http://192.168.1.30:3000/sendMail', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        emailSubject: 'Tape Calculator - Contact',
+        emailBody: `Name : ${this.state.name} <br/> Firm : ${this.state.firm} <br/> Email : ${this.state.email} <br/> Message : ${this.state.message}`,
+        receivierEmailAddress:this.state.mailTo,
+        senderEmailAddress:this.state.mailTo
+        // senderEmailAddress:"support@flyingcircle.de"
+      }),
+    }).then((response) => response.json())
+        .then((responseJson) => {
+          return responseJson.movies;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+  }
 
   validateEmail = () => {
     var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

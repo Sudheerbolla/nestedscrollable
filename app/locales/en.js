@@ -53,7 +53,11 @@ const locale = {
     core: 'core',
     length: 'LENGTH',
     thickness: 'THICKNESS',
-    result: 'RESULT'
+    result: 'RESULT',
+    unit1:'3-inch-core',
+    unit2:'6-inch-core',
+    tellerrollen:'Tellerrollen',
+    saf_rollen:'SAF-Rollen'
   },
   calculation_consumptation: {
     consumptation: 'CONSUMPTION',
@@ -104,7 +108,7 @@ const locale = {
     result: 'RESULT'
   },
   converter_price: {
-    price: 'PRICE',
+    price: 'price',
     result: 'RESULT'
   }
 };

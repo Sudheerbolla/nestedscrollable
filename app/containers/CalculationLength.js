@@ -14,6 +14,7 @@ import {
   ScrollView,
   Share
 } from 'react-native';
+
 import { Grid, DetailTextInput } from '../components';
 import { COLORS, ICONS, FONTS } from '../constants';
 import NavBarDetail from '../modules/NavBarDetail';
