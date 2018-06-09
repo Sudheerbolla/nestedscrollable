@@ -47,13 +47,82 @@ export default class Calculation extends Component {
     });
   }
 
+  handleClickPercent = (value, prev, isPercent) => {
+    let operations = ['+', '-', '/', '*'];
+    if (isPercent && new RegExp(/[+-/*]+/).test(prev)) {
+      // if (res.toString().includes('+') || res.toString().includes('-') || res.toString().includes('/') || res.toString().includes('*')) {
+      var lastItem = prev.split(/[+-/*]+/)[prev.split(/[+-/*]+/).length - 1];
+      var res = prev.substring(0, prev.lastIndexOf(lastItem));
+      var lastChar = res[res.length - 1];
+      res = res.slice(0, -1);
+      if (prev.split(/[+-/*]+/).length > 2) {
+        operations.forEach(operation => {
+          res.split(operation).forEach((elem, index) => {
+            if (index === 1 && elem !== '') {
+              let result = (new Function(`return ${res}`))();
+              result = + result;
+              if (lastChar === "+") {
+                result = result + (result * lastItem / 100);
+              } else if (lastChar === "-") {
+                result = result - (result * lastItem / 100);
+              } else if (lastChar === "/") {
+                result = result / (result * lastItem / 100);
+              } else if (lastChar === "*") {
+                result = result * (result * lastItem / 100);
+              }
+
+              this.setState({
+                text: result,
+                prev: prev || this.state.prev
+              });
+            }
+          });
+        });
+      } else {
+        if (lastChar === "+") {
+          res = parseInt(res, 10) + (res * lastItem / 100);
+        } else if (lastChar === "-") {
+          res = parseInt(res, 10) - (res * lastItem / 100);
+        } else if (lastChar === "/") {
+          res = parseInt(res, 10) / (res * lastItem / 100);
+        } else if (lastChar === "*") {
+          res = parseInt(res, 10) * (res * lastItem / 100);
+        }
+
+        this.setState({
+          text: res,
+          prev: prev || this.state.prev
+        });
+      }
+    }
+  }
+
+  // operation => {
+  // for (var i = 0; i < operations.length; i++) {
+  // var operation=  operations[i]
+  //
+  // }
+  // res.split(operation).forEach((elem, index) => {
+  //   if (index === 1 && elem !== '') {
+  //     let result = (new Function(`return ${res}`))();
+  //     result = + result;
+  //      result=parseInt(res, 10) + (res * lastItem / 100);
+  //     this.setState({
+  //       text: result,
+  //       prev: prev || this.state.prev
+  //     });
+  //   }
+
   round(number, precision) {
-    var shift = function (number, precision, reverseShift) {
+    var shift = function(number, precision, reverseShift) {
       if (reverseShift) {
         precision = -precision;
       }
       var numArray = ("" + number).split("e");
-      return +(numArray[0] + "e" + (numArray[1] ? (+numArray[1] + precision) : precision));
+      return + (numArray[0] + "e" + (
+        numArray[1]
+        ? (+ numArray[1] + precision)
+        : precision));
     };
     return shift(Math.round(shift(number, precision, false)), precision, true);
   }
@@ -82,7 +151,7 @@ export default class Calculation extends Component {
           ]}>
           <BtnAC prev={this.state.prev} currentState={this.state.text} click={this.handleClick} value='AC'/>
           <BtnPoint currentState={this.state.text} click={this.handleClick} value='+/-'/>
-          <BtnPercent currentState={this.state.text} click={this.handleClick} value='%'/>
+          <BtnPercent currentState={this.state.text} click={this.handleClickPercent} value='%'/>
           <BtnOperation currentState={this.state.text} click={this.handleClick} value='/'/>
         </View>
         <View style={styles.row}>

@@ -236,50 +236,83 @@ export class BtnPercent extends Component {
       return;
     }
 
-    // if (currentState.toString().includes('+') || currentState.toString().includes('-') || currentState.toString().includes('/') || currentState.toString().includes('*')) {
-    if (new RegExp(/[+-/*]+/).test(currentState)) {
-      let result = currentState;
-      click(result, currentState, true);
-    } else {
-      let result = + currentState / 100;
-      click(result);
-    }
-  }
+    if (currentState.toString().includes('+') || currentState.toString().includes('-') || currentState.toString().includes('/') || currentState.toString().includes('*')) {
+      let operations = ['+', '-', '/', '*'];
 
-  render() {
-    return (<SimpleBtnImage buttonContainer={styles.buttonContainerOperation} pressHandler={this.pressHandler} value={this.props.value}/>)
+      // let percVal=currentState.split(operation)[currentState.split(operation).length - 1];
+      // currentState=currentState.split(operation)[currentState.split(operation).length - 1];
+      //
+      // var path = "/bar/foo/moo/";
+      // var split = path.split("/");
+      // var x = split.slice(0, split.length - 2).join("/") + "/";
+      // alert(x);
+      for (var i = 0; i < operations.length; i++) {
+        operation = operations[i];
+        var splitString = currentState.split(operation);
+        var currentStateNew = splitString.slice(0, splitString.length - 2).join(operation) + operation;
+        if (i === operations.length - 1) {
+          let result = (new Function(`return ${currentStateNew}`))();
+          result = + result;
+          click(result);
+        } else {
+          splitString.forEach((elem, index) => {
+            if (index === 1 && elem !== '') {
+              let result = (new Function(`return ${currentState}`))();
+              result = + result;
+              click(result);
+            }
+          }}
+      }
+      // operations.forEach(operation => {
+      //   var splitString = currentState.split(operation);
+      //   splitString.forEach((elem, index) => {
+      //     if (index === 1 && elem !== '') {
+      //       let result = (new Function(`return ${currentState}`))();
+      //       result = + result;
+      //       click(result);
+      //     }
+      //   }});
+    });
+  } else {
+    let result = + currentState / 100;
+    click(result);
   }
 }
 
-export class BtnResult extends Component {
-  pressHandler = () => {
-    const {currentState, value, click, prev} = this.props;
-    console.log('currentState : ' + currentState + 'value : ' + value + 'prev : ' + prev);
-    var lastChar = 0;
-    if (currentState.length) {
-      lastChar = currentState.charAt(currentState.length - 1);
-    } else {
-      return;
-    }
-    if (lastChar === '+' || lastChar === '-' || lastChar === '/' || lastChar === '*' || currentState === 'Nan') {
-      return;
-    }
-    let operations = ['+', '-', '/', '*'];
-    operations.forEach(operation => {
-      currentState.split(operation).forEach((elem, index) => {
-        if (index === 1 && elem !== '') {
-          let result = (new Function(`return ${currentState}`))();
-          console.log('result : ' + result);
-          click(result.toString().slice(0, 15), `${currentState}`);
-          // console.log('result slice(0, 15) with currentState : ' + result.toString().slice(0, 15), `${currentState}`);
-        }
-      });
-    });
-  }
+render() {
+  return (<SimpleBtnImage buttonContainer={styles.buttonContainerOperation} pressHandler={this.pressHandler} value={this.props.value}/>)
+}
+}
 
-  render() {
-    return (<SimpleBtnImage buttonContainer={styles.buttonContainerOperation} pressHandler={this.pressHandler} value={this.props.value}/>)
+export class BtnResult extends Component {
+pressHandler = () => {
+  const {currentState, value, click, prev} = this.props;
+  console.log('currentState : ' + currentState + 'value : ' + value + 'prev : ' + prev);
+  var lastChar = 0;
+  if (currentState.length) {
+    lastChar = currentState.charAt(currentState.length - 1);
+  } else {
+    return;
   }
+  if (lastChar === '+' || lastChar === '-' || lastChar === '/' || lastChar === '*' || currentState === 'Nan') {
+    return;
+  }
+  let operations = ['+', '-', '/', '*'];
+  operations.forEach(operation => {
+    currentState.split(operation).forEach((elem, index) => {
+      if (index === 1 && elem !== '') {
+        let result = (new Function(`return ${currentState}`))();
+        console.log('result : ' + result);
+        click(result.toString().slice(0, 15), `${currentState}`);
+        // console.log('result slice(0, 15) with currentState : ' + result.toString().slice(0, 15), `${currentState}`);
+      }
+    });
+  });
+}
+
+render() {
+  return (<SimpleBtnImage buttonContainer={styles.buttonContainerOperation} pressHandler={this.pressHandler} value={this.props.value}/>)
+}
 }
 
 const {width} = Dimensions.get('window');
@@ -288,50 +321,50 @@ const screenHorizontalPadding = 50;
 const columnWidth = (width - screenHorizontalPadding) / 2;
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    backgroundColor: '#00BFFF',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 2,
-    width: cubeWidth,
-    height: cubeWidth - 10
-  },
-  buttonContainerZero: {
-    backgroundColor: '#00BFFF',
-    margin: 2,
-    width: 2 *cubeWidth + 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: cubeWidth - 10
-  },
-  buttonContainerOperation: {
-    backgroundColor: '#ffffff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: cubeWidth,
-    margin: 2,
-    height: cubeWidth - 10
-  },
-  buttonText: {
-    color: '#808080',
-    fontWeight: '400',
-    textAlign: 'center',
-    fontFamily: FONTS.FONT_BOLD,
-    fontSize: 30
-  },
-  buttonTextWhite: {
-    color: '#ffffff',
-    textAlign: 'center',
-    fontFamily: FONTS.FONT_BOLD,
-    fontSize: 26,
-    fontWeight: '200'
-  },
-  imageStyle: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 2,
-    padding: 3,
-    width: cubeWidth,
-    height: cubeWidth - 10
-  }
+buttonContainer: {
+  backgroundColor: '#00BFFF',
+  justifyContent: 'center',
+  alignItems: 'center',
+  margin: 2,
+  width: cubeWidth,
+  height: cubeWidth - 10
+},
+buttonContainerZero: {
+  backgroundColor: '#00BFFF',
+  margin: 2,
+  width: 2 *cubeWidth + 5,
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: cubeWidth - 10
+},
+buttonContainerOperation: {
+  backgroundColor: '#ffffff',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: cubeWidth,
+  margin: 2,
+  height: cubeWidth - 10
+},
+buttonText: {
+  color: '#808080',
+  fontWeight: '400',
+  textAlign: 'center',
+  fontFamily: FONTS.FONT_BOLD,
+  fontSize: 30
+},
+buttonTextWhite: {
+  color: '#ffffff',
+  textAlign: 'center',
+  fontFamily: FONTS.FONT_BOLD,
+  fontSize: 26,
+  fontWeight: '200'
+},
+imageStyle: {
+  justifyContent: 'center',
+  alignItems: 'center',
+  margin: 2,
+  padding: 3,
+  width: cubeWidth,
+  height: cubeWidth - 10
+}
 });

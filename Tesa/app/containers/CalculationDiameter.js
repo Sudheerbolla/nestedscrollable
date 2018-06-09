@@ -87,7 +87,7 @@ export default class CalculationDiameter extends Component {
     return (
           <KeyboardAvoidingView behavior={'padding'} style={styles.container}>
 
-              <ScrollView>
+              <ScrollView style={{flexGrow: 1}}>
 
                 <View style={styles.grid}>
 
@@ -120,7 +120,7 @@ export default class CalculationDiameter extends Component {
                   alignItems: 'center',
                   height:38
                 }}>
-                  <Text style={{color: this.state.TellerrollenBg}}> Tellerrollen </Text>
+                  <Text style={{color: this.state.TellerrollenBg}}>{i18n.t('calculation_diameter.tellerrollen').toUpperCase()}</Text>
                   <View style={{
                     backgroundColor: this.state.TellerrollenBg,
                     height:5,
@@ -138,7 +138,7 @@ export default class CalculationDiameter extends Component {
                   alignItems: 'center',
                   height:38
                 }}>
-                  <Text style={{color: this.state.SAFRollenBg}}> SAF-Rollen </Text>
+                  <Text style={{color: this.state.SAFRollenBg}}>{i18n.t('calculation_diameter.saf_rollen').toUpperCase()}</Text>
                   <View style={{
                     backgroundColor: this.state.SAFRollenBg,
                     height:5,
@@ -1055,7 +1055,7 @@ const styles = StyleSheet.create({
     marginRight:10
   },
   container: {
-    flex: 1,
+    flexGrow: 1
   },
   grid: {
     flex: 1,

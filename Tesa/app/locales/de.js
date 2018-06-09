@@ -31,7 +31,7 @@ const locale = {
     diameter: 'Rollendurchmesser',
     consumption: 'Verbrauch',
     price_roll: 'Preis / Rolle',
-    price_m2: 'Preis / m'
+    price_m2: 'Preis / m2'
   },
   calculation_area: {
     area: 'FLÄCHE',
@@ -55,8 +55,8 @@ const locale = {
     length: 'LÄNGE',
     thickness: 'DICKE',
     result: 'ERGEBNIS',
-    unit1:'Mandrin 3 pouves',
-    unit2:'Mandrin 6 pouves',
+    unit1:'3-zoll-kern',
+    unit2:'6-zoll-kern',
     tellerrollen:'Rouleau',
     saf_rollen:'bobine trancannée'
     // unit1:'3-zoll-kern',
@@ -75,13 +75,13 @@ const locale = {
   },
   calculation_price: {
     price_roll: 'Preis / Rolle',
-    price: 'pries',
+    price: 'Preis',
     length: 'LÄNGE',
     width: 'BREITE',
     result: 'ERGEBNIS'
   },
   calculation_price_m2: {
-    price_m2: 'Preis / m',
+    price_m2: 'Preis / M2',
     price: 'Preis',
     roll: 'Rolle',
     length: 'LÄNGE',

@@ -16,7 +16,7 @@ const locale = {
     diameter: 'diámetro del rollo',
     consumption: 'consumo',
     price_roll: 'precio / rollo',
-    price_m2: 'precio / m'
+    price_m2: 'precio / m2'
   },
   contact: {
     name: 'NOMBRE',
@@ -78,7 +78,7 @@ const locale = {
     result: 'RESULTADO',
   },
   calculation_price_m2: {
-    price_m2: 'PRECIO/M',
+    price_m2: 'PRECIO/M2',
     price: 'PRECIO',
     roll: 'RODAR',
     length: 'LONGITUD',

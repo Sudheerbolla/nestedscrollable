@@ -177,46 +177,6 @@ export class BtnDote extends Component {
   }
 }
 
-// export class BtnPercent extends Component {
-//   pressHandler = () => {
-//     const {currentState, value, click} = this.props;
-//     alert("curr state : "+currentState+" value : "+value);
-//      let result = + currentState / 100;
-//      click(result);
-//     var lastChar = currentState.charAt(currentState.length - 1);
-//     if (lastChar === '+' || lastChar === '-' || lastChar === '/' || lastChar === '*') {
-//       return;
-//     }
-//     if (currentState.contains('+') || currentState.contains('-') || currentState.contains('/') || currentState.contains('*')) {
-//  alert("true");
-//       let operations = ['+', '-', '/', '*'];
-//       operations.forEach(operation => {
-//          if (currentState.contains(operation)) {
-//            currentState.split(operation).forEach((elem, index) => {
-//              if (index === 1 && elem !== '') {
-//                let result = (new Function(`return ${currentState}`))();
-//                let result = + result / 100;
-//                click(result);
-//              }
-//            });
-//          } else {
-//            let result = + currentState / 100;
-//            click(result);
-//          }
-//         currentState.split(operation).forEach((elem, index) => {
-//           if (index === 1 && elem !== '') {
-//             let result = (new Function(`return ${currentState}`))();
-//             result = + result / 100;
-//             click(result);
-//           }
-//         });
-//       });
-//     } else {
-//       let result = + currentState / 100;
-//       click(result);
-//     }
-//   }
-
 export class BtnPercent extends Component {
   pressHandler = () => {
     const {currentState, value, click} = this.props;
@@ -236,10 +196,30 @@ export class BtnPercent extends Component {
       return;
     }
 
-    // if (currentState.toString().includes('+') || currentState.toString().includes('-') || currentState.toString().includes('/') || currentState.toString().includes('*')) {
     if (new RegExp(/[+-/*]+/).test(currentState)) {
-      let result = currentState;
-      click(result, currentState, true);
+      let operations = ['+', '-', '/', '*'];
+      var lastItem = currentState.split(/[+-/*]+/)[currentState.split(/[+-/*]+/).length - 1];
+      var res = currentState.substring(0, currentState.lastIndexOf(lastItem));
+      res = res.slice(0, -1)
+      // alert(res + " res");
+      // operations.forEach(operation => {
+      //   res.split(operation).forEach((elem, index) => {
+      //     if (index === 1 && elem !== '') {
+      //       result = (new Function(`return ${res}`))();
+      //       result = + result / 100;
+      //        lastItem * result / 100
+      //     }
+      //   });
+      // });
+      operations.forEach(operation => {
+        res.split(operation).forEach((elem, index) => {
+          if (index === 1 && elem !== '') {
+            let result = (new Function(`return ${res}`))();
+            result = + result;
+            click(result, lastItem, true)
+          }
+        });
+      });
     } else {
       let result = + currentState / 100;
       click(result);
@@ -249,6 +229,7 @@ export class BtnPercent extends Component {
   render() {
     return (<SimpleBtnImage buttonContainer={styles.buttonContainerOperation} pressHandler={this.pressHandler} value={this.props.value}/>)
   }
+
 }
 
 export class BtnResult extends Component {

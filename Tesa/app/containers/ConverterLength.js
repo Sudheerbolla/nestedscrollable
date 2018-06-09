@@ -28,7 +28,6 @@ class Details extends Component {
       lengthValueInY: '0',
       lengthValueInF: '0',
       lengthValueInI: '0',
-      lengthValueInMSI: '0',
       hideView:'m'
     };
   }
@@ -132,7 +131,6 @@ class Details extends Component {
       lengthValueInY: this.getCalculatedValue(numberModified, 'yards'),
       lengthValueInF: this.getCalculatedValue(numberModified, 'feet'),
       lengthValueInI: this.getCalculatedValue(numberModified, 'inches'),
-      lengthValueInMSI: '0'
     });
   }
 
@@ -151,8 +149,6 @@ class Details extends Component {
         outPut = 3.28083 * number
       } else if (conv == 'inches') {
         outPut = 39.36996 * number
-      } else if (conv == 'MSI') {
-        outPut = number
       }
     } else if (this.state.unit == 'cm') {
       if (conv === 'm')
@@ -167,8 +163,6 @@ class Details extends Component {
         outPut = 0.0328083 * number
       } else if (conv == 'inches') {
         outPut = 0.3936996 * number
-      } else if (conv == 'MSI') {
-        outPut = number
       }
     } else if (this.state.unit == 'mm') {
       if (conv === 'm')
@@ -183,8 +177,6 @@ class Details extends Component {
         outPut = 0.00328083 * number
       } else if (conv == 'inches') {
         outPut = 0.03936996 * number
-      } else if (conv == 'MSI') {
-        outPut = number
       }
     } else if (this.state.unit == 'yards') {
       if (conv === 'm')
@@ -199,8 +191,6 @@ class Details extends Component {
         outPut = 3 * number
       } else if (conv == 'inches') {
         outPut = 36 * number
-      } else if (conv == 'MSI') {
-        outPut = number
       }
     } else if (this.state.unit == 'feet') {
       if (conv === 'm')
@@ -215,8 +205,6 @@ class Details extends Component {
         outPut = number
       } else if (conv == 'inches') {
         outPut = 12 * number
-      } else if (conv == 'MSI') {
-        outPut = number
       }
     } else if (this.state.unit == 'inches') {
       if (conv === 'm')
@@ -231,11 +219,7 @@ class Details extends Component {
         outPut = 0.0833334 * number
       } else if (conv == 'inches') {
         outPut = number
-      } else if (conv == 'MSI') {
-        outPut = number
       }
-    }else if (this.state.unit == 'MSI') {
-        outPut = number
     }
     outPut = this.round(outPut, 3);
     if(needToReplaceDotWithComma){
@@ -257,8 +241,7 @@ class Details extends Component {
     +'\n'+this.state.lengthValueInMM+' MM'
     +'\n'+this.state.lengthValueInY+' Yards'
     +'\n'+this.state.lengthValueInF+' Feet'
-    +'\n'+this.state.lengthValueInI+' Inches'
-    +'\n'+this.state.lengthValueInMSI +' MSI';
+    +'\n'+this.state.lengthValueInI+' Inches';
 
     if(Platform.OS === 'ios') {
       Share.share({
@@ -355,11 +338,6 @@ class Details extends Component {
                          {applyLetterSpacing(this.state.lengthValueInI, 1)}
                 </MarqueeText>
               }
-              { this.state.hideView!='MSI' &&
-                <MarqueeText style={styles.number} duration={3000} marqueeOnStart loop marqueeDelay={1000} marqueeResetDelay={1000}>
-                         {applyLetterSpacing(this.state.lengthValueInMSI, 1)}
-                </MarqueeText>
-              }
               </View>
             </View>
           </View>
@@ -373,7 +351,7 @@ class Details extends Component {
               {Platform.select({
                 android: (
                   <CustomPicker
-                    options={['m', 'cm', 'mm', 'yards', 'feet', 'inches', 'MSI']}
+                    options={['m', 'cm', 'mm', 'yards', 'feet', 'inches']}
                     fieldTemplate={this.renderField}
                     style={{ paddingLeft: 30, marginTop: 13, height: 20 }}
                     value={this.state.unit}
@@ -395,7 +373,6 @@ class Details extends Component {
                     <Picker.Item label="yards" value="yards" />
                     <Picker.Item label="feet" value="feet" />
                     <Picker.Item label="inches" value="inches" />
-                    <Picker.Item label="MSI" value="MSI" />
                   </Picker>
                 ),
               })}
@@ -454,14 +431,7 @@ class Details extends Component {
                 text={'inches'}
               />
             }
-            { this.state.hideView!='MSI' &&
-              <SupText
-                textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 18 }}
-                supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11 }}
-                style={styles.unitItem}
-                text={'MSI'}
-              />
-            }
+
             </View>
           </View>
         </View>

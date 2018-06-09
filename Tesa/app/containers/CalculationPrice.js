@@ -20,7 +20,7 @@ class Details extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      unit: 'm',
+      unit: 'pro m',
       priceValue: '20',
       lengthValue: Platform.OS === 'ios'?i18n.t('calculation_area.lengthValue'):'66.00',
       widthValue: '205',
@@ -102,10 +102,15 @@ class Details extends Component {
          needToReplaceDotWithComma=true;
       }
     }
-
-    if (this.state.unit == 'm') {
+// 'pro 100m', 'pro m', 'pro m2'
+    if (this.state.unit == 'pro 100m') {
+      pricePerRoll=priceValue*widthValue*0.001*lengthValue;
+    } else if (this.state.unit == 'pro m') {
+      pricePerRoll=priceValue*widthValue*0.001*lengthValue;
+    } else if (this.state.unit == 'pro m2') {
       pricePerRoll=priceValue*widthValue*0.001*lengthValue;
     }
+
     pricePerRoll=this.round(pricePerRoll, 3);
     if(needToReplaceDotWithComma){
       if(pricePerRoll.toString().includes('.')){
@@ -173,7 +178,7 @@ class Details extends Component {
     const space = Platform.select({ ios: 5, android: 2 });
     return (
       <KeyboardAvoidingView behavior={'padding'} style={styles.container}>
-          <ScrollView>
+          <ScrollView style={{flexGrow: 1}}>
 
             <View style={styles.grid}>
 
@@ -237,18 +242,43 @@ class Details extends Component {
                     />
 
                   </View>
-
-                  <View style={{ width: '30%',padding:8,marginTop:25 }}>
-                    <View style={{justifyContent: 'center',
-                          alignSelf: "stretch",
-                          alignItems: 'center'}}>
-                           <Text style={{ marginTop: 5, height: 22 }}>m</Text>
-                    </View>
+                  <View style={{ width: '30%',padding:8,marginTop:Platform.OS === 'android'?25:2 }}>
+                    <View style={{
+                      borderWidth: 1,
+                      borderColor: Platform.OS === 'android'?COLORS.DARK_GREY:COLORS.WHITE
+                    }} />
+                    {Platform.select({
+                      android: (
+                        <CustomPicker
+                          options={['pro 100m', 'pro m', 'pro m2']}
+                          fieldTemplate={this.renderField}
+                          style={{ margin: 5, height: 22 }}
+                          value={this.state.unit}
+                          onValueChange={(value) => {
+                            this.setState({ unit: value },function(){this.updateAllValues()});
+                          }}
+                        />),
+                      ios: (
+                        <Picker
+                          selectedValue={this.state.unit}
+                          itemStyle={{ fontSize: 15, color: COLORS.DARK_GREY }}
+                          onValueChange={(itemValue, itemIndex) => {
+                            this.setState({ unit: itemValue },function(){this.updateAllValues()});
+                          }}>
+                          <Picker.Item label="pro	100m" value="pro	100	m" />
+                          <Picker.Item label="pro	m" value="pro m" />
+                          <Picker.Item label="pro	m2" value="pro m2" />
+                        </Picker>
+                      ),
+                    })}
+                    <View style={{
+                      borderWidth: 1,
+                      borderColor: Platform.OS === 'android'?COLORS.DARK_GREY:COLORS.WHITE
+                    }} />
                   </View>
-
                 </View>
 
-                <View style={{height: 35 }} />
+                <View style={{height: Platform.OS === 'android'?35:2 }} />
 
                 <View style={styles.horizontalStyle}>
 
@@ -288,8 +318,7 @@ class Details extends Component {
                     />
 
                   </View>
-
-                  <View style={{ width: '30%',padding:8,marginTop:25 }}>
+                  <View style={{ width: '30%',padding:8,marginTop:Platform.OS === 'android'?25:2 }}>
                     <View style={{justifyContent: 'center',
                           alignSelf: "stretch",
                           alignItems: 'center'}}>
@@ -297,10 +326,9 @@ class Details extends Component {
                     </View>
                   </View>
                     </View>
-
                 </View>
 
-                <View style={{height: 35 }} />
+                <View style={{height: Platform.OS === 'android'?35:2 }} />
 
                 <View style={styles.horizontalStyle}>
                     <View style={{width:'70%'}}>
@@ -337,7 +365,7 @@ class Details extends Component {
                         }
                       />
                     </View>
-                    <View style={{ width: '30%',padding:8,marginTop:25 }}>
+                    <View style={{ width: '30%',padding:8,marginTop:Platform.OS === 'android'?25:2 }}>
                         <View style={{justifyContent: 'center',
                               alignSelf: "stretch",
                               alignItems: 'center'}}>
@@ -346,7 +374,7 @@ class Details extends Component {
                     </View>
                 </View>
 
-                <View style={{ height: 85 }} />
+                <View style={{ height: Platform.OS === 'android'?85:45 }} />
 
                 <View style={{
                   flexDirection: 'row',
@@ -383,8 +411,7 @@ class Details extends Component {
                          textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 16 }}
                          supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11 }}
                          style={styles.unitItem}
-                         text={'m'}
-                         sup={'2'}
+                         text={i18n.t('calculation_price.price_roll').toUpperCase()}
                        />
                       </View>
 
@@ -409,7 +436,15 @@ class Details extends Component {
   }
 
 }
-
+{/* <CustomPicker
+  options={['pro 100m', 'pro m', 'pro m2']}
+  fieldTemplate={this.renderField}
+  style={{ margin: 5, height: 22 }}
+  value={this.state.unit}
+  onValueChange={(value) => {
+    this.setState({ unit: value },function(){this.updateAllValues()});
+  }}
+/> */}
 const styles = StyleSheet.create({
   horizontalStyle:{
     flexDirection: 'row',
@@ -433,7 +468,7 @@ const styles = StyleSheet.create({
     marginRight:10
   },
   container: {
-    flex: 1,
+    flexGrow: 1
   },
   grid: {
     flex: 1,

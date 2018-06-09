@@ -248,7 +248,7 @@ export default class CalculationArea extends Component {
     return (
       <KeyboardAvoidingView behavior={'padding'} style={styles.container}>
 
-          <ScrollView>
+          <ScrollView style={{flexGrow: 1}}>
 
             <View style={styles.grid}>
 
@@ -537,7 +537,7 @@ const styles = StyleSheet.create({
     marginRight:10
   },
   container: {
-    flex: 1,
+    flexGrow: 1
   },
   grid: {
     flex: 1,

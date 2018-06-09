@@ -6,13 +6,13 @@ const locale = {
   },
   general: {
     calculation: '計算',
-    converter: '變流器',
+    converter: '单位转换器',
     calculator: '袖珍計算器',
     contact: '聯繫'
   },
   calculation: {
     area: '粘接面积',
-    length: '長さ',
+    length: '长度',
     diameter: '直径',
     consumption: '消耗量',
     price_roll: '价格/卷',
@@ -35,14 +35,14 @@ const locale = {
   },
   calculation_area: {
     area: '表面',
-    length: '長度',
+    length: '长度',
     width: '寬度',
     result: '結果',
     lengthValue: '66.00',
     widthValue: '0.019'
   },
   calculation_length: {
-    length: '長度',
+    length: '长度',
     area: '區',
     width: '寬度',
     result: '結果',
@@ -52,7 +52,7 @@ const locale = {
   calculation_diameter: {
     diameter: '直徑',
     core: '核心直徑',
-    length: '長度',
+    length: '长度',
     thickness: '厚度',
     result: '結果',
     unit1:'3-zoll-kern',
@@ -63,7 +63,7 @@ const locale = {
   calculation_consumptation: {
     consumptation: '消費',
     punch_line: '消費 / 1000 衝線',
-    length_x: '長度(X)',
+    length_x: '长度(X)',
     width_y: '寬度 (Y)',
     without_waste: '请注意，请注意，这里的物料消耗量指未考虑浪费情况下的纯物料消耗这里的物料消耗量指未考虑浪费情况下的纯物料消耗',
     result: '結果',
@@ -71,17 +71,17 @@ const locale = {
     widthValue: '205'
   },
   calculation_price: {
-    price_roll: '價錢/滾',
+    price_roll: '价格/卷',
     price: '價錢',
     length: '長度',
-    width: '寬度',
+    width: '长度',
     result: '結果',
   },
   calculation_price_m2: {
     price_m2: '價錢/M',
     price: '價錢',
     roll: '滾',
-    length: '長度',
+    length: '长度',
     width: '寬度',
     result: '結果',
   },
@@ -93,7 +93,7 @@ const locale = {
     noValueAlert:'请填写所有空格',
   },
   converter_length: {
-    length: '長度',
+    length: '长度',
     result: '結果',
   },
   converter_thickness: {

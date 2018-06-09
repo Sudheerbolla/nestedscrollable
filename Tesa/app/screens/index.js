@@ -23,7 +23,6 @@ import ConverterThickness from '../containers/ConverterThickness';
 import ConverterMass from '../containers/ConverterMass';
 import ConverterPrice from '../containers/ConverterPrice';
 import Calculator from '../containers/Calculator';
-import CalculatorNew from '../containers/CalculatorNew';
 import Contact from '../containers/Contact';
 
 const middleware = createReactNavigationReduxMiddleware('intro', (state) => state.nav);
@@ -48,7 +47,6 @@ export const AppNavigator = StackNavigator(
     ConverterMass: { screen: ConverterMass, navigationOptions: { header: null } },
     ConverterPrice: { screen: ConverterPrice, navigationOptions: { header: null } },
     Calculator: { screen: Calculator, navigationOptions: { header: null } },
-    CalculatorNew: { screen: CalculatorNew, navigationOptions: { header: null } },
     Contact: { screen: Contact, navigationOptions: { header: null } },
   },
   {
