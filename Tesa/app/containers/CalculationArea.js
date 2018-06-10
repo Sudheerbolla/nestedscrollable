@@ -271,7 +271,7 @@ export default class CalculationArea extends Component {
 
               <View style={styles.container}>
 
-                <View style={{ height: 35 }} />
+                <View style={{ height: Platform.OS === 'android'?35:-25 }} />
 
                 <View style={styles.horizontalStyle}>
 
@@ -314,29 +314,45 @@ export default class CalculationArea extends Component {
 
                   </View>
 
-                  <View style={{ width: '30%',padding:8,marginTop:25 }}>
-                    <View style={{
-                      borderWidth: 1,
-                      borderColor: COLORS.DARK_GREY
-                    }} />
-                        <CustomPicker
-                          options={['yards', 'm', 'feet', 'inches']}
-                          fieldTemplate={this.renderField}
-                          style={{ margin: 5, height: 22 }}
-                          value={this.state.unit}
-                          onValueChange={(value) => {
-                            this.setState({ unit: value },function(){this.updateAllValues()});
-                          }}
-                        />
-                    <View style={{
-                      borderWidth: 1,
-                      borderColor: COLORS.DARK_GREY
-                    }} />
+                    <View style={{ width: '30%',padding:8,marginTop:Platform.OS === 'android'?25:0 }}>
+                      <View style={{
+                        borderWidth: 1,
+                        borderColor: Platform.OS === 'android'?COLORS.DARK_GREY:COLORS.WHITE
+                      }} />
+                      {Platform.select({
+                        android: (
+                          <CustomPicker
+                            options={['yards', 'm', 'feet', 'inches']}
+                            fieldTemplate={this.renderField}
+                            style={{ margin: 5, height: 22 }}
+                            value={this.state.unit}
+                            onValueChange={(value) => {
+                              this.setState({ unit: value },function(){this.updateAllValues()});
+                            }}
+                          />),
+                        ios: (
+                          <Picker
+                            selectedValue={this.state.unit}
+                            itemStyle={{ fontSize: 15, color: COLORS.DARK_GREY }}
+                            onValueChange={(itemValue, itemIndex) => {
+                              this.setState({ unit: itemValue },function(){this.updateAllValues()});
+                            }}>
+                            <Picker.Item label="yards" value="yards" />
+                            <Picker.Item label="m" value="m" />
+                            <Picker.Item label="feet" value="feet" />
+                            <Picker.Item label="inches" value="inches" />
+                          </Picker>
+                        ),
+                      })}
+                      <View style={{
+                        borderWidth: 1,
+                        borderColor: Platform.OS === 'android'?COLORS.DARK_GREY:COLORS.WHITE
+                      }} />
+                    </View>
+
                   </View>
 
-                </View>
-
-                <View style={{height: 35 }} />
+                <View style={{height: Platform.OS === 'android'?35:-25 }} />
 
                 <View style={styles.horizontalStyle}>
 
@@ -499,7 +515,7 @@ export default class CalculationArea extends Component {
 
             </View>
 
-            <View style={{ height: 40 }} />
+            <View style={{ height: 50 }} />
 
             <View style={styles.footerContainer}>
               <Image source={ICONS.BRAND_BAR} style={styles.brandBar} />

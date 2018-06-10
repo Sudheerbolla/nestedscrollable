@@ -362,7 +362,6 @@ class Details extends Component {
                          supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11 }}
                          style={styles.unitItem}
                          text={applyLetterSpacing(i18n.t('calculation_price_m2.price_m2'), 1)}
-                         sup={'2'}
                        />
 
                       </View>
@@ -375,7 +374,7 @@ class Details extends Component {
 
               </View>
 
-            <View style={{ height: 40 }} />
+            <View style={{ height: 80 }} />
 
             <View style={styles.footerContainer}>
 

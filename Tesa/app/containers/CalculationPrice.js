@@ -177,7 +177,7 @@ class Details extends Component {
     const { params } = this.props.navigation.state;
     const space = Platform.select({ ios: 5, android: 2 });
     return (
-      <KeyboardAvoidingView behavior={'padding'} style={styles.container}>
+      <KeyboardAvoidingView behavior={'padding'}>
           <ScrollView style={{flexGrow: 1}}>
 
             <View style={styles.grid}>
@@ -201,11 +201,11 @@ class Details extends Component {
 
               <View style={styles.container}>
 
-                <View style={{ height: 35 }} />
+                <View style={{ height: Platform.OS === 'android'?35:-25 }} />
 
                 <View style={styles.horizontalStyle}>
 
-                  <View style={{width:'70%'}}>
+                  <View style={{width:'67%'}}>
 
                     <DetailTextInput
                       title={i18n.t('calculation_price.price').toUpperCase()}
@@ -242,7 +242,7 @@ class Details extends Component {
                     />
 
                   </View>
-                  <View style={{ width: '30%',padding:8,marginTop:Platform.OS === 'android'?25:2 }}>
+                  <View style={{ width: '33%',padding:8,marginTop:Platform.OS === 'android'?25:0 }}>
                     <View style={{
                       borderWidth: 1,
                       borderColor: Platform.OS === 'android'?COLORS.DARK_GREY:COLORS.WHITE
@@ -278,7 +278,7 @@ class Details extends Component {
                   </View>
                 </View>
 
-                <View style={{height: Platform.OS === 'android'?35:2 }} />
+                <View style={{height: Platform.OS === 'android'?35:-25 }} />
 
                 <View style={styles.horizontalStyle}>
 
@@ -328,7 +328,7 @@ class Details extends Component {
                     </View>
                 </View>
 
-                <View style={{height: Platform.OS === 'android'?35:2 }} />
+                <View style={{height: 35 }} />
 
                 <View style={styles.horizontalStyle}>
                     <View style={{width:'70%'}}>
@@ -374,7 +374,7 @@ class Details extends Component {
                     </View>
                 </View>
 
-                <View style={{ height: Platform.OS === 'android'?85:45 }} />
+                <View style={{ height: 85 }} />
 
                 <View style={{
                   flexDirection: 'row',
@@ -421,9 +421,9 @@ class Details extends Component {
 
                 </View>
 
-              </View>
+            </View>
 
-            <View style={{ height: 40 }} />
+            <View style={{ height: 80 }} />
 
             <View style={styles.footerContainer}>
 
@@ -471,7 +471,7 @@ const styles = StyleSheet.create({
     flexGrow: 1
   },
   grid: {
-    flex: 1,
+    flexGrow: 1,
     marginHorizontal: 25,
   },
   logoContainer: {

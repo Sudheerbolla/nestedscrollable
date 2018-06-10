@@ -265,7 +265,7 @@ class Details extends Component {
 
             <View style={styles.container}>
 
-              <View style={{ height: 35 }} />
+              <View style={{ height: Platform.OS === 'android'?35:-25 }} />
 
               <View style={styles.horizontalStyle}>
 
@@ -306,12 +306,13 @@ class Details extends Component {
                   />
 
                 </View>
-
-                <View style={{ width: '30%',padding:8,marginTop:25 }}>
+                <View style={{ width: '30%',padding:8,marginTop:Platform.OS === 'android'?25:0 }}>
                   <View style={{
                     borderWidth: 1,
-                    borderColor: COLORS.DARK_GREY
+                    borderColor: Platform.OS === 'android'?COLORS.DARK_GREY:COLORS.WHITE
                   }} />
+                  {Platform.select({
+                    android: (
                       <CustomPicker
                         options={['yards2', 'm2', 'feet2', 'inches2']}
                         fieldTemplate={this.renderField}
@@ -320,16 +321,30 @@ class Details extends Component {
                         onValueChange={(value) => {
                           this.setState({ unit: value },function(){this.updateAllValues()});
                         }}
-                      />
+                      />),
+                    ios: (
+                      <Picker
+                        selectedValue={this.state.unit}
+                        itemStyle={{ fontSize: 15, color: COLORS.DARK_GREY }}
+                        onValueChange={(itemValue, itemIndex) => {
+                          this.setState({ unit: itemValue },function(){this.updateAllValues()});
+                        }}>
+                        <Picker.Item label="yards2" value="yards2" />
+                        <Picker.Item label="m2" value="m2" />
+                        <Picker.Item label="feet2" value="feet2" />
+                        <Picker.Item label="inches2" value="inches2" />
+                      </Picker>
+                    ),
+                  })}
                   <View style={{
                     borderWidth: 1,
-                    borderColor: COLORS.DARK_GREY
+                    borderColor: Platform.OS === 'android'?COLORS.DARK_GREY:COLORS.WHITE
                   }} />
                 </View>
 
               </View>
 
-              <View style={{height: 35 }} />
+              <View style={{height: Platform.OS === 'android'?35:-15 }} />
 
               <View style={styles.horizontalStyle}>
 
@@ -382,7 +397,7 @@ class Details extends Component {
 
               </View>
 
-              <View style={{ height: 85 }} />
+              <View style={{ height: 95 }} />
 
               <View style={{
                 flexDirection: 'row',
@@ -488,7 +503,7 @@ class Details extends Component {
 
           </View>
 
-          <View style={{ height: 40 }} />
+          <View style={{ height: 85 }} />
 
           <View style={styles.footerContainer}>
             <Image source={ICONS.BRAND_BAR} style={styles.brandBar} />

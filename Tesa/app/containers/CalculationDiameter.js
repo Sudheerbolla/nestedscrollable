@@ -340,12 +340,12 @@ class TellerrollenScreen extends React.Component {
           </View>
 
           <View style={{ width: '35%',padding:8 }}>
-
             <View style={{
               borderWidth: 1,
-              borderColor: COLORS.DARK_GREY
-              }}/>
-
+              borderColor: Platform.OS === 'android'?COLORS.DARK_GREY:COLORS.WHITE
+            }} />
+            {Platform.select({
+              android: (
                 <CustomPicker
                   options={[i18n.t('calculation_diameter.unit1'),i18n.t('calculation_diameter.unit2')]}
                   fieldTemplate={this.renderField}
@@ -354,15 +354,24 @@ class TellerrollenScreen extends React.Component {
                   onValueChange={(value) => {
                     this.setState({ unit: value },function(){this.updateAllValues()});
                   }}
-                />
-
+                />),
+              ios: (
+                <Picker
+                  selectedValue={this.state.unit}
+                  itemStyle={{ fontSize: 15, color: COLORS.DARK_GREY }}
+                  onValueChange={(itemValue, itemIndex) => {
+                    this.setState({ unit: itemValue },function(){this.updateAllValues()});
+                  }}>
+                  <Picker.Item label={i18n.t('calculation_diameter.unit1')} value={i18n.t('calculation_diameter.unit1')} />
+                  <Picker.Item label={i18n.t('calculation_diameter.unit2')} value={i18n.t('calculation_diameter.unit2')} />
+                </Picker>
+              ),
+            })}
             <View style={{
               borderWidth: 1,
-              borderColor: COLORS.DARK_GREY
-              }}/>
-
+              borderColor: Platform.OS === 'android'?COLORS.DARK_GREY:COLORS.WHITE
+            }} />
           </View>
-
         </View>
 
         <View style={{ height: 35 }} />
@@ -533,6 +542,8 @@ class TellerrollenScreen extends React.Component {
                 text={'inches'}
               />
             </View>
+
+            <View style={{height:45}}/>
 
             </View>
 
@@ -725,12 +736,12 @@ class SAFRollenScreen extends React.Component {
             </View>
 
             <View style={{ width: '35%',padding:8 }}>
-
               <View style={{
                 borderWidth: 1,
-                borderColor: COLORS.DARK_GREY
-                }}/>
-
+                borderColor: Platform.OS === 'android'?COLORS.DARK_GREY:COLORS.WHITE
+              }} />
+              {Platform.select({
+                android: (
                   <CustomPicker
                     options={[i18n.t('calculation_diameter.unit1'),i18n.t('calculation_diameter.unit2')]}
                     fieldTemplate={this.renderField}
@@ -739,14 +750,25 @@ class SAFRollenScreen extends React.Component {
                     onValueChange={(value) => {
                       this.setState({ unit: value },function(){this.updateAllValues()});
                     }}
-                  />
-
+                  />),
+                ios: (
+                  <Picker
+                    selectedValue={this.state.unit}
+                    itemStyle={{ fontSize: 15, color: COLORS.DARK_GREY }}
+                    onValueChange={(itemValue, itemIndex) => {
+                      this.setState({ unit: itemValue },function(){this.updateAllValues()});
+                    }}>
+                    <Picker.Item label={i18n.t('calculation_diameter.unit1')} value={i18n.t('calculation_diameter.unit1')} />
+                    <Picker.Item label={i18n.t('calculation_diameter.unit2')} value={i18n.t('calculation_diameter.unit2')} />
+                  </Picker>
+                ),
+              })}
               <View style={{
                 borderWidth: 1,
-                borderColor: COLORS.DARK_GREY
-                }}/>
-
+                borderColor: Platform.OS === 'android'?COLORS.DARK_GREY:COLORS.WHITE
+              }} />
             </View>
+        
 
           </View>
 

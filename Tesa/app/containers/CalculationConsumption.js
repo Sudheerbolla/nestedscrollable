@@ -151,7 +151,7 @@ export default class CalculationConsumptation extends Component {
     return (
         <KeyboardAvoidingView behavior={'padding'} style={styles.container}>
 
-            <ScrollView style={{flexGrow: 1}}>
+            <ScrollView>
 
                 <View style={styles.grid}>
 
@@ -349,7 +349,7 @@ export default class CalculationConsumptation extends Component {
 
                 </View>
 
-                <View style={{ height: 30 }} />
+                <View style={{ height: 60 }} />
 
                 <View style={styles.footerContainer}>
                   <Image source={ICONS.BRAND_BAR} style={styles.brandBar} />
