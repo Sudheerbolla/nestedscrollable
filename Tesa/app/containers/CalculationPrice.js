@@ -20,7 +20,7 @@ class Details extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      unit: 'pro m',
+      unit: '/m',
       priceValue: '20',
       lengthValue: Platform.OS === 'ios'?i18n.t('calculation_area.lengthValue'):'66.00',
       widthValue: '205',
@@ -103,11 +103,11 @@ class Details extends Component {
       }
     }
 // 'pro 100m', 'pro m', 'pro m2'
-    if (this.state.unit == 'pro 100m') {
-      pricePerRoll=priceValue*widthValue*0.001*lengthValue;
-    } else if (this.state.unit == 'pro m') {
-      pricePerRoll=priceValue*widthValue*0.001*lengthValue;
-    } else if (this.state.unit == 'pro m2') {
+    if (this.state.unit == '/m') {
+      // pricePerRoll=priceValue*widthValue*0.001*lengthValue;
+    // } else if (this.state.unit == 'pro m') {
+      // pricePerRoll=priceValue*widthValue*0.001*lengthValue;
+    // } else if (this.state.unit == 'pro m2') {
       pricePerRoll=priceValue*widthValue*0.001*lengthValue;
     }
 
@@ -201,11 +201,11 @@ class Details extends Component {
 
               <View style={styles.container}>
 
-                <View style={{ height: Platform.OS === 'android'?35:-25 }} />
+                <View style={{ height: 35 }} />
 
                 <View style={styles.horizontalStyle}>
 
-                  <View style={{width:'67%'}}>
+                  <View style={{width:'65%'}}>
 
                     <DetailTextInput
                       title={i18n.t('calculation_price.price').toUpperCase()}
@@ -242,47 +242,20 @@ class Details extends Component {
                     />
 
                   </View>
-                  <View style={{ width: '33%',padding:8,marginTop:Platform.OS === 'android'?25:0 }}>
-                    <View style={{
-                      borderWidth: 1,
-                      borderColor: Platform.OS === 'android'?COLORS.DARK_GREY:COLORS.WHITE
-                    }} />
-                    {Platform.select({
-                      android: (
-                        <CustomPicker
-                          options={['pro 100m', 'pro m', 'pro m2']}
-                          fieldTemplate={this.renderField}
-                          style={{ margin: 5, height: 22 }}
-                          value={this.state.unit}
-                          onValueChange={(value) => {
-                            this.setState({ unit: value },function(){this.updateAllValues()});
-                          }}
-                        />),
-                      ios: (
-                        <Picker
-                          selectedValue={this.state.unit}
-                          itemStyle={{ fontSize: 15, color: COLORS.DARK_GREY }}
-                          onValueChange={(itemValue, itemIndex) => {
-                            this.setState({ unit: itemValue },function(){this.updateAllValues()});
-                          }}>
-                          <Picker.Item label="pro	100m" value="pro	100	m" />
-                          <Picker.Item label="pro	m" value="pro m" />
-                          <Picker.Item label="pro	m2" value="pro m2" />
-                        </Picker>
-                      ),
-                    })}
-                    <View style={{
-                      borderWidth: 1,
-                      borderColor: Platform.OS === 'android'?COLORS.DARK_GREY:COLORS.WHITE
-                    }} />
+                  <View style={{ width: '35%',padding:8,marginTop:25 }}>
+                    <View style={{justifyContent: 'center',
+                          alignSelf: "stretch",
+                          alignItems: 'center'}}>
+                           <Text style={{ marginTop: 5, height: 22 }}>/m</Text>
+                    </View>
                   </View>
-                </View>
+                  </View>
 
-                <View style={{height: Platform.OS === 'android'?35:-25 }} />
+                <View style={{height: 35 }} />
 
                 <View style={styles.horizontalStyle}>
 
-                  <View style={{width:'70%'}}>
+                  <View style={{width:'65%'}}>
 
                     <DetailTextInput
                       title={i18n.t('calculation_price.length').toUpperCase()}
@@ -318,7 +291,7 @@ class Details extends Component {
                     />
 
                   </View>
-                  <View style={{ width: '30%',padding:8,marginTop:Platform.OS === 'android'?25:2 }}>
+                  <View style={{ width: '35%',padding:8,marginTop:25 }}>
                     <View style={{justifyContent: 'center',
                           alignSelf: "stretch",
                           alignItems: 'center'}}>
@@ -331,7 +304,7 @@ class Details extends Component {
                 <View style={{height: 35 }} />
 
                 <View style={styles.horizontalStyle}>
-                    <View style={{width:'70%'}}>
+                    <View style={{width:'65%'}}>
                       <DetailTextInput
                         title={i18n.t('calculation_price.width').toUpperCase()}
                         value={this.state.widthValue}
@@ -365,7 +338,7 @@ class Details extends Component {
                         }
                       />
                     </View>
-                    <View style={{ width: '30%',padding:8,marginTop:Platform.OS === 'android'?25:2 }}>
+                    <View style={{ width: '35%',padding:8,marginTop:25 }}>
                         <View style={{justifyContent: 'center',
                               alignSelf: "stretch",
                               alignItems: 'center'}}>
@@ -406,9 +379,9 @@ class Details extends Component {
                         </MarqueeText>
                       </View>
 
-                      <View style={{width:'30%'}}>
+                      <View style={{width:'35%'}}>
                         <SupText
-                         textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 16 }}
+                         textStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 14 }}
                          supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11 }}
                          style={styles.unitItem}
                          text={i18n.t('calculation_price.price_roll').toUpperCase()}
@@ -499,7 +472,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   resultValue:{
-    width:'70%',
+    width:'65%',
     justifyContent: 'flex-end',
     alignItems:'flex-end',
     paddingRight:5

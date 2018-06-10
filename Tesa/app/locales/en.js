@@ -71,7 +71,7 @@ const locale = {
     widthValue: '205'
   },
   calculation_price: {
-    price_roll: 'Price / Roll',
+    price_roll: 'Price/Roll',
     price: 'Price',
     length: 'Length',
     width: 'Width',
@@ -79,8 +79,8 @@ const locale = {
   },
   calculation_price_m2: {
     price_m2: 'Price / M2',
-    price: 'Price',
-    roll: 'Roll',
+    price: 'Price ($)',
+    roll: '/Roll',
     length: 'Length',
     width: 'Width',
     result: 'Result'

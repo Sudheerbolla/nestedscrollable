@@ -55,8 +55,8 @@ const locale = {
     length: 'LONGUEUR',
     thickness: 'ÉPAISSEUR',
     result: 'RÉSULTAT',
-    unit1:'3-zoll-kern',
-    unit2:'6-zoll-kern',
+    unit1:'3-Pouce-Mandrin',
+    unit2:'6-Pouce-Mandrin',
     tellerrollen:'Rouleau',
     saf_rollen:'bobine trancannée'
   },
@@ -79,8 +79,8 @@ const locale = {
   },
   calculation_price_m2: {
     price_m2: 'PRIX/M2',
-    price: 'PRIX',
-    roll: 'AU ROULEAU',
+    price: 'Prix (€)',
+    roll: '/AU ROULEAU',
     length: 'LONGUEUR',
     width: 'LARGEUR',
     result: 'RÉSULTAT',

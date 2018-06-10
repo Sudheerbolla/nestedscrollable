@@ -74,7 +74,7 @@ const locale = {
 
   },
   calculation_price: {
-    price_roll: 'Preis / Rolle',
+    price_roll: 'Preis/Rolle',
     price: 'Preis',
     length: 'LÄNGE',
     width: 'BREITE',
@@ -82,8 +82,8 @@ const locale = {
   },
   calculation_price_m2: {
     price_m2: 'Preis / M2',
-    price: 'Preis',
-    roll: 'Rolle',
+    price: 'Preis (€)',
+    roll: '/Rolle',
     length: 'LÄNGE',
     width: 'BREITE',
     result: 'ERGEBNIS'

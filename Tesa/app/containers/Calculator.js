@@ -73,7 +73,7 @@ export default class Calculation extends Component {
 
               this.setState({
                 text: result,
-                prev: prev || this.state.prev
+                prev: prev + "%" || this.state.prev
               });
             }
           });
@@ -91,9 +91,16 @@ export default class Calculation extends Component {
 
         this.setState({
           text: res,
-          prev: prev || this.state.prev
+          prev: prev + "%" || this.state.prev
         });
       }
+    } else {
+      // alert('prev : ' + prev + " value : " + value);
+      let result = + prev / 100;
+      this.setState({
+        text: value,
+        prev: prev + "%" || this.state.prev
+      });
     }
   }
 

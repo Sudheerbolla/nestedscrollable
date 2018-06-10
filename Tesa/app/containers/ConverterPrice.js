@@ -50,11 +50,15 @@ class Details extends Component {
         <View>
           {!selectedItem && <Text style={[styles.text, { color: 'grey' }]}>{defaultText}</Text>}
           {selectedItem && (
-            <View style={styles.innerContainer}>
+            <View style={{
+              alignSelf: "center",
+              alignItems: 'center',
+              alignContent: 'center'
+            }}>
               <SupText
                 textStyle={[styles.text, { color: COLORS.DARK_GREY }]}
                 supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11, color: COLORS.DARK_GREY }}
-                style={styles.unitItem}
+                style={styles.unitItemPicker}
                 text={getLabel(selectedItem)}
                 sup={''}
               />
@@ -300,7 +304,7 @@ class Details extends Component {
                   <CustomPicker
                     options={[i18n.t('converter_price.price')+' / m2', i18n.t('converter_price.price')+' / yd2', i18n.t('converter_price.price')+' / ft2', i18n.t('converter_price.price')+' / MSI']}
                     fieldTemplate={this.renderField}
-                    style={{ paddingLeft: 30, marginTop: 13, height: 20 }}
+                    style={{ paddingLeft: 17, marginTop: 13, height: 20 }}
                     value={this.state.unit}
                     onValueChange={(value) => {
                         this.setState({ unit: value,hideView:value },function(){this.updateAllValues(this.state.lengthValue)});
@@ -386,6 +390,9 @@ const styles = StyleSheet.create({
   unitItem: {
     height: 35,
     paddingTop: 3,
+  },
+  unitItemPicker: {
+    height: 35,
   },
   resultContainer: {
     flexDirection: 'row',

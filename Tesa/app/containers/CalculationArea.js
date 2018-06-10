@@ -65,14 +65,16 @@ export default class CalculationArea extends Component {
           {!selectedItem && <Text style={[styles.text, { color: 'grey' }]}>{defaultText}</Text>}
           {selectedItem && (
             <View style={{
-              justifyContent: 'center',
-              alignSelf: "stretch",
-              alignItems: 'center'
+              alignSelf: "center",
+              alignItems: 'center',
+              alignContent: 'center'
             }}>
               <SupText
-                textStyle={[styles.text, { color: COLORS.DARK_GREY }]}
+                textStyle={{
+                  color: COLORS.DARK_GREY
+                 }}
                 supStyle={{ fontFamily: FONTS.FONT_BOLD, fontSize: 11, color: COLORS.DARK_GREY }}
-                style={styles.unitItem}
+                style={styles.unitItemPicker}
                 text={getLabel(selectedItem)}
                 sup={''}
               />
@@ -324,7 +326,7 @@ export default class CalculationArea extends Component {
                           <CustomPicker
                             options={['yards', 'm', 'feet', 'inches']}
                             fieldTemplate={this.renderField}
-                            style={{ margin: 5, height: 22 }}
+                            style={{ height: 22 }}
                             value={this.state.unit}
                             onValueChange={(value) => {
                               this.setState({ unit: value },function(){this.updateAllValues()});
@@ -346,6 +348,7 @@ export default class CalculationArea extends Component {
                       })}
                       <View style={{
                         borderWidth: 1,
+                        marginTop:2,
                         borderColor: Platform.OS === 'android'?COLORS.DARK_GREY:COLORS.WHITE
                       }} />
                     </View>
@@ -519,7 +522,6 @@ export default class CalculationArea extends Component {
 
             <View style={styles.footerContainer}>
               <Image source={ICONS.BRAND_BAR} style={styles.brandBar} />
-
             </View>
 
           </ScrollView>
@@ -543,6 +545,9 @@ const styles = StyleSheet.create({
     height: 35,
     paddingTop: 3,
     marginLeft: 10
+  },
+  unitItemPicker: {
+    height: 35,
   },
   number: {
     fontSize: 20,

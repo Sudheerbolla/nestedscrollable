@@ -242,7 +242,7 @@ export class BtnPercent extends Component {
       click(result, currentState, true);
     } else {
       let result = + currentState / 100;
-      click(result);
+      click(result, currentState, false);
     }
   }
 

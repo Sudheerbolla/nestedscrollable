@@ -8,7 +8,7 @@ const locale = {
     calculation: 'cálculo',
     converter: 'convertidor',
     calculator: 'calculadora',
-    contact: 'contacto',
+    contact: 'contacto'
   },
   calculation: {
     area: 'area',
@@ -29,9 +29,9 @@ const locale = {
     imprint: 'IMPRIMIR',
     privacy: 'política de privacidad',
     condition: 'Condiciones de Uso',
-    characters:'caracteres',
-    emailvalidation:'Por favor introduzca una dirección de correo electrónico válida',
-    send_out:'enviado'
+    characters: 'caracteres',
+    emailvalidation: 'Por favor introduzca una dirección de correo electrónico válida',
+    send_out: 'enviado'
   },
   calculation_area: {
     area: 'ZONA',
@@ -55,10 +55,10 @@ const locale = {
     length: 'LONGITUD',
     thickness: 'ESPESOR',
     result: 'RESULTADO',
-    unit1:'3-zoll-kern',
-    unit2:'6-zoll-kern',
-    tellerrollen:'Rouleau',
-    saf_rollen:'bobine trancannée'
+    unit1: '3-Pulgada-Mandril',
+    unit2: '6-Pulgada-Mandril',
+    tellerrollen: 'Rouleau',
+    saf_rollen: 'bobine trancannée'
   },
   calculation_consumptation: {
     consumptation: 'CONSUMPTION',
@@ -71,47 +71,47 @@ const locale = {
     widthValue: '205'
   },
   calculation_price: {
-    price_roll: 'PRECIO / RODAR',
+    price_roll: 'PRECIO/RODAR',
     price: 'PRECIO',
     length: 'LONGITUD',
     width: 'ANCHURA',
-    result: 'RESULTADO',
+    result: 'RESULTADO'
   },
   calculation_price_m2: {
     price_m2: 'PRECIO/M2',
-    price: 'PRECIO',
-    roll: 'RODAR',
+    price: 'Precio (€)',
+    roll: '/RODAR',
     length: 'LONGITUD',
     width: 'ANCHURA',
-    result: 'RESULTADO',
+    result: 'RESULTADO'
   },
   converter_area: {
     area: 'SUPERFCIE',
     result: 'RESULTADO',
-    negativeAlert:'No están permitidos los valores negativos',
-    outOfRangeAlert:'Este valor está fuera de rango',
-    noValueAlert:'Por favor rellena todos los campos',
+    negativeAlert: 'No están permitidos los valores negativos',
+    outOfRangeAlert: 'Este valor está fuera de rango',
+    noValueAlert: 'Por favor rellena todos los campos'
   },
   converter_length: {
     length: 'LONGITUD',
-    result: 'RESULTADO',
+    result: 'RESULTADO'
   },
   converter_thickness: {
     thickness: 'ESPESOR',
-    result: 'RESULTADO',
+    result: 'RESULTADO'
   },
   converter_mass: {
     mass: 'peso',
-    result: 'RESULTADO',
+    result: 'RESULTADO'
   },
   converter_force: {
     force: 'fuerza adhesión',
-    result: 'RESULTADO',
+    result: 'RESULTADO'
   },
   converter_price: {
     price: 'precio',
-    result: 'RESULTADO',
-  },
+    result: 'RESULTADO'
+  }
 };
 
 export default locale;

@@ -55,8 +55,8 @@ const locale = {
     length: '⻑さ',
     thickness: '厚さ',
     result: '結果',
-    unit1:'3-zoll-kern',
-    unit2:'6-zoll-kern',
+    unit1:'3-インチ - コアサイズ',
+    unit2:'6-インチ - コアサイズ',
     tellerrollen:'Rouleau',
     saf_rollen:'bobine trancannée'
   },
@@ -79,8 +79,8 @@ const locale = {
   },
   calculation_price_m2: {
     price_m2: '価格/M',
-    price: '価格',
-    roll: 'ロール',
+    price: '価格(¥)',
+    roll: '/ロール',
     length: '⻑さ',
     width: '幅',
     result: '結果',
